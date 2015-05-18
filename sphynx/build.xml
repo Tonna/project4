@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="war" basedir=".">
+	<property name="tomcat" value="D:\home\yakovcha\apps\apache-tomcat-8.0.15"/>
+	<property name="tomcat.deployment" value="${tomcat}/webapps"/>
+	<property name="tomcat.bin" value="${tomcat}/bin"/>
+	<property name="base" value="."/>
+	<property name="source" value="${base}/src"/>
+
+	<target name="war">
+		<war warfile="sphynx.war" needxmlfile="false">
+	        	<fileset dir="${source}/web"/>	
+		</war>
+	</target>
+	<target name="deploy">
+		<copy file="${base}/sphynx.war" todir="${tomcat.deployment}"/>
+	</target>
+	<target name="tomcat-start">
+		<exec executable="${tomcat.bin}/startup.bat" />
+	</target>
+	<target name="tomcat-stop">
+		<exec executable="${tomcat.bin}/shutdown.bat" />
+	</target>
+
+
+
+</project>
