@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="war" basedir=".">
-	<property name="tomcat" value="D:\home\yakovcha\apps\apache-tomcat-8.0.15"/>
-	<property name="tomcat.deployment" value="${tomcat}/webapps"/>
-	<property name="tomcat.bin" value="${tomcat}/bin"/>
+<project name="sphynx" basedir=".">
+	<property environment="env"/>
+	<property name="tomcat-home" value="${env.TOMCAT_HOME}"/>
+	<property name="tomcat.deployment" value="${tomcat-home}/webapps"/>
+	<property name="tomcat.bin" value="${tomcat-home}/bin"/>
 	<property name="base" value="."/>
-	<property name="source" value="${base}/src"/>
+	<property name="src.dir" value="${base}/src"/>
+	<property name="classes.dir" value="${base}/classes"/>
+	<property name="war.file" value="sphynx.war"/>
+
+	<target name="clean">
+		<delete dir="${classes.dir}"/>
+		<delete file="${war.file}"/>
+	</target>	
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+	</target>
 
 	<target name="war">
-		<war warfile="sphynx.war" needxmlfile="false">
-	        	<fileset dir="${source}/web"/>	
+		<war warfile="${war.file}" needxmlfile="false">
+	        	<fileset dir="${src.dir}/web"/>	
 		</war>
 	</target>
+
 	<target name="deploy">
-		<copy file="${base}/sphynx.war" todir="${tomcat.deployment}"/>
+		<copy file="${base}/${war.file}" todir="${tomcat.deployment}"/>
 	</target>
+
 	<target name="tomcat-start">
 		<exec executable="${tomcat.bin}/startup.bat" />
 	</target>
+
 	<target name="tomcat-stop">
 		<exec executable="${tomcat.bin}/shutdown.bat" />
 	</target>
 
-
+	<target name="full" depends="tomcat-stop,clean,compile,war,deploy,tomcat-start"/>
 
 </project>
