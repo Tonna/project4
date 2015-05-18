@@ -7,12 +7,17 @@
 	<property name="base" value="."/>
 	<property name="src.dir" value="${base}/src"/>
 	<property name="classes.dir" value="${base}/classes"/>
-	<property name="war.file" value="sphynx.war"/>
+	<property name="war.file" value="${ant.project.name}.war"/>
 
 	<target name="clean">
 		<delete dir="${classes.dir}"/>
 		<delete file="${war.file}"/>
 	</target>	
+
+	<target name="clean-deployed" depends="tomcat-stop">
+		<delete file="${tomcat.deployment}/${war.file}"/>
+		<delete dir="${tomcat.deployment}/${ant.project.name}"/>
+	</target>
 
 	<target name="compile">
 		<mkdir dir="${classes.dir}"/>
@@ -20,8 +25,8 @@
 	</target>
 
 	<target name="war">
-		<war warfile="${war.file}" needxmlfile="false">
-	        	<fileset dir="${src.dir}/web"/>	
+		<war warfile="${war.file}" webxml="src/webapp/WEB-INF/web.xml">
+	        	<fileset dir="${src.dir}/webapp"/>	
 		</war>
 	</target>
 
@@ -37,6 +42,6 @@
 		<exec executable="${tomcat.bin}/shutdown.bat" />
 	</target>
 
-	<target name="full" depends="tomcat-stop,clean,compile,war,deploy,tomcat-start"/>
+	<target name="full" depends="tomcat-stop,clean-deployed,clean,clean-deployed,compile,war,deploy,tomcat-start"/>
 
 </project>
