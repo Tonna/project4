@@ -1,2 +1,5 @@
 *.war
-sphynx/classes/*
+sphynx/target/*
+*/.idea/*
+.idea/*
+*/lib/*

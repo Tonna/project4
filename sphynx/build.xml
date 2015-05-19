@@ -4,10 +4,20 @@
 	<property name="tomcat-home" value="${env.TOMCAT_HOME}"/>
 	<property name="tomcat.deployment" value="${tomcat-home}/webapps"/>
 	<property name="tomcat.bin" value="${tomcat-home}/bin"/>
-	<property name="base" value="."/>
-	<property name="src.dir" value="${base}/src"/>
-	<property name="classes.dir" value="${base}/classes"/>
+	<property name="base.dir" value="."/>
+	<property name="src.dir" value="${base.dir}/src/main/java"/>
+    <property name="target.dir" value="${base.dir}/target"/>
+    <property name="test.src.dir" value="${base.dir}/src/test/java"/>
+    <property name="test.reports.dir" value="${target.dir}/reports"/>
+    <property name="classes.dir" value="${target.dir}/classes"/>
+    <property name="test.classes.dir" value="${target.dir}/test-classes"/>
 	<property name="war.file" value="${ant.project.name}.war"/>
+
+	<path id="build.classpath"> 
+		<fileset dir="lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path> 
 
 	<target name="clean">
 		<delete dir="${classes.dir}"/>
@@ -19,19 +29,48 @@
 		<delete dir="${tomcat.deployment}/${ant.project.name}"/>
 	</target>
 
-	<target name="compile">
+	<target name="compile-sources">
 		<mkdir dir="${classes.dir}"/>
-		<javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}">
+			<classpath refid="build.classpath" />
+		</javac>
+	</target>
+
+    <target name="compile-tests">
+        <mkdir dir="${test.classes.dir}"/>
+        <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}">
+            <classpath refid="build.classpath" />
+        </javac>
+    </target>
+
+	<target name="test-unit">
+
+        <mkdir dir="${test.reports.dir}"/>
+
+		<junit dir="${base.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true">
+			<batchtest todir="${test.reports.dir}">
+				<fileset dir="${test.src.dir}">
+					<include name="**/*Test*"/>
+				</fileset>
+			</batchtest>
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${test.classes.dir}"/>
+            </classpath>
+			<formatter type="xml"/>
+			<jvmarg value="-ea"/>
+		</junit>
+
 	</target>
 
 	<target name="war">
-		<war warfile="${war.file}" webxml="src/webapp/WEB-INF/web.xml">
-	        	<fileset dir="${src.dir}/webapp"/>	
+		<war warfile="${war.file}" webxml="src/main/webapp/WEB-INF/web.xml">
+			<fileset dir="${src.dir}/main/webapp"/>	
 		</war>
 	</target>
 
 	<target name="deploy">
-		<copy file="${base}/${war.file}" todir="${tomcat.deployment}"/>
+		<copy file="${base.dir}/${war.file}" todir="${tomcat.deployment}"/>
 	</target>
 
 	<target name="tomcat-start">
@@ -42,6 +81,6 @@
 		<exec executable="${tomcat.bin}/shutdown.bat" />
 	</target>
 
-	<target name="full" depends="tomcat-stop,clean-deployed,clean,clean-deployed,compile,war,deploy,tomcat-start"/>
+	<target name="full" depends="tomcat-stop,clean-deployed,clean,clean-deployed,compile-sources,war,deploy,tomcat-start"/>
 
 </project>
