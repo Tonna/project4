@@ -22,7 +22,7 @@
     <property name="test.unit.dir" value="${test.src.dir}/java"/>
     <property name="test.classes.dir" value="${target.dir}/test-classes"/>
     <property name="test.reports.dir" value="${target.dir}/reports"/>
-    
+
     <path id="build.classpath">
         <fileset dir="lib">
             <include name="**/*.jar"/>
@@ -43,7 +43,7 @@
     <target name="compile-sources">
         <mkdir dir="${classes.dir}"/>
         <javac srcdir="${src.dir}" destdir="${classes.dir}">
-            <classpath refid="build.classpath" />
+            <classpath refid="build.classpath"/>
         </javac>
     </target>
 
@@ -57,6 +57,7 @@
         </javac>
     </target>
 
+    <!--Remove copy-past. Functional and unit tests target are differ only by one line -->
     <target name="test-functional">
 
         <mkdir dir="${test.reports.dir}"/>
@@ -100,24 +101,25 @@
     </target>
 
     <target name="war">
-		<war warfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
-			<fileset dir="${src.web.dir}"/>
-		</war>
-	</target>
+        <war warfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
+            <fileset dir="${src.web.dir}"/>
+        </war>
+    </target>
 
-	<target name="deploy">
-		<copy file="${target.dir}/${war.file}" todir="${tomcat.deployment}"/>
-	</target>
+    <target name="deploy">
+        <copy file="${target.dir}/${war.file}" todir="${tomcat.deployment}"/>
+    </target>
 
-	<target name="tomcat-start">
-		<exec executable="${tomcat.bin}/startup.bat" />
-	</target>
+    <target name="tomcat-start">
+        <exec executable="${tomcat.bin}/startup.bat"/>
+    </target>
 
-	<target name="tomcat-stop">
-		<exec executable="${tomcat.bin}/shutdown.bat" />
-	</target>
+    <target name="tomcat-stop">
+        <exec executable="${tomcat.bin}/shutdown.bat"/>
+    </target>
 
     <target name="working-with-classes" depends="clean,compile-sources,compile-tests,test-unit"/>
-    <target name="full" depends="tomcat-stop,clean-deployed,clean-deployed,working-with-classes,war,deploy,tomcat-start,test-functional"/>
+    <target name="full"
+            depends="tomcat-stop,clean-deployed,working-with-classes,war,deploy,tomcat-start,test-functional"/>
 
 </project>
