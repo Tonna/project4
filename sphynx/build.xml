@@ -1,42 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="sphynx" basedir=".">
-	<property environment="env"/>
-	<property name="tomcat-home" value="${env.TOMCAT_HOME}"/>
-	<property name="tomcat.deployment" value="${tomcat-home}/webapps"/>
-	<property name="tomcat.bin" value="${tomcat-home}/bin"/>
-	<property name="base.dir" value="."/>
-	<property name="src.dir" value="${base.dir}/src/main/java"/>
-	<property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
+    <property environment="env"/>
+
+    <property name="tomcat.home" value="${env.TOMCAT_HOME}"/>
+    <property name="tomcat.deployment" value="${tomcat.home}/webapps"/>
+    <property name="tomcat.bin" value="${tomcat.home}/bin"/>
+
+    <property name="base.dir" value="."/>
+
+    <property name="src.dir" value="${base.dir}/src/main/java"/>
+    <property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
+    <property name="src.web.xml.file" value="${src.web.dir}/WEB-INF/web.xml"/>
+
     <property name="target.dir" value="${base.dir}/target"/>
-    <property name="test.src.dir" value="${base.dir}/src/test"/>
-    <property name="test.reports.dir" value="${target.dir}/reports"/>
     <property name="classes.dir" value="${target.dir}/classes"/>
+
+    <property name="war.file" value="${ant.project.name}.war"/>
+
+    <property name="test.src.dir" value="${base.dir}/src/test"/>
+    <property name="test.functional.dir" value="${test.src.dir}/functional"/>
+    <property name="test.unit.dir" value="${test.src.dir}/java"/>
     <property name="test.classes.dir" value="${target.dir}/test-classes"/>
-	<property name="war.file" value="${target.dir}/${ant.project.name}.war"/>
+    <property name="test.reports.dir" value="${target.dir}/reports"/>
+    
+    <path id="build.classpath">
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
 
-	<path id="build.classpath"> 
-		<fileset dir="lib">
-			<include name="**/*.jar"/>
-		</fileset>
-	</path> 
+    <target name="clean">
+        <delete dir="${classes.dir}"/>
+        <delete dir="${test.classes.dir}"/>
+        <delete file="${target.dir}/${war.file}"/>
+    </target>
 
-	<target name="clean">
-		<delete dir="${classes.dir}"/>
-		<delete dir="${test.classes.dir}"/>
-		<delete file="${war.file}"/>
-	</target>	
+    <target name="clean-deployed">
+        <delete file="${tomcat.deployment}/${war.file}"/>
+        <delete dir="${tomcat.deployment}/${ant.project.name}"/>
+    </target>
 
-	<target name="clean-deployed" depends="tomcat-stop">
-		<delete file="${tomcat.deployment}/${war.file}"/>
-		<delete dir="${tomcat.deployment}/${ant.project.name}"/>
-	</target>
-
-	<target name="compile-sources">
-		<mkdir dir="${classes.dir}"/>
-		<javac srcdir="${src.dir}" destdir="${classes.dir}">
-			<classpath refid="build.classpath" />
-		</javac>
-	</target>
+    <target name="compile-sources">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}">
+            <classpath refid="build.classpath" />
+        </javac>
+    </target>
 
     <target name="compile-tests">
         <mkdir dir="${test.classes.dir}"/>
@@ -48,34 +57,13 @@
         </javac>
     </target>
 
-	<target name="test-functional">
-
-        <mkdir dir="${test.reports.dir}"/>
-
-		<junit dir="${base.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true">
-			<batchtest todir="${test.reports.dir}">
-				<fileset dir="${test.src.dir}/functional">
-					<include name="**/*Test*"/>
-				</fileset>
-			</batchtest>
-            <classpath>
-                <path refid="build.classpath"/>
-                <pathelement location="${test.classes.dir}"/>
-                <pathelement location="${classes.dir}"/>
-            </classpath>
-			<formatter type="xml"/>
-			<jvmarg value="-ea"/>
-		</junit>
-
-	</target>
-
-    <target name="test-unit">
+    <target name="test-functional">
 
         <mkdir dir="${test.reports.dir}"/>
 
         <junit dir="${base.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true">
             <batchtest todir="${test.reports.dir}">
-                <fileset dir="${test.src.dir}/java">
+                <fileset dir="${test.functional.dir}">
                     <include name="**/*Test*"/>
                 </fileset>
             </batchtest>
@@ -90,14 +78,35 @@
 
     </target>
 
-	<target name="war">
-		<war warfile="${war.file}" webxml="src/main/webapp/WEB-INF/web.xml">
+    <target name="test-unit">
+
+        <mkdir dir="${test.reports.dir}"/>
+
+        <junit dir="${base.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true">
+            <batchtest todir="${test.reports.dir}">
+                <fileset dir="${test.unit.dir}">
+                    <include name="**/*Test*"/>
+                </fileset>
+            </batchtest>
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${test.classes.dir}"/>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
+            <formatter type="xml"/>
+            <jvmarg value="-ea"/>
+        </junit>
+
+    </target>
+
+    <target name="war">
+		<war warfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
 			<fileset dir="${src.web.dir}"/>
 		</war>
 	</target>
 
 	<target name="deploy">
-		<copy file="${base.dir}/${war.file}" todir="${tomcat.deployment}"/>
+		<copy file="${target.dir}/${war.file}" todir="${tomcat.deployment}"/>
 	</target>
 
 	<target name="tomcat-start">
