@@ -1,0 +1,88 @@
+body {
+	background-color: #996633;
+}
+
+#login {
+	display: table;
+	padding: 10px;
+}
+
+#allcontent {
+	width: 80%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #FFCC00;
+}
+
+#header {
+    padding: 20px;
+    overflow: hidden;
+    text-align: right;
+}
+
+div#applicationName {
+	font-size: 150%;
+	text-align: center;
+	overflow: hidden;
+}
+
+#main {
+	margin: 10px 10px 10px 10px;
+}
+
+.tableRow {
+	display: table-row;
+}
+
+div.tableRow p:first-child {
+    text-align: right;
+}
+
+div.tableRow p {
+    display: table-cell;
+    vertical-align: top;
+    padding: 3px;
+}
+
+#questions {
+	margin-left: 10px;
+	padding: 10px;
+}
+
+.question {
+	word-break: break-all;
+	border-width: 1px;
+	border-style: solid;
+	border-color: red;         	
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.question h3 {
+ 	font-size: 110%;
+}
+
+.bigButton {
+	font-size:150%
+}
+
+.subject {
+	padding: 15px;
+	margin-left: 20px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: red;
+	margin-bottom: 10px;
+}        
+
+.subject h2 {
+	font-size: 120%;
+}       
+
+#userData {
+	padding-top: 50px;         
+ 	float: right;
+}
+
