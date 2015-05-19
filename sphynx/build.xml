@@ -6,12 +6,13 @@
 	<property name="tomcat.bin" value="${tomcat-home}/bin"/>
 	<property name="base.dir" value="."/>
 	<property name="src.dir" value="${base.dir}/src/main/java"/>
+	<property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
     <property name="target.dir" value="${base.dir}/target"/>
-    <property name="test.src.dir" value="${base.dir}/src/test/java"/>
+    <property name="test.src.dir" value="${base.dir}/src/test"/>
     <property name="test.reports.dir" value="${target.dir}/reports"/>
     <property name="classes.dir" value="${target.dir}/classes"/>
     <property name="test.classes.dir" value="${target.dir}/test-classes"/>
-	<property name="war.file" value="${ant.project.name}.war"/>
+	<property name="war.file" value="${target.dir}/${ant.project.name}.war"/>
 
 	<path id="build.classpath"> 
 		<fileset dir="lib">
@@ -65,7 +66,7 @@
 
 	<target name="war">
 		<war warfile="${war.file}" webxml="src/main/webapp/WEB-INF/web.xml">
-			<fileset dir="${src.dir}/main/webapp"/>	
+			<fileset dir="${src.web.dir}"/>
 		</war>
 	</target>
 
