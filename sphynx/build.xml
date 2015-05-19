@@ -22,6 +22,7 @@
 
 	<target name="clean">
 		<delete dir="${classes.dir}"/>
+		<delete dir="${test.classes.dir}"/>
 		<delete file="${war.file}"/>
 	</target>	
 
@@ -40,29 +41,54 @@
     <target name="compile-tests">
         <mkdir dir="${test.classes.dir}"/>
         <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}">
-            <classpath refid="build.classpath" />
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
         </javac>
     </target>
 
-	<target name="test-unit">
+	<target name="test-functional">
 
         <mkdir dir="${test.reports.dir}"/>
 
 		<junit dir="${base.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true">
 			<batchtest todir="${test.reports.dir}">
-				<fileset dir="${test.src.dir}">
+				<fileset dir="${test.src.dir}/functional">
 					<include name="**/*Test*"/>
 				</fileset>
 			</batchtest>
             <classpath>
                 <path refid="build.classpath"/>
                 <pathelement location="${test.classes.dir}"/>
+                <pathelement location="${classes.dir}"/>
             </classpath>
 			<formatter type="xml"/>
 			<jvmarg value="-ea"/>
 		</junit>
 
 	</target>
+
+    <target name="test-unit">
+
+        <mkdir dir="${test.reports.dir}"/>
+
+        <junit dir="${base.dir}" errorproperty="tests.failed" failureproperty="tests.failed" fork="true">
+            <batchtest todir="${test.reports.dir}">
+                <fileset dir="${test.src.dir}/java">
+                    <include name="**/*Test*"/>
+                </fileset>
+            </batchtest>
+            <classpath>
+                <path refid="build.classpath"/>
+                <pathelement location="${test.classes.dir}"/>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
+            <formatter type="xml"/>
+            <jvmarg value="-ea"/>
+        </junit>
+
+    </target>
 
 	<target name="war">
 		<war warfile="${war.file}" webxml="src/main/webapp/WEB-INF/web.xml">
