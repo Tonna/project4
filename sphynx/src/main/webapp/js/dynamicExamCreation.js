@@ -7,10 +7,11 @@ function addQuestion(){
     document.getElementById('questions').appendChild(document.getElementById('addQuestionButton'));
 }
 function addAnswer(question, button){
-    var addAnswerHtml = document.getElementById('answerFormHTML').value;
-    var answer=document.createElement('div');
+    var addAnswerHtml = document.getElementById('answerFormHTML');
+    var answer=addAnswerHtml.cloneNode(true);
+    answer.id="";
+    answer.style="inline";
     answer.className="answer tableRow";
-    answer.innerHTML=addAnswerHtml;
     question.appendChild(answer);
     question.appendChild(button);
 }

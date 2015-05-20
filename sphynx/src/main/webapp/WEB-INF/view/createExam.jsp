@@ -15,13 +15,12 @@
 			&lt;/div&gt;
 			&lt;input type=&quot;button&quot; id=&quot;addAnswerButton&quot; value=&quot;Add answer&quot; onclick=&quot;addAnswer(this.parentNode, this);return false;&quot;&gt;
 		">
-		<!--Escaped HTML of answer form is here-->
-		<input type="hidden" id="answerFormHTML" value="
-			&lt;p&gt;Text for answer&lt;/p&gt;
-			&lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;answer&quot;&gt;&lt;/p&gt;
-			&lt;p&gt;is correct?&lt;/p&gt;
-			&lt;p&gt;&lt;input type=&quot;checkbox&quot; name=&quot;is_right&quot;&gt;&lt;/p&gt;
-		">
+    	<div style="display: none;" id="answerFormHTML">
+            <p>Text for answer</p>
+            <p><input type="text" name="answer"></p>
+            <p>is correct?</p>
+            <p><input type="checkbox" name="is_right"></p>
+        </div>
 		<div id="allcontent">
 			<div id="header">
 				<div id="applicationName">
