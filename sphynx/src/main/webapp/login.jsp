@@ -9,7 +9,7 @@
 		<div id="allcontent">
 			<div id="main">
 				<div id="applicationName">Welcome to Sphynx portal!</div>
-				<form id="login" action="exams.html" method="POST">
+				<form id="login" action="login" method="POST">
 					<div class="tableRow">
 						<p>Username: </p>
 

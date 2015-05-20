@@ -6,7 +6,32 @@
     <display-name>sphynx</display-name>
 
     <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.yakovchuk.sphynx.controller.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExamController</servlet-name>
+        <servlet-class>com.yakovchuk.sphynx.controller.ExamController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ExamController</servlet-name>
+        <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
 
 </web-app>

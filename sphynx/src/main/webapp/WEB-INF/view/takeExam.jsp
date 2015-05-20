@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link type="text/css" rel="stylesheet" href="./stylesheets/sphynx.css"/>
+		<link type="text/css" rel="stylesheet" href="stylesheets/sphynx.css"/>
 		<meta charset="utf-8"/>
 		<title>Test passage</title>
 	</head>
@@ -11,11 +11,11 @@
 				<p>You entered as %USERNAME%</p>
 
 				<p>
-					<a href="login.html">logout</a>
+                    <a href="logout?logout=true">logout</a>
 				</p>
 			</div>
 			<div id="main">
-				<form id="questions" action="exams.html" method="POST">
+				<form id="questions" action="exam?action=view" method="POST">
 					<input type="hidden" name="test-name" value="test1"/>
 
 					<div class="question">

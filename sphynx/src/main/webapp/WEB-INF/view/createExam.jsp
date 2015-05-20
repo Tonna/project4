@@ -50,12 +50,12 @@
 				</div>
 				<div id="userData">				
 					<p>Welcome %USERNAME%</p>
-					<p><a href="login.html">Logout</a></p>
+                    <a href="logout?logout=true">logout</a>
 				</div>
 			</div>
 
 			<div id="main">
-				<form action="exams.html" id="questions" method="POST">
+				<form action="exam?action=view" id="questions" method="POST">
 					<input type="button" id="addQuestionButton" value="Add question" onclick="addQuestion();return false;">
 					<div class="tableRow"><p><input type="submit" value="Create exam"></p></div>
 				</form>

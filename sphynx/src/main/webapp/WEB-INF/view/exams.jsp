@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link type="text/css" rel="stylesheet" href="./stylesheets/sphynx.css"/>
+		<link type="text/css" rel="stylesheet" href="stylesheets/sphynx.css"/>
 		<meta charset="utf-8"/>
 		<title>Test picking</title>
 	</head>
@@ -10,32 +10,32 @@
 			<div id="header">
 				<p>You entered as %USERNAME%</p>
 				<p>
-					<a href="login.html">logout</a>
+					<a href="logout?logout=true">logout</a>
 				</p>
 			</div>
 
 			<div id="main">
-				<a href="createExam.html">Create exam</a>
+				<a href="exam?action=create">Create exam</a>
 				<div class="subject">
 					<h2>Subject something</h2>
 
 					<p>
-						<a href="takeExam.html">Test1</a>
+						<a href="exam?action=take&id=1">Test1</a>
 					</p>
 
 					<p>
-						<a href="takeExam.html">Test2</a>
+						<a href="exam?action=take&id=2">Test2</a>
 					</p>
 				</div>
 				<div class="subject">
 					<h2>Subject other</h2>
 
 					<p>
-						<a href="takeExam.html">Test1</a>
+						<a href="exam?action=take&id=3">Test1</a>
 					</p>
 
 					<p>
-						<a href="takeExam.html">Test2</a>
+						<a href="exam?action=take&id=4">Test2</a>
 					</p>
 				</div>
 			</div>
