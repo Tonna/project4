@@ -3,7 +3,7 @@
 	<head>
 		<link type="text/css" rel="stylesheet" href="stylesheets/sphynx.css">
 		<meta charset="utf-8">
-		<title>Test creation</title>
+		<title>Exam creation</title>
 		<script type="text/javascript">
 			function addQuestion(){
 				var addQuestionHtml = document.getElementById('questionFormHTML').value;
@@ -24,8 +24,6 @@
 				question.appendChild(button);
 			}
 		</script>
-		
-
 	</head>
 	<body onload="addQuestion()">
 		<!--Escaped HTML of question form is here-->

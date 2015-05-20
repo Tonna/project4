@@ -3,7 +3,7 @@
 	<head>
 		<link type="text/css" rel="stylesheet" href="stylesheets/sphynx.css"/>
 		<meta charset="utf-8"/>
-		<title>Test passage</title>
+		<title>Exam passage</title>
 	</head>
 	<body>
 		<div id="allcontent">

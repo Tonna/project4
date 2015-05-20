@@ -104,6 +104,10 @@
         <war destfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
             <fileset dir="${src.web.dir}"/>
             <classes dir="${classes.dir}"/>
+            <lib dir="lib">
+                <include name="standard.jar"/>
+                <include name="jstl.jar"/>
+            </lib>
         </war>
     </target>
 
