@@ -7,7 +7,7 @@
 		<title>Exam creation</title>
 		<script src="js/dynamicExamCreation.js"></script>
 	</head>
-	<body onload="addQuestion()">
+	<body>
         <examCreation:question />
         <examCreation:answer />
 		<div id="allcontent">

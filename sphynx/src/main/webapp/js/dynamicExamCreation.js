@@ -16,3 +16,7 @@ function addAnswer(question, button){
     question.appendChild(answer);
     question.appendChild(button);
 }
+function init() {
+    addQuestion()
+}
+window.onload = init;
