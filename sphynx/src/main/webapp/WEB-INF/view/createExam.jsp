@@ -1,3 +1,4 @@
+<%@ taglib prefix="examCreation" tagdir="/WEB-INF/tags/examCreation" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,12 +16,7 @@
 			&lt;/div&gt;
 			&lt;input type=&quot;button&quot; id=&quot;addAnswerButton&quot; value=&quot;Add answer&quot; onclick=&quot;addAnswer(this.parentNode, this);return false;&quot;&gt;
 		">
-    	<div style="display: none;" id="answerFormHTML">
-            <p>Text for answer</p>
-            <p><input type="text" name="answer"></p>
-            <p>is correct?</p>
-            <p><input type="checkbox" name="is_right"></p>
-        </div>
+        <examCreation:answer />
 		<div id="allcontent">
 			<div id="header">
 				<div id="applicationName">
