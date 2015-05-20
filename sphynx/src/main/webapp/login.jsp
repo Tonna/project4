@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8"/>
-		<link type="text/css" rel="stylesheet" href="stylesheets/sphynx.css"/>
-		<title>Login to Sphynx</title>
-	</head>
-	<body>
+<%@ taglib prefix="common" tagdir="/WEB-INF/tags" %><!DOCTYPE html>
+<common:header title="Login to Sphynx"/>
 		<div id="allcontent">
 			<div id="main">
 				<div id="applicationName">Welcome to Sphynx portal!</div>
@@ -34,5 +28,4 @@
 				</form>
 			</div>
 		</div>
-	</body>
-</html>
+<common:footer/>
