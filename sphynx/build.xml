@@ -101,8 +101,9 @@
     </target>
 
     <target name="war">
-        <war warfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
+        <war destfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
             <fileset dir="${src.web.dir}"/>
+            <classes dir="${classes.dir}"/>
         </war>
     </target>
 
