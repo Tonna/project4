@@ -1,13 +1,7 @@
 <%@ taglib prefix="examCreation" tagdir="/WEB-INF/tags/examCreation" %>
-<!DOCTYPE html>
-<html>
-	<head>
-		<link type="text/css" rel="stylesheet" href="stylesheets/sphynx.css">
-		<meta charset="utf-8">
-		<title>Exam creation</title>
-		<script src="js/dynamicExamCreation.js"></script>
-	</head>
-	<body>
+<%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
+
+        <common:header title="Exam creation"/>
         <examCreation:question />
         <examCreation:answer />
 		<div id="allcontent">

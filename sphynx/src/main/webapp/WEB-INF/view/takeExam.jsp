@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<link type="text/css" rel="stylesheet" href="stylesheets/sphynx.css"/>
-		<meta charset="utf-8"/>
-		<title>Exam passage</title>
-	</head>
-	<body>
+<%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
+
+        <common:header title="Exam taking"/>
+
 		<div id="allcontent">
 			<div id="header">
 				<p>You entered as %USERNAME%</p>
