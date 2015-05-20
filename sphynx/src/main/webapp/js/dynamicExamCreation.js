@@ -1,8 +1,9 @@
 function addQuestion(){
-    var addQuestionHtml = document.getElementById('questionFormHTML').value;
-    var new_question=document.createElement('div');
+    var addQuestionHtml = document.getElementById('questionFormHTML');
+    var new_question=addQuestionHtml.cloneNode(true);
+    new_question.id = "";
+    new_question.style="inline";
     new_question.className = "question";
-    new_question.innerHTML=addQuestionHtml;
     document.getElementById('questions').appendChild(new_question);
     document.getElementById('questions').appendChild(document.getElementById('addQuestionButton'));
 }

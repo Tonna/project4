@@ -8,14 +8,7 @@
 		<script src="js/dynamicExamCreation.js"></script>
 	</head>
 	<body onload="addQuestion()">
-		<!--Escaped HTML of question form is here-->
-		<input type="hidden" id="questionFormHTML" value="
-			&lt;div class=&quot;tableRow&quot;&gt;
-				&lt;p&gt;Text for question&lt;/p&gt;
-				&lt;p&gt;&lt;textarea rows=&quot;2&quot; name=&quot;question&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
-			&lt;/div&gt;
-			&lt;input type=&quot;button&quot; id=&quot;addAnswerButton&quot; value=&quot;Add answer&quot; onclick=&quot;addAnswer(this.parentNode, this);return false;&quot;&gt;
-		">
+        <examCreation:question />
         <examCreation:answer />
 		<div id="allcontent">
 			<div id="header">
