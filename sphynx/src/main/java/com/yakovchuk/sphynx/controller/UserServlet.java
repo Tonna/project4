@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
-        if (Boolean.parseBoolean(request.getParameter("logout"))) {
+        if ("logout".equals(request.getParameter("action"))) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }

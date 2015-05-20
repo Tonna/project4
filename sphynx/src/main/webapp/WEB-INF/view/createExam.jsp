@@ -50,7 +50,7 @@
 				</div>
 				<div id="userData">				
 					<p>Welcome %USERNAME%</p>
-                    <a href="logout?logout=true">logout</a>
+                    <a href="user?action=logout">logout</a>
 				</div>
 			</div>
 

@@ -11,7 +11,7 @@
 				<p>You entered as %USERNAME%</p>
 
 				<p>
-                    <a href="logout?logout=true">logout</a>
+                    <a href="user?action=logout">logout</a>
 				</p>
 			</div>
 			<div id="main">
