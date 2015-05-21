@@ -29,7 +29,7 @@ public class ExamServlet extends HttpServlet {
         } else if (take.equals(action)) {
             request.getRequestDispatcher("WEB-INF/view/takeExam.jsp").forward(request, response);
         } else { // TODO: Implement wrong action handling.
-            request.setAttribute("exams", examService.getExams());
+            request.setAttribute("examsBySubject", examService.getExamsBySubject());
             request.getRequestDispatcher("WEB-INF/view/exams.jsp").forward(request, response);
         }
     }

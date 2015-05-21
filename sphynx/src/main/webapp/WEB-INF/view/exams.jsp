@@ -20,16 +20,18 @@
       Create exam
     </a>
     
-    <c:forEach var="exam" items="${exams}" varStatus="status">
+    <c:forEach var="subject" items="${examsBySubject}" varStatus="status">
       <div class="subject">
         <h2>
-          ${exam.subject}
+          ${subject.key}
         </h2>
+        <c:forEach var="exam" items="${subject.value}" varStatus="status">
         <p>
           <a href="exam?action=take&id=${exam.id}"/>
             <c:out value="${exam.name}"/>
           </a>
         </p>
+        </c:forEach>
       </div>
     </c:forEach>
     
