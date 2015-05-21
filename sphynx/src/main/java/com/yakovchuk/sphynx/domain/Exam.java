@@ -80,6 +80,10 @@ public class Exam {
             this.questions = questions;
         }
 
+        public Builder(Exam exam) {
+            this(exam.name, exam.questions);
+        }
+
         public Builder id(String id) {
             this.id = id;
             return this;

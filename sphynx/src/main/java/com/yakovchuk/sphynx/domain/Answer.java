@@ -62,12 +62,16 @@ public class Answer {
 
     public static class Builder {
         private String id;
-        private String text;
-        private Boolean isCorrect;
+        private final String text;
+        private final Boolean isCorrect;
 
         public Builder(String text, Boolean isCorrect) {
             this.text = text;
             this.isCorrect = isCorrect;
+        }
+
+        public Builder(Answer answer) {
+            this(answer.text, answer.isCorrect);
         }
 
         public Builder id(String id) {

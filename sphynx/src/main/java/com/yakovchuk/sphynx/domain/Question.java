@@ -68,6 +68,10 @@ public class Question {
             this.answers = answers;
         }
 
+        public Builder(Question question) {
+            this(question.text, question.answers);
+        }
+
         public Builder id(String id) {
             this.id = id;
             return this;
