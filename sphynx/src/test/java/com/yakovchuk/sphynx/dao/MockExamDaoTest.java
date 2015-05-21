@@ -1,44 +1,45 @@
 package com.yakovchuk.sphynx.dao;
 
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.*;
 import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam1;
-import static org.junit.Assert.assertEquals;
+import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam2;
+import static org.junit.Assert.*;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.yakovchuk.sphynx.domain.Answer;
 import com.yakovchuk.sphynx.domain.Exam;
-import com.yakovchuk.sphynx.domain.Question;
 
 public class MockExamDaoTest {
 
     private MockExamDao dao;
 
-    @Before
-    public void init() {
-        dao = new MockExamDao();
-    }
-
-    // get | put couple of exams to dao and get some exact one by id
-
     @Test
     public void testGetExamById() {
-
-        dao.getData().add(getExam1());
-        dao.getData().add(getExam2());
-
+        dao = new MockExamDao(getExam1(), getExam2());
         assertEquals(getExam1(), dao.get("1"));
     }
 
-    // get | put in empty dao two exams -> getAll and get those two exams back
+    @Test
+    public void testGetAllExams() {
+        dao = new MockExamDao(getExam1(), getExam2());
+        Collection<Exam> exams = dao.getAll();
+        assertTrue(exams.contains(getExam1()));
+        assertTrue(exams.contains(getExam2()));
+    }
 
-    // create | add exam
+    @Test
+    public void testCreateExam() {
+        dao = new MockExamDao();
+        assertTrue(dao.getAll().isEmpty());
+        // assuming creation of new exam - without id
+        Exam examToSave = new Exam.Builder(getExam1()).id(null).build();
+        Exam persisted = dao.create(examToSave);
+        assertNotNull(persisted.getId());
+        assertEquals(examToSave.getName(), persisted.getName());
+        assertEquals(examToSave.getSubject(), persisted.getSubject());
+        assertEquals(examToSave.getQuestions(), persisted.getQuestions());
 
-    // update | get one exam, make changes to it, call update and get it again
-
-    // delete | remove exam by id
-
+    }
 }

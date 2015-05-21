@@ -1,47 +1,49 @@
 package com.yakovchuk.sphynx.dao;
 
-import com.yakovchuk.sphynx.domain.Exam;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+
+import com.yakovchuk.sphynx.domain.Exam;
 
 public class MockExamDao implements ExamDao {
 
-    private Set<Exam> data = new HashSet<Exam>();
+    private Map<String, Exam> data;
 
-    public Set<Exam> getData() {
-        return data;
-    }
-
-    public void setData(Set<Exam> data) {
-        this.data = data;
-    }
-
-    @Override public Exam get(String id) {
-        for(Exam exam : data) {
-            if(id.equals(exam.getId())) {
-                return exam;
-            }
+    public MockExamDao(Exam ... exams) {
+        data = new HashMap<String, Exam>();
+        for (Exam exam : exams) {
+            data.put(exam.getId(), exam);
         }
-        return null;
     }
 
-    @Override public Collection<Exam> getAll() {
-        return null;
+    @Override
+    public Exam get(String id) {
+        return data.get(id);
     }
 
-    @Override public Exam create(Exam toCreate) {
-        return null;
+    @Override
+    public Collection<Exam> getAll() {
+        return data.values();
     }
 
-    @Override public Exam update(Exam toUpdate) {
-        return null;
+    @Override
+    public Exam create(Exam toCreate) {
+        Exam toPersist = new Exam.Builder(toCreate).id(Integer.toString(new Random().nextInt())).build();
+        data.put(toPersist.getId(), toPersist);
+        return toPersist;
     }
 
-    @Override public Exam delete(Exam toDelete) {
-        return null;
+    @Override
+    public Exam update(Exam toUpdate) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Exam delete(Exam toDelete) {
+        throw new UnsupportedOperationException();
     }
 }
