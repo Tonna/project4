@@ -6,6 +6,7 @@ public class Exam {
 
     private String id;
     private String name;
+    private String subject;
     private Collection<Question> questions;
 
     public String getId() {
@@ -24,6 +25,14 @@ public class Exam {
         this.name = name;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     public Collection<Question> getQuestions() {
         return questions;
     }
@@ -36,6 +45,7 @@ public class Exam {
         return "Exam{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", subject='" + subject + '\'' +
                 ", questions=" + questions +
                 '}';
     }
@@ -54,6 +64,8 @@ public class Exam {
             return false;
         if (questions != null ? !questions.equals(exam.questions) : exam.questions != null)
             return false;
+        if (subject != null ? !subject.equals(exam.subject) : exam.subject != null)
+            return false;
 
         return true;
     }
@@ -61,6 +73,7 @@ public class Exam {
     @Override public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (subject != null ? subject.hashCode() : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;
     }
