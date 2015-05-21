@@ -34,4 +34,8 @@
         <url-pattern>/exam</url-pattern>
     </servlet-mapping>
 
+    <listener>
+        <listener-class>com.yakovchuk.sphynx.initialization.InitializationServletContextListener</listener-class>
+    </listener>
+
 </web-app>

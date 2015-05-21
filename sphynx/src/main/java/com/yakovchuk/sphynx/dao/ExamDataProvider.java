@@ -21,7 +21,7 @@ public class ExamDataProvider {
         answers12.add(new Answer.Builder("20", false).build());
         questions1.add(new Question.Builder("2 ^ 10 = ?", answers12).build());
 
-        return new Exam.Builder("Math exam", questions1).id("1").build();
+        return new Exam.Builder("Basic math", questions1).id("1").subject("Math").build();
     }
 
     public static Exam getExam2() {
@@ -38,6 +38,6 @@ public class ExamDataProvider {
         questions2.add(new Question.Builder("Maybe I should type less? Is there a way to develop software fast?",
                 answers22).build());
 
-        return new Exam.Builder("Despair exam", questions2).id("2").build();
+        return new Exam.Builder("Despair exam", questions2).id("2").subject("Software development").build();
     }
 }
