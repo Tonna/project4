@@ -70,6 +70,7 @@ public class Question {
 
         public Builder(Question question) {
             this(question.text, question.answers);
+            this.id = question.id;
         }
 
         public Builder id(String id) {

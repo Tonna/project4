@@ -82,6 +82,8 @@ public class Exam {
 
         public Builder(Exam exam) {
             this(exam.name, exam.questions);
+            this.id=exam.id;
+            this.subject = exam.subject;
         }
 
         public Builder id(String id) {

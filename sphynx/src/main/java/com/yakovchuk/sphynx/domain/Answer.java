@@ -72,6 +72,7 @@ public class Answer {
 
         public Builder(Answer answer) {
             this(answer.text, answer.isCorrect);
+            this.id = answer.id;
         }
 
         public Builder id(String id) {
