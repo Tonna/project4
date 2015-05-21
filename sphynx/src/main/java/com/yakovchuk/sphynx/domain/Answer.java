@@ -2,43 +2,39 @@ package com.yakovchuk.sphynx.domain;
 
 public class Answer {
 
-    private String id;
-    private String text;
-    private Boolean isCorrect;
+    private final String id;
+    private final String text;
+    private final Boolean isCorrect;
+
+    private Answer(Builder builder) {
+        this.id = builder.id;
+        this.text = builder.text;
+        this.isCorrect = builder.isCorrect;
+    }
+
+    public static Builder builder(String text, Boolean isCorrect) {
+        return new Builder(text, isCorrect);
+    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public Boolean getIsCorrect() {
         return isCorrect;
     }
 
-    public void setIsCorrect(Boolean isCorrect) {
-        this.isCorrect = isCorrect;
+    @Override
+    public String toString() {
+        return "Answer{" + "id='" + id + '\'' + ", text='" + text + '\'' + ", isCorrect=" + isCorrect + '}';
     }
 
-    @Override public String toString() {
-        return "Answer{" +
-                "id='" + id + '\'' +
-                ", text='" + text + '\'' +
-                ", isCorrect=" + isCorrect +
-                '}';
-    }
-
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
@@ -56,10 +52,31 @@ public class Answer {
         return true;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + (isCorrect != null ? isCorrect.hashCode() : 0);
         return result;
+    }
+
+    public static class Builder {
+        private String id;
+        private String text;
+        private Boolean isCorrect;
+
+        public Builder(String text, Boolean isCorrect) {
+            this.text = text;
+            this.isCorrect = isCorrect;
+        }
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Answer build() {
+            return new Answer(this);
+        }
     }
 }
