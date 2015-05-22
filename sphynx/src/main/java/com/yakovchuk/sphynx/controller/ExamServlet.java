@@ -27,6 +27,7 @@ public class ExamServlet extends HttpServlet {
         if (create.equals(action)) {
             request.getRequestDispatcher("WEB-INF/view/createExam.jsp").forward(request, response);
         } else if (take.equals(action)) {
+            request.setAttribute("exam", examService.getExam(request.getParameter("id")));
             request.getRequestDispatcher("WEB-INF/view/takeExam.jsp").forward(request, response);
         } else { // TODO: Implement wrong action handling.
             request.setAttribute("examsBySubject", examService.getExamsBySubject());
