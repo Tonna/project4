@@ -123,8 +123,14 @@
         <exec executable="${tomcat.bin}/shutdown.bat"/>
     </target>
 
+  <target name="tomcat-start-debug">
+    <exec executable="${tomcat.bin}/catalina.bat">
+	 <arg line="jpda start"/>
+    </exec>
+  </target>
+
     <target name="working-with-classes" depends="clean,compile-sources,compile-tests,test-unit"/>
     <target name="full"
-            depends="tomcat-stop,clean-deployed,working-with-classes,war,deploy,tomcat-start,test-functional"/>
+            depends="tomcat-stop,clean-deployed,working-with-classes,war,deploy,tomcat-start-debug"/>
 
 </project>
