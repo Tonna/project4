@@ -1,1 +1,0 @@
-separate whole project to milestones. base functionality(?), ..., database, multi-language
