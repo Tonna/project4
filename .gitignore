@@ -3,4 +3,4 @@ sphynx/target/*
 */.idea/*
 .idea/*
 */lib/*
-inbox/
+old/
