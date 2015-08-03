@@ -1,5 +1,6 @@
 package com.yakovchuk.sphynx.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Exam {
@@ -70,21 +71,19 @@ public class Exam {
 
     public static class Builder {
 
-        public final String name;
-        public final Collection<Question> questions;
-        public String id;
-        public String subject;
-
-        public Builder(String name, Collection<Question> questions) {
-            this.name = name;
-            this.questions = questions;
-        }
+        private String name;
+        private Collection<Question> questions;
+        private String id;
+        private String subject;
 
         public Builder(Exam exam) {
-            this(exam.name, exam.questions);
-            this.id=exam.id;
+            this.name = exam.name;
+            this.questions = exam.questions;
+            this.id = exam.id;
             this.subject = exam.subject;
         }
+
+        public Builder(){}
 
         public Builder id(String id) {
             this.id = id;
@@ -93,6 +92,24 @@ public class Exam {
 
         public Builder subject(String subject) {
             this.subject = subject;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder questions(Collection<Question> questions) {
+            this.questions = questions;
+            return this;
+        }
+
+        public Builder addQuestion(Question question) {
+            if (questions == null) {
+                questions = new ArrayList<>();
+            }
+            questions.add(question);
             return this;
         }
 

@@ -1,5 +1,6 @@
 package com.yakovchuk.sphynx.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Question {
@@ -59,9 +60,12 @@ public class Question {
     }
 
     public static class Builder {
-        public final String text;
-        public final Collection<Answer> answers;
-        public String id;
+        private String text;
+        private Collection<Answer> answers;
+        private String id;
+
+        public Builder() {
+        }
 
         public Builder(String text, Collection<Answer> answers) {
             this.text = text;
@@ -75,6 +79,24 @@ public class Question {
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder text(String text) {
+            this.text = text;
+            return this;
+        }
+
+        public Builder answers(Collection<Answer> answers) {
+            this.answers = answers;
+            return this;
+        }
+
+        public Builder addAnswer(Answer answer){
+            if(answers == null) {
+                answers = new ArrayList<>();
+            }
+            answers.add(answer);
             return this;
         }
 

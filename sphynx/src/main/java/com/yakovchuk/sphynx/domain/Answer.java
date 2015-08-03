@@ -12,8 +12,8 @@ public class Answer {
         this.isCorrect = builder.isCorrect;
     }
 
-    public static Builder builder(String text, Boolean isCorrect) {
-        return new Builder(text, isCorrect);
+    public static Builder builder() {
+        return new Builder();
     }
 
     public String getId() {
@@ -62,21 +62,29 @@ public class Answer {
 
     public static class Builder {
         private String id;
-        private final String text;
-        private final Boolean isCorrect;
+        private String text;
+        private Boolean isCorrect;
 
-        public Builder(String text, Boolean isCorrect) {
-            this.text = text;
-            this.isCorrect = isCorrect;
-        }
+        public Builder(){}
 
         public Builder(Answer answer) {
-            this(answer.text, answer.isCorrect);
             this.id = answer.id;
+            this.text = answer.text;
+            this.isCorrect = answer.isCorrect;
         }
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder text(String text) {
+            this.text = text;
+            return this;
+        }
+
+        public Builder isCorrect(Boolean isCorrect) {
+            this.isCorrect = isCorrect;
             return this;
         }
 
