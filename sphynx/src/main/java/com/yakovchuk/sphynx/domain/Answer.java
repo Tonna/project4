@@ -63,7 +63,7 @@ public class Answer {
     public static class Builder {
         private String id;
         private String text;
-        private Boolean isCorrect;
+        private Boolean isCorrect = false;
 
         public Builder(){}
 
@@ -85,6 +85,11 @@ public class Answer {
 
         public Builder isCorrect(Boolean isCorrect) {
             this.isCorrect = isCorrect;
+            return this;
+        }
+
+        public Builder isCorrect() {
+            this.isCorrect = true;
             return this;
         }
 
