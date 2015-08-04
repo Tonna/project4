@@ -7,15 +7,19 @@
       <div id="header">
         <p>
           You entered as %USERNAME%
-      </p>
-      <p>
-        <a href="user?action=logout">
-          logout
-        </a>
-      </p>
+        </p>
+        <p>
+          <a href="user?action=logout">
+            logout
+          </a>
+        </p>
   </div>
   
   <div id="main">
+    <p>
+        You took "${takenExamName}" exam.
+        You answered ${correctlyAnsweredQuestions} out of ${questionsInExam}
+    </p>
     <a href="exam?action=create">
       Create exam
     </a>
