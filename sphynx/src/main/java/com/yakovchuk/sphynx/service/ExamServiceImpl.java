@@ -1,17 +1,13 @@
 package com.yakovchuk.sphynx.service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import com.yakovchuk.sphynx.dao.ExamDao;
 import com.yakovchuk.sphynx.domain.Exam;
 
+import java.util.*;
+
 public class ExamServiceImpl implements ExamService {
 
-    ExamDao examDao;
+    private ExamDao examDao;
 
     public ExamDao getExamDao() {
         return examDao;
@@ -28,7 +24,6 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Map<String, Collection<Exam>> getExamsBySubject() {
-        // return map <Subject, Collection<Exam>>?
         Map<String, Collection<Exam>> subjectAndItsExams = new TreeMap<String, Collection<Exam>>();
 
         Collection<Exam> exams = examDao.getAll();
@@ -47,7 +42,6 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Collection<Exam> getExams() {
-        //return map <Subject, Collection<Exam>>?
         return examDao.getAll();
     }
 
