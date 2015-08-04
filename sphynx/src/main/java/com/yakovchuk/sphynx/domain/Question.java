@@ -67,13 +67,9 @@ public class Question {
         public Builder() {
         }
 
-        public Builder(String text, Collection<Answer> answers) {
-            this.text = text;
-            this.answers = answers;
-        }
-
         public Builder(Question question) {
-            this(question.text, question.answers);
+            this.text = question.text;
+            this.answers = question.answers;
             this.id = question.id;
         }
 
