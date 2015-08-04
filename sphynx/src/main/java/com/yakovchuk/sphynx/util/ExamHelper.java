@@ -41,6 +41,10 @@ public class ExamHelper {
 
         int correctAnswers = 0;
 
+        if(answeredExam.getQuestions() == null || answeredExam.getQuestions().isEmpty()){
+            return correctAnswers;
+        }
+
         for (Question originalQuestion : originalExam.getQuestions()) {
             for (Question answeredQuestion : answeredExam.getQuestions()) {
                 if (originalQuestion.getId().equals(answeredQuestion.getId())) {

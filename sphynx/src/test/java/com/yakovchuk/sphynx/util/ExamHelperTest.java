@@ -1,7 +1,9 @@
 package com.yakovchuk.sphynx.util;
 
-import com.yakovchuk.sphynx.dao.ExamDataProvider;
+import com.yakovchuk.sphynx.domain.Exam;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static com.yakovchuk.sphynx.dao.ExamDataProvider.*;
 import static org.junit.Assert.assertEquals;
@@ -11,6 +13,17 @@ public class ExamHelperTest {
     @Test
     public void testCreationOfExamFromRequest() {
         assertEquals(getExam3Answered(), new ExamHelper().createExamFromRequest(getExam3FromRequest()));
+    }
+
+    @Test
+    public void testNoQuestionsInAnsweredExam() {
+        assertEquals(0, new ExamHelper().checkExam(getExam1Original(), new Exam.Builder().id("1").build()));
+    }
+
+    @Test
+    public void testQuestionsInAnsweredExamIsEmpty() {
+        assertEquals(0, new ExamHelper().checkExam(getExam1Original(),
+                new Exam.Builder().id("1").questions(new ArrayList<>()).build()));
     }
 
     @Test

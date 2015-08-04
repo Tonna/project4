@@ -80,7 +80,7 @@ public class ExamDataProvider {
     }
 
     public static Exam getExam3Answered() {
-        return new Exam.Builder().id("1")
+        return new Exam.Builder().id("3")
                 .addQuestion(
                         new Question.Builder().id("11")
                                 .addAnswer(new Answer.Builder().id("111").build())
@@ -99,7 +99,7 @@ public class ExamDataProvider {
 
     public static Map<String, String[]> getExam3FromRequest() {
         Map<String, String[]> map = new HashMap<String, String[]>();
-        map.put("exam-id", new String[]{"1"});
+        map.put("exam-id", new String[]{"3"});
         map.put("answer-id-for-question-id-11", new String[]{"111", "112"});
         map.put("answer-id-for-question-id-12", new String[]{"121"});
         map.put("answer-id-for-question-id-13", new String[]{"131"});
