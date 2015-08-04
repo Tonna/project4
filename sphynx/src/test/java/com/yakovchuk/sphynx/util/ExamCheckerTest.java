@@ -8,39 +8,36 @@ import java.util.ArrayList;
 import static com.yakovchuk.sphynx.dao.ExamDataProvider.*;
 import static org.junit.Assert.assertEquals;
 
-public class ExamHelperTest {
+public class ExamCheckerTest {
 
-    @Test
-    public void testCreationOfExamFromRequest() {
-        assertEquals(getExam3Answered(), new ExamHelper().createExamFromRequest(getExam3FromRequest()));
-    }
+    private final ExamCheckerImp examChecker = new ExamCheckerImp();
 
     @Test
     public void testNoQuestionsInAnsweredExam() {
-        assertEquals(0, new ExamHelper().checkExam(getExam1Original(), new Exam.Builder().id("1").build()));
+        assertEquals(0, examChecker.checkExam(getExam1Original(), new Exam.Builder().id("1").build()));
     }
 
     @Test
     public void testQuestionsInAnsweredExamIsEmpty() {
-        assertEquals(0, new ExamHelper().checkExam(getExam1Original(),
+        assertEquals(0, examChecker.checkExam(getExam1Original(),
                 new Exam.Builder().id("1").questions(new ArrayList<>()).build()));
     }
 
     @Test
     public void testAllQuestionsAnsweredCorrectly() {
-        assertEquals(2, new ExamHelper().checkExam(getExam2Original(), getExam2Answered()));
+        assertEquals(2, examChecker.checkExam(getExam2Original(), getExam2Answered()));
     }
 
 
     @Test
     public void testAllQuestionsAnsweredWrong() {
-        assertEquals(0, new ExamHelper().checkExam(getExam1Original(), getExam1Answered()));
+        assertEquals(0, examChecker.checkExam(getExam1Original(), getExam1Answered()));
 
     }
 
 
     @Test
     public void testOneQuestionAnsweredCorrectly() {
-        assertEquals(1, new ExamHelper().checkExam(getExam3Original(), getExam3Answered()));
+        assertEquals(1, examChecker.checkExam(getExam3Original(), getExam3Answered()));
     }
 }

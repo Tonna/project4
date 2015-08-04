@@ -9,17 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yakovchuk.sphynx.domain.Exam;
 import com.yakovchuk.sphynx.service.ExamService;
-import com.yakovchuk.sphynx.util.ExamHelper;
+import com.yakovchuk.sphynx.util.ExamChecker;
+import com.yakovchuk.sphynx.util.ExamSubmissionMapper;
 
 public class ExamServlet extends HttpServlet {
 
     private ExamService examService;
-    private ExamHelper examHelper;
+    private ExamSubmissionMapper examSubmissionMapper;
+    private ExamChecker examChecker;
 
     @Override
     public void init() throws ServletException {
         examService = (ExamService) getServletContext().getAttribute("examService");
-        examHelper = (ExamHelper) getServletContext().getAttribute("examHelper");
+        examSubmissionMapper = (ExamSubmissionMapper) getServletContext().getAttribute("examSubmissionMapper");
+        examChecker = (ExamChecker) getServletContext().getAttribute("examChecker");
     }
 
     @Override
@@ -35,11 +38,11 @@ public class ExamServlet extends HttpServlet {
             request.setAttribute("exam", examService.getExam(request.getParameter("id")));
             request.getRequestDispatcher("WEB-INF/view/takeExam.jsp").forward(request, response);
         } else if (submit.equals(action)){
-            Exam submittedExam = examHelper.createExamFromRequest(request.getParameterMap());
+            Exam submittedExam = examSubmissionMapper.mapExam(request.getParameterMap());
             Exam originalExam = examService.getExam(submittedExam.getId());
             request.setAttribute("takenExamName", originalExam.getName());
             request.setAttribute("questionsInExam", originalExam.getQuestions().size());
-            request.setAttribute("correctlyAnsweredQuestions", examHelper.checkExam(originalExam, submittedExam));
+            request.setAttribute("correctlyAnsweredQuestions", examChecker.checkExam(originalExam, submittedExam));
             request.setAttribute("examsBySubject", examService.getExamsBySubject());
             request.getRequestDispatcher("WEB-INF/view/exams.jsp").forward(request, response);
         } else { // TODO: Implement wrong action handling.

@@ -1,18 +1,16 @@
 package com.yakovchuk.sphynx.initialization;
 
+import com.yakovchuk.sphynx.dao.ExamDao;
+import com.yakovchuk.sphynx.dao.MockExamDao;
+import com.yakovchuk.sphynx.service.ExamServiceImpl;
+import com.yakovchuk.sphynx.util.ExamCheckerImp;
+import com.yakovchuk.sphynx.util.ExamSubmissionMapper;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.yakovchuk.sphynx.dao.ExamDao;
-import com.yakovchuk.sphynx.dao.ExamDataProvider;
-import com.yakovchuk.sphynx.dao.MockExamDao;
-import com.yakovchuk.sphynx.service.ExamServiceImpl;
-import com.yakovchuk.sphynx.util.ExamHelper;
-
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam1Original;
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam2Original;
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam3Original;
+import static com.yakovchuk.sphynx.dao.ExamDataProvider.*;
 
 public class InitializationServletContextListener implements ServletContextListener {
     @Override
@@ -24,7 +22,9 @@ public class InitializationServletContextListener implements ServletContextListe
         examService.setExamDao(examDao);
         context.setAttribute("examService", examService);
 
-        context.setAttribute("examHelper", new ExamHelper());
+        context.setAttribute("examSubmissionMapper", new ExamSubmissionMapper());
+
+        context.setAttribute("examChecker", new ExamCheckerImp());
     }
 
     @Override
