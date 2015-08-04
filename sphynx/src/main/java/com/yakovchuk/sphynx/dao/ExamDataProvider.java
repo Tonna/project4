@@ -16,8 +16,8 @@ public class ExamDataProvider {
                         .addAnswer(new Answer.Builder().text("20").isCorrect(false).id("14").build())
                         .build())
                 .addQuestion(new Question.Builder().id("15").text("1 + 1 = ?")
-                        .addAnswer(new Answer.Builder().id("2").isCorrect(true).id("11").build())
-                        .addAnswer(new Answer.Builder().id("3").isCorrect(false).id("12").build())
+                        .addAnswer(new Answer.Builder().text("2").isCorrect(true).id("11").build())
+                        .addAnswer(new Answer.Builder().text("3").isCorrect(false).id("12").build())
                         .build())
                 .build();
     }
@@ -58,7 +58,7 @@ public class ExamDataProvider {
     }
 
     public static Exam getExam3Original() {
-        return new Exam.Builder().id("1").name("dummy exam").subject("development")
+        return new Exam.Builder().id("3").name("dummy exam").subject("development")
                 .addQuestion(
                         new Question.Builder().id("11").text("first question of dummy exam")
                                 .addAnswer(new Answer.Builder().id("111").text("first answer - wrong").build())
