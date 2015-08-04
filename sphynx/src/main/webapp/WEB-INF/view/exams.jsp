@@ -16,10 +16,12 @@
   </div>
   
   <div id="main">
-    <p>
-        You took "${takenExamName}" exam.
-        You answered ${correctlyAnsweredQuestions} out of ${questionsInExam}
-    </p>
+    <c:if test="${not empty takenExamName}">
+        <p>
+            You took "${takenExamName}" exam.
+            You answered ${correctlyAnsweredQuestions} out of ${questionsInExam}
+        </p>
+    </c:if>
     <a href="exam?action=create">
       Create exam
     </a>
