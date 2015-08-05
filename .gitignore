@@ -1,6 +1,7 @@
-*.war
-sphynx/target/*
+sphinx/target/*
 */.idea/*
 .idea/*
 */lib/*
 old/
+
+*.iml
