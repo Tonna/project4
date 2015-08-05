@@ -55,6 +55,6 @@ public class ExamCheckerImp implements ExamChecker {
         Set<String> userAnswerIds = new HashSet<>();
         answeredQuestion.getAnswers().stream().forEach(a -> userAnswerIds.add(a.getId()));
 
-        return userAnswerIds.containsAll(originalAnswerIds);
+        return originalAnswerIds.equals(userAnswerIds);
     }
 }
