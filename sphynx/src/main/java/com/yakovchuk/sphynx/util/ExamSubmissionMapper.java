@@ -21,7 +21,8 @@ public class ExamSubmissionMapper implements ExamMapper {
     }
 
     private Question buildQuestion(Map<String, String[]> parameterMap, String question) {
-        Question.Builder builder = new Question.Builder().id(question.replace("answer-id-for-question-id-", ""));
+        String questionId = question.replace("answer-id-for-question-id-", "");
+        Question.Builder builder = new Question.Builder().id(questionId);
         for (String answerId : parameterMap.get(question)) {
             builder.addAnswer(new Answer.Builder().id(answerId).build());
         }
