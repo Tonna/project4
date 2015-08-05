@@ -4,7 +4,9 @@ import com.yakovchuk.sphynx.domain.Answer;
 import com.yakovchuk.sphynx.domain.Exam;
 import com.yakovchuk.sphynx.domain.Question;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class ExamCheckerImp implements ExamChecker {
@@ -24,20 +26,16 @@ public class ExamCheckerImp implements ExamChecker {
             return correctAnswers;
         }
 
+        Map<String, Question> userAnsweredQuestions = new HashMap<>();
+        answeredExam.getQuestions().stream().forEach(q -> userAnsweredQuestions.put(q.getId(), q));
+
         for (Question originalQuestion : originalExam.getQuestions()) {
-            for (Question answeredQuestion : answeredExam.getQuestions()) {
-                if (originalQuestion.getId().equals(answeredQuestion.getId())) {
-                    if (checkQuestion(originalQuestion, answeredQuestion)) {
-                        correctAnswers += 1;
-                    }
-                }
+            Question userQuestion = userAnsweredQuestions.get(originalQuestion.getId());
+            if (userQuestion != null && checkQuestion(originalQuestion, userQuestion)) {
+                correctAnswers += 1;
             }
-
         }
-
         return correctAnswers;
-
-
     }
 
     /*
