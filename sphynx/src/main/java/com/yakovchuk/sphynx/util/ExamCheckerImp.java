@@ -4,9 +4,8 @@ import com.yakovchuk.sphynx.domain.Answer;
 import com.yakovchuk.sphynx.domain.Exam;
 import com.yakovchuk.sphynx.domain.Question;
 
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ExamCheckerImp implements ExamChecker {
 
@@ -21,7 +20,7 @@ public class ExamCheckerImp implements ExamChecker {
 
         int correctAnswers = 0;
 
-        if(answeredExam.getQuestions() == null || answeredExam.getQuestions().isEmpty()){
+        if (answeredExam.getQuestions() == null || answeredExam.getQuestions().isEmpty()) {
             return correctAnswers;
         }
 
@@ -47,18 +46,15 @@ public class ExamCheckerImp implements ExamChecker {
         if quantities match and each original answer has corresponding answer from user input return true.
      */
     private boolean checkQuestion(Question originalQuestion, Question answeredQuestion) {
-        Stream<Answer> originalAnswers = originalQuestion.getAnswers().stream().filter(a -> a.getIsCorrect());
 
-        if (originalQuestion.getAnswers().stream().filter(a -> a.getIsCorrect()).count() == answeredQuestion.getAnswers().size()) {
-            Function<Answer, Boolean> ggg = oA -> {
-                Predicate<Answer> isAnswerIdsEqual = uA -> uA.getId().equals(oA.getId());
-                return answeredQuestion.getAnswers().stream().anyMatch(isAnswerIdsEqual);
-            };
-            Stream<Boolean> booleanStream = originalAnswers.map(ggg);
-            return booleanStream.allMatch(b -> b);
-        }
+        Set<String> originalAnswerIds = new HashSet<>();
+        originalQuestion.getAnswers().stream()
+                .filter(Answer::getIsCorrect).map(Answer::getId)
+                .iterator().forEachRemaining(id -> originalAnswerIds.add(id));
 
+        Set<String> userAnswerIds = new HashSet<>();
+        answeredQuestion.getAnswers().stream().forEach(a -> userAnswerIds.add(a.getId()));
 
-        return false;
+        return userAnswerIds.containsAll(originalAnswerIds);
     }
 }
