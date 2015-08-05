@@ -1,20 +1,18 @@
 package com.yakovchuk.sphinx.dao;
 
+import com.yakovchuk.sphinx.domain.Exam;
+
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
-
-import com.yakovchuk.sphinx.domain.Exam;
 
 public class MockExamDao implements ExamDao {
 
-    private Map<String, Exam> data;
+    private final Map<String, Exam> data;
 
-    public MockExamDao(Exam ... exams) {
-        data = new HashMap<String, Exam>();
+    public MockExamDao(Exam... exams) {
+        data = new HashMap<>();
         for (Exam exam : exams) {
             data.put(exam.getId(), exam);
         }

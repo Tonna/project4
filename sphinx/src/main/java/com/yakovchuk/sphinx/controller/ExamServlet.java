@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.service.ExamService;
 import com.yakovchuk.sphinx.util.ExamChecker;
+import com.yakovchuk.sphinx.util.ExamMapper;
 import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
 
 public class ExamServlet extends HttpServlet {
 
     private ExamService examService;
-    private ExamSubmissionMapper examSubmissionMapper;
+    private ExamMapper examSubmissionMapper;
     private ExamChecker examChecker;
 
     @Override

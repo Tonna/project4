@@ -48,7 +48,7 @@ public class ExamCheckerImp implements ExamChecker {
         Set<String> originalAnswerIds = new HashSet<>();
         originalQuestion.getAnswers().stream()
                 .filter(Answer::getIsCorrect).map(Answer::getId)
-                .iterator().forEachRemaining(id -> originalAnswerIds.add(id));
+                .iterator().forEachRemaining(originalAnswerIds::add);
 
         Set<String> userAnswerIds = new HashSet<>();
         answeredQuestion.getAnswers().stream().forEach(a -> userAnswerIds.add(a.getId()));

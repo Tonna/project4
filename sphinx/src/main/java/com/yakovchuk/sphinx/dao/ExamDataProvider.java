@@ -98,7 +98,7 @@ public class ExamDataProvider {
     }
 
     public static Map<String, String[]> getExam3FromRequest() {
-        Map<String, String[]> map = new HashMap<String, String[]>();
+        Map<String, String[]> map = new HashMap<>();
         map.put("exam-id", new String[]{"3"});
         map.put("answer-id-for-question-id-11", new String[]{"111", "112"});
         map.put("answer-id-for-question-id-12", new String[]{"121"});
