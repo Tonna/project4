@@ -1,7 +1,7 @@
-package com.yakovchuk.sphynx.service;
+package com.yakovchuk.sphinx.service;
 
-import com.yakovchuk.sphynx.dao.ExamDao;
-import com.yakovchuk.sphynx.domain.Exam;
+import com.yakovchuk.sphinx.dao.ExamDao;
+import com.yakovchuk.sphinx.domain.Exam;
 
 import java.util.*;
 

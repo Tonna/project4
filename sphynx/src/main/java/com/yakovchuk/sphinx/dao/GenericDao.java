@@ -1,4 +1,4 @@
-package com.yakovchuk.sphynx.dao;
+package com.yakovchuk.sphinx.dao;
 
 import java.util.Collection;
 

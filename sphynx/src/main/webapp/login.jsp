@@ -1,8 +1,8 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %><!DOCTYPE html>
-<common:header title="Login to Sphynx"/>
+<common:header title="Login to sphinx"/>
 		<div id="allcontent">
 			<div id="main">
-				<div id="applicationName">Welcome to Sphynx portal!</div>
+				<div id="applicationName">Welcome to sphinx portal!</div>
 				<form id="login" action="login" method="POST">
 					<div class="tableRow">
 						<p>Username: </p>

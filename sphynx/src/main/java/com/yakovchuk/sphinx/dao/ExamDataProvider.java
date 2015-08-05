@@ -1,8 +1,8 @@
-package com.yakovchuk.sphynx.dao;
+package com.yakovchuk.sphinx.dao;
 
-import com.yakovchuk.sphynx.domain.Answer;
-import com.yakovchuk.sphynx.domain.Exam;
-import com.yakovchuk.sphynx.domain.Question;
+import com.yakovchuk.sphinx.domain.Answer;
+import com.yakovchuk.sphinx.domain.Exam;
+import com.yakovchuk.sphinx.domain.Question;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,9 +1,9 @@
-package com.yakovchuk.sphynx.util;
+package com.yakovchuk.sphinx.util;
 
 import org.junit.Test;
 
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam3Answered;
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam3FromRequest;
+import static com.yakovchuk.sphinx.dao.ExamDataProvider.getExam3Answered;
+import static com.yakovchuk.sphinx.dao.ExamDataProvider.getExam3FromRequest;
 import static org.junit.Assert.*;
 
 public class ExamSubmissionMapperTest {

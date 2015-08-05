@@ -3,7 +3,7 @@
          xmlns="http://java.sun/com/xml/ns/javaee"
          id="WebApp_ID" version="2.5">
 
-    <display-name>sphynx</display-name>
+    <display-name>sphinx</display-name>
 
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
@@ -11,7 +11,7 @@
 
     <servlet>
         <servlet-name>UserServlet</servlet-name>
-        <servlet-class>com.yakovchuk.sphynx.controller.UserServlet</servlet-class>
+        <servlet-class>com.yakovchuk.sphinx.controller.UserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>ExamController</servlet-name>
-        <servlet-class>com.yakovchuk.sphynx.controller.ExamServlet</servlet-class>
+        <servlet-class>com.yakovchuk.sphinx.controller.ExamServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -35,7 +35,7 @@
     </servlet-mapping>
 
     <listener>
-        <listener-class>com.yakovchuk.sphynx.initialization.InitializationServletContextListener</listener-class>
+        <listener-class>com.yakovchuk.sphinx.initialization.InitializationServletContextListener</listener-class>
     </listener>
 
 </web-app>

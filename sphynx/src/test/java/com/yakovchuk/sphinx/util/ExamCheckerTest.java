@@ -1,11 +1,11 @@
-package com.yakovchuk.sphynx.util;
+package com.yakovchuk.sphinx.util;
 
-import com.yakovchuk.sphynx.domain.Exam;
+import com.yakovchuk.sphinx.domain.Exam;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.*;
+import static com.yakovchuk.sphinx.dao.ExamDataProvider.*;
 import static org.junit.Assert.assertEquals;
 
 public class ExamCheckerTest {

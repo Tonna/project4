@@ -1,4 +1,4 @@
-package com.yakovchuk.sphynx.controller;
+package com.yakovchuk.sphinx.controller;
 
 import java.io.IOException;
 

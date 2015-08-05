@@ -1,16 +1,16 @@
-package com.yakovchuk.sphynx.initialization;
+package com.yakovchuk.sphinx.initialization;
 
-import com.yakovchuk.sphynx.dao.ExamDao;
-import com.yakovchuk.sphynx.dao.MockExamDao;
-import com.yakovchuk.sphynx.service.ExamServiceImpl;
-import com.yakovchuk.sphynx.util.ExamCheckerImp;
-import com.yakovchuk.sphynx.util.ExamSubmissionMapper;
+import com.yakovchuk.sphinx.dao.ExamDao;
+import com.yakovchuk.sphinx.dao.MockExamDao;
+import com.yakovchuk.sphinx.service.ExamServiceImpl;
+import com.yakovchuk.sphinx.util.ExamCheckerImp;
+import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.*;
+import static com.yakovchuk.sphinx.dao.ExamDataProvider.*;
 
 public class InitializationServletContextListener implements ServletContextListener {
     @Override

@@ -9,7 +9,7 @@ public class FrontendFirstTest {
     @Test
     public void dummyTest() throws Exception {
         WebDriver driver = new FirefoxDriver();
-        driver.get("http:localhost:8081/sphynx");
+        driver.get("http:localhost:8081/sphinx");
         System.out.println("Page title is: " + driver.getTitle());
         driver.quit();
     }

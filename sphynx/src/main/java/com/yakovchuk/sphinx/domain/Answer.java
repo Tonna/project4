@@ -1,4 +1,4 @@
-package com.yakovchuk.sphynx.domain;
+package com.yakovchuk.sphinx.domain;
 
 public class Answer {
 

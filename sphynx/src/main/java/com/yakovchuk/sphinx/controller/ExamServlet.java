@@ -1,4 +1,4 @@
-package com.yakovchuk.sphynx.controller;
+package com.yakovchuk.sphinx.controller;
 
 import java.io.IOException;
 
@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yakovchuk.sphynx.domain.Exam;
-import com.yakovchuk.sphynx.service.ExamService;
-import com.yakovchuk.sphynx.util.ExamChecker;
-import com.yakovchuk.sphynx.util.ExamSubmissionMapper;
+import com.yakovchuk.sphinx.domain.Exam;
+import com.yakovchuk.sphinx.service.ExamService;
+import com.yakovchuk.sphinx.util.ExamChecker;
+import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
 
 public class ExamServlet extends HttpServlet {
 

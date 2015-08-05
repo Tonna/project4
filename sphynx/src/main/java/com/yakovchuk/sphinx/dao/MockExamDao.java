@@ -1,4 +1,4 @@
-package com.yakovchuk.sphynx.dao;
+package com.yakovchuk.sphinx.dao;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import com.yakovchuk.sphynx.domain.Exam;
+import com.yakovchuk.sphinx.domain.Exam;
 
 public class MockExamDao implements ExamDao {
 

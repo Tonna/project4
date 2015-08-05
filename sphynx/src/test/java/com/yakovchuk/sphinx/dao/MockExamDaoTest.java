@@ -1,14 +1,14 @@
-package com.yakovchuk.sphynx.dao;
+package com.yakovchuk.sphinx.dao;
 
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam1Original;
-import static com.yakovchuk.sphynx.dao.ExamDataProvider.getExam2Original;
+import static com.yakovchuk.sphinx.dao.ExamDataProvider.getExam1Original;
+import static com.yakovchuk.sphinx.dao.ExamDataProvider.getExam2Original;
 import static org.junit.Assert.*;
 
 import java.util.Collection;
 
 import org.junit.Test;
 
-import com.yakovchuk.sphynx.domain.Exam;
+import com.yakovchuk.sphinx.domain.Exam;
 
 public class MockExamDaoTest {
 

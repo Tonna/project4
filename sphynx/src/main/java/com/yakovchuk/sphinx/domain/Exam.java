@@ -1,4 +1,4 @@
-package com.yakovchuk.sphynx.domain;
+package com.yakovchuk.sphinx.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;

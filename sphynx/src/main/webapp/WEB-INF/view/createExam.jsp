@@ -8,7 +8,7 @@
 <div id="allcontent">
     <div id="header">
         <div id="applicationName">
-            Sphynx
+            sphinx
         </div>
         <div id="userData">
             <p>Welcome %USERNAME%</p>
