@@ -8,3 +8,5 @@
 		<script src="js/dynamicExamCreation.js"></script>
 	</head>
 	<body>
+
+<div id="allcontent">
