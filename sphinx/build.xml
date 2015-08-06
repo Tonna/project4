@@ -135,6 +135,7 @@
     </target>
 
     <target name="working-with-classes" depends="clean,compile-sources,compile-tests,test-unit"/>
+    <target name="light" depends="tomcat-stop,clean-deployed,war,deploy,tomcat-start-debug"/>
     <target name="full"
             depends="tomcat-stop,clean-deployed,working-with-classes,war,deploy,tomcat-start-debug"/>
 
