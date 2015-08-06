@@ -49,12 +49,15 @@ public class ExamServlet extends HttpServlet {
             request.setAttribute("takenExamName", originalExam.getName());
             request.setAttribute("questionsInExam", originalExam.getQuestions().size());
             request.setAttribute("correctlyAnsweredQuestions", examChecker.checkExam(originalExam, submittedExam));
-            request.setAttribute("examsBySubject", examService.getExamsBySubject());
-            request.getRequestDispatcher("WEB-INF/view/exams.jsp").forward(request, response);
+            goToExamsPage(request, response);
         } else { // TODO: Implement wrong action handling.
-            request.setAttribute("examsBySubject", examService.getExamsBySubject());
-            request.getRequestDispatcher("WEB-INF/view/exams.jsp").forward(request, response);
+            goToExamsPage(request, response);
         }
+    }
+
+    private void goToExamsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("examsBySubject", examService.getExamsBySubject());
+        request.getRequestDispatcher("WEB-INF/view/exams.jsp").forward(request, response);
     }
 
     @Override
