@@ -9,6 +9,8 @@
     <property name="base.dir" value="."/>
 
     <property name="src.dir" value="${base.dir}/src/main/java"/>
+    <property name="src.res.dir" value="${base.dir}/src/main/resources"/>
+    <property name="log4j.xml" value="${src.res.dir}/log4j2.xml"/>
     <property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
     <property name="src.web.xml.file" value="${src.web.dir}/WEB-INF/web.xml"/>
 
@@ -101,12 +103,15 @@
     </target>
 
     <target name="war">
+        <copy file="${log4j.xml}" todir="${classes.dir}"/>
         <war destfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
             <fileset dir="${src.web.dir}"/>
             <classes dir="${classes.dir}"/>
             <lib dir="lib">
                 <include name="standard.jar"/>
                 <include name="jstl.jar"/>
+                <include name="log4j-api-2.3.jar"/>
+                <include name="log4j-core-2.3.jar"/>
             </lib>
         </war>
     </target>
@@ -123,11 +128,11 @@
         <exec executable="${tomcat.bin}/shutdown.bat"/>
     </target>
 
-  <target name="tomcat-start-debug">
-    <exec executable="${tomcat.bin}/catalina.bat">
-	 <arg line="jpda start"/>
-    </exec>
-  </target>
+    <target name="tomcat-start-debug">
+        <exec executable="${tomcat.bin}/catalina.bat">
+            <arg line="jpda start"/>
+        </exec>
+    </target>
 
     <target name="working-with-classes" depends="clean,compile-sources,compile-tests,test-unit"/>
     <target name="full"

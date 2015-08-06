@@ -1,17 +1,18 @@
 package com.yakovchuk.sphinx.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.service.ExamService;
 import com.yakovchuk.sphinx.util.ExamChecker;
 import com.yakovchuk.sphinx.util.ExamMapper;
 import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class ExamServlet extends HttpServlet {
 
@@ -19,11 +20,15 @@ public class ExamServlet extends HttpServlet {
     private ExamMapper examSubmissionMapper;
     private ExamChecker examChecker;
 
+    private static final Logger logger = LogManager.getLogger(ExamServlet.class);
+
     @Override
     public void init() throws ServletException {
+        logger.info("ExamServlet initiation started");
         examService = (ExamService) getServletContext().getAttribute("examService");
         examSubmissionMapper = (ExamSubmissionMapper) getServletContext().getAttribute("examSubmissionMapper");
         examChecker = (ExamChecker) getServletContext().getAttribute("examChecker");
+        logger.info("ExamServlet initiation finished");
     }
 
     @Override
@@ -38,7 +43,7 @@ public class ExamServlet extends HttpServlet {
         } else if (take.equals(action)) {
             request.setAttribute("exam", examService.getExam(request.getParameter("id")));
             request.getRequestDispatcher("WEB-INF/view/takeExam.jsp").forward(request, response);
-        } else if (submit.equals(action)){
+        } else if (submit.equals(action)) {
             Exam submittedExam = examSubmissionMapper.mapExam(request.getParameterMap());
             Exam originalExam = examService.getExam(submittedExam.getId());
             request.setAttribute("takenExamName", originalExam.getName());
