@@ -1,4 +1,4 @@
-<%@ taglib prefix="common" tagdir="/WEB-INF/tags" %><!DOCTYPE html>
+<%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
 <common:header title="Login to sphinx"/>
 
     <div id="main">
@@ -7,13 +7,13 @@
             <div class="tableRow">
                 <p>Username: </p>
                 <p>
-                    <input type="text" name="studentLogin"/>
+                    <input type="text" name="login"/>
                 </p>
             </div>
             <div class="tableRow">
                 <p>Password: </p>
                 <p>
-                    <input type="password" name="studentPassword"/>
+                    <input type="password" name="password"/>
                 </p>
             </div>
             <div class="tableRow">
