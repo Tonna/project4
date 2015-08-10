@@ -1,7 +1,12 @@
+var questionCount = 0;
+var answerCount = 0
+
+
 function addQuestion(){
     var addQuestionHtml = document.getElementById('questionFormHTML');
     var new_question=addQuestionHtml.cloneNode(true);
-    new_question.id = "";
+    questionCount = questionCount + 1;
+    new_question.id = "question" + questionCount;
     new_question.style="inline";
     new_question.className = "question";
     document.getElementById('questions').appendChild(new_question);
@@ -10,7 +15,8 @@ function addQuestion(){
 function addAnswer(question, button){
     var addAnswerHtml = document.getElementById('answerFormHTML');
     var answer=addAnswerHtml.cloneNode(true);
-    answer.id="";
+    answerCount = answerCount + 1;
+    answer.id="answerFormHTML" + answerCount;
     answer.style="inline";
     answer.className="answer tableRow";
     question.appendChild(answer);
