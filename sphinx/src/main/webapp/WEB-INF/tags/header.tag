@@ -8,5 +8,5 @@
 		<script src="js/dynamicExamCreation.js"></script>
 	</head>
 	<body>
-
-<div id="allcontent">
+         <div id="allcontent" class="development">
+            <h1 id="applicationName" class="development">Sphinx examination service</h1>
