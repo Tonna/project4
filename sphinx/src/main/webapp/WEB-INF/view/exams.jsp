@@ -4,10 +4,10 @@
 <common:header title="Exam picking"/>
 <common:userSection/>
 
-<div id="main" class="development">
+<div id="main">
 
     <c:if test="${not empty takenExamName}">
-        <div id="examResult" class="development">
+        <div id="examResult">
             <p>
                 You took "${takenExamName}" exam.
             </p>
@@ -18,7 +18,7 @@
     </c:if>
 
     <!-- TODO if role tutor then display-->
-    <div class="development">
+    <div>
         <a href="exam?action=create">Create exam</a>
     </div>
 
