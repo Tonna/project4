@@ -15,26 +15,26 @@ body {
 div {
     border-style: solid;
     border-width: 1px;
-    border-color: red;
+    border-color: yellow;
     margin: 4px;
 }
 
 div div{
-    border-color: yellow;
-}
-
-div div div{
     border-color: green;
 }
 
-div div div div{
+div div div{
     border-color: blue;
 }
 
-div div div div div{
+div div div div{
     border-color: violet;
 }
 
-div div div div div div{
+div div div div div{
     border-color: black;
+}
+
+div div div div div div{
+    border-color: red;
 }
