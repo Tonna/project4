@@ -1,30 +1,16 @@
-var questionCount = 0;
-var answerCount = 0
-
-
 function addQuestion(){
-    var addQuestionHtml = document.getElementById('questionFormHTML');
+    var addQuestionHtml = document.getElementById('questionTemplate');
     var new_question=addQuestionHtml.cloneNode(true);
-    questionCount = questionCount + 1;
-    new_question.id = "question" + questionCount;
+    new_question.id = "";
     new_question.style="inline";
-    new_question.className = "question development";
-    document.getElementById('questions').appendChild(new_question);
-    document.getElementById('questions').appendChild(document.getElementById('addQuestionButton'));
+    document.getElementById('questionsSection').appendChild(new_question);
 }
-function addAnswer(question, button){
-//TODO button shouldn't be extracted from div. It breaks markup
-    var addAnswerHtml = document.getElementById('answerFormHTML');
+
+function addAnswer(question){
+    var addAnswerHtml = document.getElementById('answerTemplate');
     var answer=addAnswerHtml.cloneNode(true);
-    answerCount = answerCount + 1;
-    answer.id="answerFormHTML" + answerCount;
+    answer.id="";
     answer.style="inline";
-    answer.className="answer development";
-    question.appendChild(answer);
-    question.appendChild(button);
+    var answersSection = question.getElementsByClassName("answersSection")[0];
+    answersSection.appendChild(answer);
 }
-function init() {
-//TODO call from jsp?
-    addQuestion()
-}
-window.onload = init;

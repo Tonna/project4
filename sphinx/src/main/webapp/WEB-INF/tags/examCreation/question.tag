@@ -4,7 +4,7 @@
 
 <c:choose>
     <c:when test="${isHidden == false}">
-        <div id="questionTemplate" class="question"">
+        <div class="question">
     </c:when>
     <c:otherwise>
         <div id="questionTemplate" class="question" style="display: none;">
@@ -15,12 +15,12 @@
     <p>
         <textarea rows="2" name="question"></textarea>
     </p>
-    <div class="sectionForAnswers">
+    <div class="answersSection">
         <examCreation:answer isHidden="false"/>
         <examCreation:answer isHidden="false"/>
     </div>
     <div class="addAnswerButton">
-        <input type="button" value="Add answer" onclick="addAnswer(this.parentNode, this);return false;"/>
+        <input type="button" value="Add answer" onclick="addAnswer(this.parentNode.parentNode);return false;"/>
     </div>
 </div>
 

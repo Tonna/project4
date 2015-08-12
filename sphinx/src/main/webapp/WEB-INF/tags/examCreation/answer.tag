@@ -3,10 +3,10 @@
 
 <c:choose>
     <c:when test="${isHidden == false}">
-        <div  id="answerTemplate">
+        <div class="answer">
     </c:when>
     <c:otherwise>
-        <div style="display: none;"  id="answerTemplate">
+        <div id="answerTemplate" class="answer" style="display: none;">
     </c:otherwise>
 </c:choose>
 
