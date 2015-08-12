@@ -11,9 +11,30 @@ body {
 	background-color: #FFCC00;
 }
 
-.development {
+
+div {
     border-style: solid;
     border-width: 1px;
     border-color: red;
     margin: 4px;
+}
+
+div div{
+    border-color: yellow;
+}
+
+div div div{
+    border-color: green;
+}
+
+div div div div{
+    border-color: blue;
+}
+
+div div div div div{
+    border-color: violet;
+}
+
+div div div div div div{
+    border-color: black;
 }
