@@ -7,12 +7,15 @@
 <examCreation:question/>
 <examCreation:answer/>
 
-<div id="main" class="development">
-    <form action="exam?action=view" id="questions" class="development" method="POST">
-        <div id="addQuestionButton" class="development">
+<div id="main">
+    <form action="exam?action=view" id="examCreationForm" method="POST">
+        <div id="questionsSection">
+            <examCreation:question isHidden="false"/>
+        </div>
+        <div id="addQuestionButton">
             <input type="button" value="Add question" onclick="addQuestion();return false;"/>
         </div>
-        <div class="development">
+        <div>
             <p>
                 <input type="submit" value="Create exam"/>
             </p>

@@ -1,4 +1,15 @@
-<div style="display: none;" class="development" id="answerFormHTML">
+<%@ attribute name="isHidden" required="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:choose>
+    <c:when test="${isHidden == false}">
+        <div  id="answerTemplate">
+    </c:when>
+    <c:otherwise>
+        <div style="display: none;"  id="answerTemplate">
+    </c:otherwise>
+</c:choose>
+
 	<p>Text for answer</p>
 	<p>
 		<input type="text" name="answer"/>
