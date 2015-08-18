@@ -79,6 +79,55 @@ public class ExamDataProvider {
                 .build();
     }
 
+    public static Exam getExam3OriginalWithoutIds() {
+        return new Exam.Builder().name("dummy exam").subject("development")
+                .addQuestion(
+                        new Question.Builder().text("first question of dummy exam")
+                                .addAnswer(new Answer.Builder().text("first answer - wrong").build())
+                                .addAnswer(new Answer.Builder().text("second answer - correct").isCorrect().build())
+                                .addAnswer(new Answer.Builder().text("third answer - correct").isCorrect().build())
+                                .addAnswer(new Answer.Builder().text("fourth answer - wrong").build())
+                                .build())
+                .addQuestion(
+                        new Question.Builder().text("second question of dummy exam")
+                                .addAnswer(new Answer.Builder().text("first answer - correct").isCorrect().build())
+                                .addAnswer(new Answer.Builder().text("second answer -wrong").build())
+                                .build())
+                .addQuestion(
+                        new Question.Builder().text("third question of dummy exam")
+                                .addAnswer(new Answer.Builder().text("first answer - wrong").build())
+                                .addAnswer(new Answer.Builder().text("second answer - correct").isCorrect().build())
+                                .build())
+                .build();
+    }
+
+    public static Map<String, String[]> getExam3FromCreationRequest() {
+        Map<String, String[]> map = new HashMap<>();
+
+        map.put("subject", new String[]{"development"});
+        map.put("examName", new String[]{"dummy exam"});
+
+        map.put("questionCount-1-questionText", new String[]{"first question of dummy exam"});
+        map.put("questionCount-1-answerCount-1-answerText", new String[]{"first answer - wrong"});
+        map.put("questionCount-1-answerCount-2-answerText", new String[]{"second answer - correct"});
+        map.put("questionCount-1-answerCount-2-isCorrect", new String[]{"true"});
+        map.put("questionCount-1-answerCount-3-answerText", new String[]{"third answer - correct"});
+        map.put("questionCount-1-answerCount-3-isCorrect", new String[]{"true"});
+        map.put("questionCount-1-answerCount-4-answerText", new String[]{"fourth answer - wrong"});
+
+        map.put("questionCount-2-questionText", new String[]{"second question of dummy exam"});
+        map.put("questionCount-2-answerCount-5-answerText", new String[]{"first answer - correct"});
+        map.put("questionCount-2-answerCount-5-isCorrect", new String[]{"true"});
+        map.put("questionCount-2-answerCount-6-answerText", new String[]{"second answer - wrong"});
+
+        map.put("questionCount-3-questionText", new String[]{"third question of dummy exam"});
+        map.put("questionCount-3-answerCount-7-answerText", new String[]{"first answer - wrong"});
+        map.put("questionCount-3-answerCount-8-answerText", new String[]{"second answer - correct"});
+        map.put("questionCount-3-answerCount-8-isCorrect", new String[]{"true"});
+
+        return map;
+    }
+
     public static Exam getExam3Answered() {
         return new Exam.Builder().id("3")
                 .addQuestion(
@@ -97,7 +146,7 @@ public class ExamDataProvider {
                 .build();
     }
 
-    public static Map<String, String[]> getExam3FromRequest() {
+    public static Map<String, String[]> getExam3FromSubmissionRequest() {
         Map<String, String[]> map = new HashMap<>();
         map.put("exam-id", new String[]{"3"});
         map.put("answer-id-for-question-id-11", new String[]{"111", "112"});
