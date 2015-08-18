@@ -6,6 +6,7 @@
 		<meta charset="utf-8"/>
 		<title>${title}</title>
 		<script src="js/dynamicExamCreation.js"></script>
+		<script src="js/jquery-2.1.4.js"></script>
 	</head>
 	<body>
          <div id="allcontent">

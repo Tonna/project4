@@ -1,16 +1,22 @@
+var questionCount = 0;
+var answerCount = 0;
+
 function addQuestion(){
-    var addQuestionHtml = document.getElementById('questionTemplate');
-    var new_question=addQuestionHtml.cloneNode(true);
-    new_question.id = "";
-    new_question.style="inline";
-    document.getElementById('questionsSection').appendChild(new_question);
+    questionCount = questionCount + 1;
+    var new_question =
+        $("#questionTemplate").clone().removeAttr("id").removeAttr("style").attr("questionCount", questionCount);
+    $(new_question).find("p textarea").attr("name", "questionCount-" + questionCount + "-questionText");
+    $("#questionsSection").append(new_question);
+    addAnswer(new_question)
+    addAnswer(new_question);
 }
 
 function addAnswer(question){
-    var addAnswerHtml = document.getElementById('answerTemplate');
-    var answer=addAnswerHtml.cloneNode(true);
-    answer.id="";
-    answer.style="inline";
-    var answersSection = question.getElementsByClassName("answersSection")[0];
-    answersSection.appendChild(answer);
+    answerCount = answerCount + 1;
+    var new_answer =
+        $("#answerTemplate").clone().removeAttr("id").removeAttr("style").attr("answerCount", answerCount);
+    $(new_answer).find("input[name='answer']").attr("name", "questionCount-" + $(question).attr("questionCount") + "-answerCount-" + answerCount + "-answerText");
+    $(new_answer).find("input[name='isCorrect']").attr("name", "questionCount-" + $(question).attr("questionCount") + "-answerCount-" + answerCount + "-isCorrect");
+    $(question).find(".answersSection").append(new_answer);
+
 }
