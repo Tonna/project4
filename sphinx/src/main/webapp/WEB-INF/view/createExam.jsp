@@ -9,6 +9,12 @@
 
 <div id="main">
     <form action="exam?action=view" id="examCreationForm" method="POST">
+        <div>
+            <p>Exam subject</p>
+            <p>
+                <input type="text" name="Subject"/>
+            </p>
+        </div>
         <div id="questionsSection">
             <script type="text/javascript">addQuestion();</script>
         </div>
