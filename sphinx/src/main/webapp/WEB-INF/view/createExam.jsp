@@ -10,7 +10,7 @@
 <div id="main">
     <form action="exam?action=view" id="examCreationForm" method="POST">
         <div id="questionsSection">
-            <examCreation:question isHidden="false"/>
+            <script type="text/javascript">addQuestion();</script>
         </div>
         <div id="addQuestionButton">
             <input type="button" value="Add question" onclick="addQuestion();return false;"/>
