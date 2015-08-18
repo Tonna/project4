@@ -12,7 +12,13 @@
         <div>
             <p>Exam subject</p>
             <p>
-                <input type="text" name="Subject"/>
+                <input type="text" name="subject"/>
+            </p>
+        </div>
+        <div>
+            <p>Exam name</p>
+            <p>
+                <input type="text" name="examName"/>
             </p>
         </div>
         <div id="questionsSection">
