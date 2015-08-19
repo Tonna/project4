@@ -3,6 +3,7 @@ package com.yakovchuk.sphinx.controller;
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.service.ExamService;
 import com.yakovchuk.sphinx.util.ExamChecker;
+import com.yakovchuk.sphinx.util.ExamCreationMapper;
 import com.yakovchuk.sphinx.util.ExamMapper;
 import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ public class ExamServlet extends HttpServlet {
 
     private ExamService examService;
     private ExamMapper examSubmissionMapper;
+    private ExamMapper examCreationMapper;
     private ExamChecker examChecker;
 
     private static final Logger logger = LogManager.getLogger(ExamServlet.class);
@@ -27,6 +29,7 @@ public class ExamServlet extends HttpServlet {
         logger.info("ExamServlet initiation started");
         examService = (ExamService) getServletContext().getAttribute("examService");
         examSubmissionMapper = (ExamSubmissionMapper) getServletContext().getAttribute("examSubmissionMapper");
+        examCreationMapper = (ExamCreationMapper) getServletContext().getAttribute("examCreationMapper");
         examChecker = (ExamChecker) getServletContext().getAttribute("examChecker");
         logger.info("ExamServlet initiation finished");
     }
@@ -34,12 +37,17 @@ public class ExamServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
+        String createForm = "createForm";
         String create = "create";
         String take = "take";
         String submit = "submit";
         String action = request.getParameter("action");
-        if (create.equals(action)) {
+        if (createForm.equals(action)) {
             request.getRequestDispatcher("WEB-INF/view/createExam.jsp").forward(request, response);
+        } else if (create.equals(action)) {
+            Exam createdExam = examCreationMapper.mapExam(request.getParameterMap());
+            examService.createExam(createdExam);
+            goToExamsPage(request,response);
         } else if (take.equals(action)) {
             request.setAttribute("exam", examService.getExam(request.getParameter("id")));
             request.getRequestDispatcher("WEB-INF/view/takeExam.jsp").forward(request, response);

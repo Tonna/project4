@@ -19,7 +19,7 @@
 
     <!-- TODO if role tutor then display-->
     <div>
-        <a href="exam?action=create">Create exam</a>
+        <a href="exam?action=createForm">Create exam</a>
     </div>
 
     <div class="development subjectList">

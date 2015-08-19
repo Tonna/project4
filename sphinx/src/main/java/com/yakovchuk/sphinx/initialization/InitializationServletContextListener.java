@@ -4,6 +4,7 @@ import com.yakovchuk.sphinx.dao.ExamDao;
 import com.yakovchuk.sphinx.dao.MockExamDao;
 import com.yakovchuk.sphinx.service.ExamServiceImpl;
 import com.yakovchuk.sphinx.util.ExamCheckerImp;
+import com.yakovchuk.sphinx.util.ExamCreationMapper;
 import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
 
 import javax.servlet.ServletContext;
@@ -23,6 +24,7 @@ public class InitializationServletContextListener implements ServletContextListe
         context.setAttribute("examService", examService);
 
         context.setAttribute("examSubmissionMapper", new ExamSubmissionMapper());
+        context.setAttribute("examCreationMapper", new ExamCreationMapper());
 
         context.setAttribute("examChecker", new ExamCheckerImp());
     }
