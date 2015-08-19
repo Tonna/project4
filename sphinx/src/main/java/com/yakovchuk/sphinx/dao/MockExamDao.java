@@ -1,6 +1,8 @@
 package com.yakovchuk.sphinx.dao;
 
+import com.yakovchuk.sphinx.domain.Answer;
 import com.yakovchuk.sphinx.domain.Exam;
+import com.yakovchuk.sphinx.domain.Question;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,9 +32,33 @@ public class MockExamDao implements ExamDao {
 
     @Override
     public Exam create(Exam toCreate) {
-        Exam toPersist = new Exam.Builder(toCreate).id(Integer.toString(new Random().nextInt())).build();
+        Exam.Builder builder = new Exam.Builder().
+                id(getRandomId())
+                .subject(toCreate.getSubject())
+                .name(toCreate.getName());
+        Collection<Question> questions = toCreate.getQuestions();
+        for (Question question : questions) {
+            Question.Builder questionBuilder = new Question.Builder().id(getRandomId()).text(question.getText());
+            Collection<Answer> answers = question.getAnswers();
+            for (Answer answer : answers) {
+                questionBuilder.addAnswer(
+                        new Answer.Builder()
+                                .id(getRandomId())
+                                .text(answer.getText())
+                                .isCorrect(answer.getIsCorrect())
+                                .build());
+            }
+            builder.addQuestion(questionBuilder.build());
+
+        }
+        Exam toPersist = builder.build();
+
         data.put(toPersist.getId(), toPersist);
         return toPersist;
+    }
+
+    private String getRandomId() {
+        return Integer.toString(new Random().nextInt());
     }
 
     @Override
