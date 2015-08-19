@@ -91,7 +91,7 @@ public class ExamDataProvider {
                 .addQuestion(
                         new Question.Builder().text("second question of dummy exam")
                                 .addAnswer(new Answer.Builder().text("first answer - correct").isCorrect().build())
-                                .addAnswer(new Answer.Builder().text("second answer -wrong").build())
+                                .addAnswer(new Answer.Builder().text("second answer - wrong").build())
                                 .build())
                 .addQuestion(
                         new Question.Builder().text("third question of dummy exam")
