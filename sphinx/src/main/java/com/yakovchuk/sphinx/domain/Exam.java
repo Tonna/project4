@@ -39,36 +39,6 @@ public class Exam {
                 + ", questions=" + questions + '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        Exam exam = (Exam) o;
-
-        if (id != null ? !id.equals(exam.id) : exam.id != null)
-            return false;
-        if (name != null ? !name.equals(exam.name) : exam.name != null)
-            return false;
-        if (questions != null ? !questions.equals(exam.questions) : exam.questions != null)
-            return false;
-        if (subject != null ? !subject.equals(exam.subject) : exam.subject != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (subject != null ? subject.hashCode() : 0);
-        result = 31 * result + (questions != null ? questions.hashCode() : 0);
-        return result;
-    }
-
     public static class Builder {
 
         private String name;
@@ -117,5 +87,27 @@ public class Exam {
             return new Exam(this);
         }
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Exam)) return false;
+
+        Exam exam = (Exam) o;
+
+        if (name != null ? !name.equals(exam.name) : exam.name != null) return false;
+        if (questions != null ? !questions.equals(exam.questions) : exam.questions != null) return false;
+        if (subject != null ? !subject.equals(exam.subject) : exam.subject != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (subject != null ? subject.hashCode() : 0);
+        result = 31 * result + (questions != null ? questions.hashCode() : 0);
+        return result;
     }
 }
