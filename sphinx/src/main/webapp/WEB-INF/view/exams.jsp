@@ -30,9 +30,9 @@
                 <h2>${subject.key}</h2>
                 <c:forEach var="exam" items="${subject.value}" varStatus="status">
                     <p>
-                        <a href="exam?action=take&id=${exam.id}"/>
+                        <a href="exam?action=take&id=${exam.id}">
                             <c:out value="${exam.name}"/>
-                        <a>
+                        </a>
                     </p>
                 </c:forEach>
             </div>
