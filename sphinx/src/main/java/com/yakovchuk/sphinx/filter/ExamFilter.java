@@ -1,6 +1,5 @@
 package com.yakovchuk.sphinx.filter;
 
-import com.sun.jna.platform.win32.Netapi32Util;
 import com.yakovchuk.sphinx.user.User;
 
 import javax.servlet.*;
@@ -27,14 +26,14 @@ public class ExamFilter implements Filter {
 
         HttpSession session = ((HttpServletRequest) request).getSession();
 
-        if (session == null) {
+        if (session == null || session.getAttribute("user") == null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             String action = request.getParameterMap().get("action")[0];
             if (restrictedActions.contains(action)) {
                 User user = (User) session.getAttribute("user");
                 if(!user.getRoles().contains("tutor")){
-                    request.getRequestDispatcher("WEB-INF/view/exams.jsp").forward(request, response);
+                    request.getRequestDispatcher("/exam?action=view").forward(request, response);
                 }
             }
         }
