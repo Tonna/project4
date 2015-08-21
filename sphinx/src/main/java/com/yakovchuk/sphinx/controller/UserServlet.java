@@ -23,6 +23,7 @@ public class UserServlet extends HttpServlet {
             IOException {
         if ("logout".equals(request.getParameter("action"))) {
             logout(request, response);
+            return;
         }
 
         User existingUser = (User) request.getSession().getAttribute("user");
