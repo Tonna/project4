@@ -34,6 +34,7 @@ public class ExamFilter implements Filter {
                 User user = (User) session.getAttribute("user");
                 if(!user.getRoles().contains("tutor")){
                     request.getRequestDispatcher("/exam?action=view").forward(request, response);
+                    return;
                 }
             }
         }
