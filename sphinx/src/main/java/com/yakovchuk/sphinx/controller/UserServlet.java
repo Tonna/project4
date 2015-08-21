@@ -38,6 +38,7 @@ public class UserServlet extends HttpServlet {
         if(userFromService instanceof NullUser){
             //TODO add message to method
             goToLogin(request, response);
+            return;
         }
 
         request.getSession().setAttribute("user", userFromService);
@@ -51,7 +52,6 @@ public class UserServlet extends HttpServlet {
 
     private void goToLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("login.jsp").forward(request, response);
-        return;
     }
 
     @Override
