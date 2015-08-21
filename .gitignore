@@ -5,3 +5,5 @@ sphinx/target/*
 old/
 
 *.iml
+
+*vendor*
