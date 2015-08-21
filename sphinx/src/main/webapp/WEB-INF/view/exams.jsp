@@ -1,6 +1,6 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://yakovchuk.com/jsp/jstl/collection" prefix="col" %>
 
 <common:header title="Exam picking"/>
 <common:userSection/>
@@ -18,9 +18,7 @@
         </div>
     </c:if>
 
-    <!--XXX hack. It checks that list of roles converted to sting contains string.
-    TODO come up with more elegant solution-->
-    <c:if test="${fn:contains(sessionScope.user.roles, 'tutor')}">
+    <c:if test="${col:contains(applicationScope['examCreationRoles'], sessionScope.user.roles)}">
         <div>
             <a href="exam?action=createForm">Create exam</a>
         </div>

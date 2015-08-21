@@ -11,6 +11,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import java.util.Arrays;
+
 import static com.yakovchuk.sphinx.dao.ExamDataProvider.*;
 
 public class InitializationServletContextListener implements ServletContextListener {
@@ -27,6 +29,8 @@ public class InitializationServletContextListener implements ServletContextListe
         context.setAttribute("examCreationMapper", new ExamCreationMapper());
 
         context.setAttribute("examChecker", new ExamCheckerImp());
+
+        context.setAttribute("examCreationRoles", Arrays.asList("tutor"));
     }
 
     @Override
