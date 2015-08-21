@@ -5,6 +5,8 @@ import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.domain.Question;
 
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class ExamSubmissionMapper implements ExamMapper {
 
@@ -15,8 +17,18 @@ public class ExamSubmissionMapper implements ExamMapper {
 
     private Exam buildQuestions(Map<String, String[]> parameterMap, Exam.Builder builder) {
         parameterMap.keySet()
-                .stream().filter(key -> key.contains("answer-id-for-question")).sorted().iterator()
-                .forEachRemaining(q -> builder.addQuestion(buildQuestion(parameterMap, q)));
+                .stream().filter(new Predicate<String>() {
+            @Override
+            public boolean test(String key) {
+                return key.contains("answer-id-for-question");
+            }
+        }).sorted().iterator()
+                .forEachRemaining(new Consumer<String>() {
+                    @Override
+                    public void accept(String q) {
+                        builder.addQuestion(ExamSubmissionMapper.this.buildQuestion(parameterMap, q));
+                    }
+                });
         return builder.build();
     }
 
