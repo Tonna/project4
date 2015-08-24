@@ -1,5 +1,6 @@
-package com.yakovchuk.sphinx.dao;
+package com.yakovchuk.sphinx.dao.mock;
 
+import com.yakovchuk.sphinx.dao.ExamDao;
 import com.yakovchuk.sphinx.domain.Answer;
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.domain.Question;

@@ -1,8 +1,7 @@
 package com.yakovchuk.sphinx.service;
 
-import com.yakovchuk.sphinx.dao.MockUserDao;
+import com.yakovchuk.sphinx.dao.mock.MockUserDao;
 import com.yakovchuk.sphinx.dao.UserDao;
-import com.yakovchuk.sphinx.user.NullUser;
 import com.yakovchuk.sphinx.user.User;
 
 public class UserServiceImpl implements UserService {

@@ -42,6 +42,8 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
+        assert(userFromService != null);
+
         request.getSession().setAttribute("user", userFromService);
         request.getRequestDispatcher("/exam?action=view").forward(request, response);
     }

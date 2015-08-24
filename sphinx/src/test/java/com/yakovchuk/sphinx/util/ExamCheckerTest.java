@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static com.yakovchuk.sphinx.dao.ExamDataProvider.*;
+import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.*;
 import static org.junit.Assert.assertEquals;
 
 public class ExamCheckerTest {

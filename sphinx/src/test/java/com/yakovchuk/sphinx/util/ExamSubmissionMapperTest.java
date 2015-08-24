@@ -2,7 +2,7 @@ package com.yakovchuk.sphinx.util;
 
 import org.junit.Test;
 
-import static com.yakovchuk.sphinx.dao.ExamDataProvider.*;
+import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.*;
 import static org.junit.Assert.*;
 
 public class ExamSubmissionMapperTest {

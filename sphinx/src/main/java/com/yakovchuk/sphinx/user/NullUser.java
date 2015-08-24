@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class NullUser implements User {
 
-    private static NullUser nullUser = new NullUser();
+    private static final NullUser nullUser = new NullUser();
 
     private NullUser() {
 

@@ -17,7 +17,7 @@ public class ExamFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         //TODO actions should be set via config?
         restrictedActions = new ArrayList<>();
-        restrictedActions.add("createForm");
+        restrictedActions.add("creationForm");
         restrictedActions.add("create");
     }
 
@@ -26,8 +26,10 @@ public class ExamFilter implements Filter {
 
         HttpSession session = ((HttpServletRequest) request).getSession();
 
+        //TODO can session be null at all? Better to check session is new or something
         if (session == null || session.getAttribute("user") == null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
+            //TODO put return here?
         } else {
             String action = request.getParameterMap().get("action")[0];
             if (restrictedActions.contains(action)) {

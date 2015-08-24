@@ -1,11 +1,12 @@
 package com.yakovchuk.sphinx.dao;
 
-import static com.yakovchuk.sphinx.dao.ExamDataProvider.getExam1Original;
-import static com.yakovchuk.sphinx.dao.ExamDataProvider.getExam2Original;
+import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.getExam1Original;
+import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.getExam2Original;
 import static org.junit.Assert.*;
 
 import java.util.Collection;
 
+import com.yakovchuk.sphinx.dao.mock.MockExamDao;
 import org.junit.Test;
 
 import com.yakovchuk.sphinx.domain.Exam;

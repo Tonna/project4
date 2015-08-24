@@ -1,7 +1,7 @@
 package com.yakovchuk.sphinx.initialization;
 
 import com.yakovchuk.sphinx.dao.ExamDao;
-import com.yakovchuk.sphinx.dao.MockExamDao;
+import com.yakovchuk.sphinx.dao.mock.MockExamDao;
 import com.yakovchuk.sphinx.service.ExamServiceImpl;
 import com.yakovchuk.sphinx.util.ExamCheckerImp;
 import com.yakovchuk.sphinx.util.ExamCreationMapper;
@@ -13,7 +13,7 @@ import javax.servlet.ServletContextListener;
 
 import java.util.Arrays;
 
-import static com.yakovchuk.sphinx.dao.ExamDataProvider.*;
+import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.*;
 
 public class InitializationServletContextListener implements ServletContextListener {
     @Override

@@ -27,30 +27,32 @@ public class ExamServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         logger.info("ExamServlet initiation started");
+        
         examService = (ExamService) getServletContext().getAttribute("examService");
         examSubmissionMapper = (ExamSubmissionMapper) getServletContext().getAttribute("examSubmissionMapper");
         examCreationMapper = (ExamCreationMapper) getServletContext().getAttribute("examCreationMapper");
         examChecker = (ExamChecker) getServletContext().getAttribute("examChecker");
+        
         logger.info("ExamServlet initiation finished");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
-        String createForm = "createForm";
+        String creationForm = "creationForm";
         String create = "create";
         String take = "take";
         String submit = "submit";
         String action = request.getParameter("action");
-        if (createForm.equals(action)) {
-            request.getRequestDispatcher("WEB-INF/view/createExam.jsp").forward(request, response);
+        if (creationForm.equals(action)) {
+            goToPage(request, response, "WEB-INF/view/createExam.jsp");
+        } else if (take.equals(action)) {
+            request.setAttribute("exam", examService.getExam(request.getParameter("id")));
+            goToPage(request, response, "WEB-INF/view/takeExam.jsp");
         } else if (create.equals(action)) {
             Exam createdExam = examCreationMapper.mapExam(request.getParameterMap());
             examService.createExam(createdExam);
-            goToExamsPage(request,response);
-        } else if (take.equals(action)) {
-            request.setAttribute("exam", examService.getExam(request.getParameter("id")));
-            request.getRequestDispatcher("WEB-INF/view/takeExam.jsp").forward(request, response);
+            goToExamsPage(request, response);
         } else if (submit.equals(action)) {
             Exam submittedExam = examSubmissionMapper.mapExam(request.getParameterMap());
             Exam originalExam = examService.getExam(submittedExam.getId());
@@ -58,14 +60,18 @@ public class ExamServlet extends HttpServlet {
             request.setAttribute("questionsInExam", originalExam.getQuestions().size());
             request.setAttribute("correctlyAnsweredQuestions", examChecker.checkExam(originalExam, submittedExam));
             goToExamsPage(request, response);
-        } else { // TODO: Implement wrong action handling.
+        } else { // TODO: Implement wrong action handling. Going to exams view page
             goToExamsPage(request, response);
         }
     }
 
+    private void goToPage(HttpServletRequest request, HttpServletResponse response, String jspPath) throws ServletException, IOException {
+        request.getRequestDispatcher(jspPath).forward(request, response);
+    }
+
     private void goToExamsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("examsBySubject", examService.getExamsBySubject());
-        request.getRequestDispatcher("WEB-INF/view/exams.jsp").forward(request, response);
+        goToPage(request, response, "WEB-INF/view/exams.jsp");
     }
 
     @Override

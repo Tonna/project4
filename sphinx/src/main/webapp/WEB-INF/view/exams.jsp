@@ -20,7 +20,7 @@
 
     <c:if test="${col:contains(applicationScope['examCreationRoles'], sessionScope.user.roles)}">
         <div>
-            <a href="exam?action=createForm">Create exam</a>
+            <a href="exam?action=creationForm">Create exam</a>
         </div>
     </c:if>
 
