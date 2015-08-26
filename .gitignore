@@ -2,7 +2,6 @@ sphinx/target/*
 */.idea/*
 .idea/*
 */lib/*
-old/
 
 *.iml
 
