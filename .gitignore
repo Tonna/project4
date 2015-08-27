@@ -6,3 +6,5 @@ sphinx/target/*
 *.iml
 
 *vendor*
+
+hsqldb.zip
