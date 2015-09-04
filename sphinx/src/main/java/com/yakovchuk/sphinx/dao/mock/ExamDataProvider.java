@@ -154,4 +154,46 @@ public class ExamDataProvider {
         map.put("answer-id-for-question-id-13", new String[]{"131"});
         return map;
     }
+
+    public static Exam getExam4Original() {
+        return new Exam.Builder().name("Adjectives. Select correct adjective").subject("English vocabulary")
+                .addQuestion(new Question.Builder().text("The girls were mad because they could not play")
+                        .addAnswer(new Answer.Builder().text("happy").build())
+                        .addAnswer(new Answer.Builder().text("sad").build())
+                        .addAnswer(new Answer.Builder().text("angry").isCorrect().build()).build())
+                .addQuestion(new Question.Builder().text("The chair was not hard")
+                        .addAnswer(new Answer.Builder().text("brown").build())
+                        .addAnswer(new Answer.Builder().text("new").build())
+                        .addAnswer(new Answer.Builder().text("soft").isCorrect().build()).build())
+                .addQuestion(new Question.Builder().text("Another word for not awake is")
+                        .addAnswer(new Answer.Builder().text("asleep").isCorrect().build())
+                        .addAnswer(new Answer.Builder().text("loud").build())
+                        .addAnswer(new Answer.Builder().text("scared").build()).build())
+                .addQuestion(new Question.Builder().text("The door was not closed")
+                        .addAnswer(new Answer.Builder().text("shut").build())
+                        .addAnswer(new Answer.Builder().text("dirty").build())
+                        .addAnswer(new Answer.Builder().text("open").isCorrect().build()).build())
+                .build();
+    }
+
+    public static Exam getExam5Original() {
+        return new Exam.Builder().name("Division").subject("Math")
+                .addQuestion(new Question.Builder().text("5 / 5")
+                        .addAnswer(new Answer.Builder().text("2").build())
+                        .addAnswer(new Answer.Builder().text("5").build())
+                        .addAnswer(new Answer.Builder().text("1").isCorrect().build()).build())
+                .addQuestion(new Question.Builder().text("10 / 2")
+                        .addAnswer(new Answer.Builder().text("1").build())
+                        .addAnswer(new Answer.Builder().text("10").build())
+                        .addAnswer(new Answer.Builder().text("5").isCorrect().build()).build())
+                .addQuestion(new Question.Builder().text("12 / 6")
+                        .addAnswer(new Answer.Builder().text("2").isCorrect().build())
+                        .addAnswer(new Answer.Builder().text("3").build())
+                        .addAnswer(new Answer.Builder().text("4").build()).build())
+                .addQuestion(new Question.Builder().text("22 / 2")
+                        .addAnswer(new Answer.Builder().text("10").build())
+                        .addAnswer(new Answer.Builder().text("2").build())
+                        .addAnswer(new Answer.Builder().text("11").isCorrect().build()).build())
+                .build();
+    }
 }
