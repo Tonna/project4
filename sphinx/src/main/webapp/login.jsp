@@ -2,7 +2,7 @@
 <common:header title="Login to sphinx"/>
 
 <div id="main">
-    <div class="development message">Welcome to sphinx portal!</div>
+    <div class="development message">Welcome to sphinx portal! Please login.</div>
     <form id="login" action="login" method="POST">
         <div>
             <p>Username: </p>
