@@ -27,12 +27,12 @@ public class ExamServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         logger.info("ExamServlet initiation started");
-        
+
         examService = (ExamService) getServletContext().getAttribute("examService");
         examSubmissionMapper = (ExamSubmissionMapper) getServletContext().getAttribute("examSubmissionMapper");
         examCreationMapper = (ExamCreationMapper) getServletContext().getAttribute("examCreationMapper");
         examChecker = (ExamChecker) getServletContext().getAttribute("examChecker");
-        
+
         logger.info("ExamServlet initiation finished");
     }
 

@@ -6,8 +6,11 @@ import com.yakovchuk.sphinx.user.User;
 
 public class UserServiceImpl implements UserService {
 
-    //TODO create initiation code
-    private UserDao userDao = new MockUserDao();
+    private final UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public User getUser(String login, String password) {

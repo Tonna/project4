@@ -8,6 +8,7 @@ import com.yakovchuk.sphinx.user.UserImpl;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UserServlet extends HttpServlet {
 
-    //TODO create initiation code
-    private UserService userService = new UserServiceImpl();
+    private UserService userService;
+
+    @Override
+    public void init() {
+        userService = (UserService) getServletContext().getAttribute("userService");
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,

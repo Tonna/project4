@@ -7,18 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExamFilter implements Filter {
 
-    List<String> restrictedActions;
+    private HashMap<String, String> actionRoleMapping;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        //TODO actions should be set via config?
-        restrictedActions = new ArrayList<>();
-        restrictedActions.add("creationForm");
-        restrictedActions.add("create");
+        actionRoleMapping = (HashMap<String, String>) filterConfig.getServletContext().getAttribute("actionRoleMapping");
     }
 
     @Override
@@ -32,9 +30,9 @@ public class ExamFilter implements Filter {
             //TODO put return here?
         } else {
             String action = request.getParameterMap().get("action")[0];
-            if (restrictedActions.contains(action)) {
+            if (actionRoleMapping.get(action) != null) {
                 User user = (User) session.getAttribute("user");
-                if(!user.getRoles().contains("tutor")){
+                if(!user.getRoles().contains(actionRoleMapping.get(action))){
                     request.getRequestDispatcher("/exam?action=view").forward(request, response);
                     return;
                 }
