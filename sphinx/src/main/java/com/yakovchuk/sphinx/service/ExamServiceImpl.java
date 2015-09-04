@@ -23,21 +23,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Map<String, Collection<Exam>> getExamsBySubject() {
-        Map<String, Collection<Exam>> subjectAndItsExams = new TreeMap<>();
-
-        Collection<Exam> exams = examDao.getAll();
-        for (Exam exam : exams) {
-            if (subjectAndItsExams.containsKey(exam.getSubject())) {
-                subjectAndItsExams.get(exam.getSubject()).add(exam);
-            } else {
-                Set<Exam> subjEx = new HashSet<>();
-                subjEx.add(exam);
-                subjectAndItsExams.put(exam.getSubject(), subjEx);
-            }
-        }
-
-        return subjectAndItsExams;
+    public Collection<Exam> getExamHeaders() {
+        return examDao.getAllHeaders();
     }
 
     @Override

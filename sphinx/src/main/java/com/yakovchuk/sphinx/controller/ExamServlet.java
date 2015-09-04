@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.*;
 
 public class ExamServlet extends HttpServlet {
 
@@ -70,8 +71,22 @@ public class ExamServlet extends HttpServlet {
     }
 
     private void goToExamsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("examsBySubject", examService.getExamsBySubject());
+        request.setAttribute("examsBySubject", groupBySubjects(examService.getExamHeaders()));
         goToPage(request, response, "WEB-INF/view/exams.jsp");
+    }
+
+    private TreeMap<String, Collection<Exam>> groupBySubjects(Collection<Exam> examHeaders) {
+        TreeMap<String, Collection<Exam>> subjectExamMap = new TreeMap<>();
+        for (Exam exam : examHeaders) {
+            if (subjectExamMap.containsKey(exam.getSubject())) {
+                subjectExamMap.get(exam.getSubject()).add(exam);
+            } else {
+                Set<Exam> subjEx = new HashSet<>();
+                subjEx.add(exam);
+                subjectExamMap.put(exam.getSubject(), subjEx);
+            }
+        }
+        return subjectExamMap;
     }
 
     @Override

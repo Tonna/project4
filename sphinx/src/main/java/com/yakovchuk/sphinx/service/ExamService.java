@@ -8,7 +8,7 @@ import java.util.Map;
 public interface ExamService {
     Exam getExam(String id);
 
-    Map<String, Collection<Exam>> getExamsBySubject();
+    Collection<Exam> getExamHeaders();
 
     Collection<Exam> getExams();
 

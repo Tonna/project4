@@ -71,4 +71,9 @@ public class MockExamDao implements ExamDao {
     public Exam delete(Exam toDelete) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Collection<Exam> getAllHeaders() {
+        return getAll();
+    }
 }
