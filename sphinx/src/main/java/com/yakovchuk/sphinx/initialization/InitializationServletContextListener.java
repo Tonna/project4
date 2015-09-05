@@ -36,10 +36,6 @@ public class InitializationServletContextListener implements ServletContextListe
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext context = servletContextEvent.getServletContext();
 
-        ExamDao examDao = new MockExamDao(getExam2Original(), getExam3Original());
-        ExamServiceImpl examService = new ExamServiceImpl();
-        examService.setExamDao(examDao);
-        context.setAttribute("examService", examService);
 
         context.setAttribute("examSubmissionMapper", new ExamSubmissionMapper());
         context.setAttribute("examCreationMapper", new ExamCreationMapper());
@@ -65,6 +61,10 @@ public class InitializationServletContextListener implements ServletContextListe
         UserService userService = new UserServiceImpl(userDao);
         context.setAttribute("userService", userService);
 
+        ExamDao examDao = new ExamDaoImpl(dataSource);
+        ExamServiceImpl examService = new ExamServiceImpl();
+        examService.setExamDao(examDao);
+        context.setAttribute("examService", examService);
 
         HashMap actionRoleMapping = new HashMap<>();
         actionRoleMapping.put("creationForm", "tutor");

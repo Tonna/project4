@@ -75,6 +75,7 @@ public class ExamServlet extends HttpServlet {
         goToPage(request, response, "WEB-INF/view/exams.jsp");
     }
 
+    /*TODO Move this displaying logic to separate jstl? Or just move it to jsp*/
     private TreeMap<String, Collection<Exam>> groupBySubjects(Collection<Exam> examHeaders) {
         TreeMap<String, Collection<Exam>> subjectExamMap = new TreeMap<>();
         for (Exam exam : examHeaders) {

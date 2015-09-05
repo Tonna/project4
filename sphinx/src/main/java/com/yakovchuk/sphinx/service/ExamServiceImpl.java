@@ -24,7 +24,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Collection<Exam> getExamHeaders() {
-        return examDao.getAllHeaders();
+        return examDao.getAllExamsWithoutQuestions();
     }
 
     @Override
