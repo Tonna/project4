@@ -7,14 +7,17 @@ import com.yakovchuk.sphinx.user.UserImpl;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class UserDaoImpl implements UserDao {
 
     private final DataSource dataSource;
+    private final Map<String, String> rolesMapping;
     private Connection connection;
 
-    public UserDaoImpl(DataSource dataSource) {
+    public UserDaoImpl(DataSource dataSource, Map<String, String> rolesMapping) {
         this.dataSource = dataSource;
+	this.rolesMapping = rolesMapping;
     }
 
     @Override
@@ -52,7 +55,9 @@ public class UserDaoImpl implements UserDao {
                 ResultSet resultSet1 = callableStatement.getResultSet();
                 ArrayList<String> roles = new ArrayList<String>();
                 while(resultSet1.next()) {
-                    roles.add(resultSet1.getString(1));
+                    if(rolesMapping.get(resultSet1.getString(1)) != null){
+                        roles.add(rolesMapping.get(resultSet1.getString(1)));
+		    }
                 }
                 userReal.setRoles(roles);
 

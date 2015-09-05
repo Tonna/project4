@@ -55,12 +55,16 @@ public class InitializationServletContextListener implements ServletContextListe
             logger.error("Couldn't resolve datasource");
         }
 
-        UserDao userDao = new UserDaoImpl(dataSource);
+	Map<String, String> rolesMapping = new HashMap<String, String>();
+	rolesMapping.add("tutor", "tutor");
+	rolesMapping.add("student", "student");
+
+        UserDao userDao = new UserDaoImpl(dataSource, rolesMapping);
         context.setAttribute("userDao", userDao);
 
         UserService userService = new UserServiceImpl(userDao);
         context.setAttribute("userService", userService);
-
+	
         ExamDao examDao = new ExamDaoImpl(dataSource);
         ExamServiceImpl examService = new ExamServiceImpl();
         examService.setExamDao(examDao);
