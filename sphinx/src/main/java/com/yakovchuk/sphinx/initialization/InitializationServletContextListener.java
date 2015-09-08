@@ -24,6 +24,7 @@ import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.getExam2Original;
 import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.getExam3Original;
@@ -56,8 +57,8 @@ public class InitializationServletContextListener implements ServletContextListe
         }
 
 	Map<String, String> rolesMapping = new HashMap<String, String>();
-	rolesMapping.add("tutor", "tutor");
-	rolesMapping.add("student", "student");
+	rolesMapping.put("tutor", "tutor");
+	rolesMapping.put("student", "student");
 
         UserDao userDao = new UserDaoImpl(dataSource, rolesMapping);
         context.setAttribute("userDao", userDao);
