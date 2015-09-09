@@ -67,21 +67,22 @@ public class ExamDaoImpl implements ExamDao {
 
                     HashMap<String, Question.Builder> questionBuilders = new HashMap<>();
 
-                    while (resultSet.next()) {
+                    do {
                         String questionId = resultSet.getString(QUESTION_ID_ALIAS);
-                        Question.Builder qBuilder = questionBuilders.get(questionId);
-                        if (qBuilder == null) {
+                        Question.Builder questionBuilder = questionBuilders.get(questionId);
+                        if (questionBuilder == null) {
                             String questionText = resultSet.getString(QUESTION_TEXT_ALIAS);
-                            qBuilder = new Question.Builder().id(questionId).text(questionText);
-                            questionBuilders.put(questionId, qBuilder);
+                            questionBuilder = new Question.Builder().id(questionId).text(questionText);
+                            questionBuilders.put(questionId, questionBuilder);
                         }
-                        qBuilder.addAnswer(
+                        questionBuilder.addAnswer(
                                 new Answer.Builder()
                                         .id(resultSet.getString(ANSWER_ID_ALIAS))
                                         .text(resultSet.getString(ANSWER_TEXT_ALIAS))
                                         .isCorrect(Integer.parseInt(resultSet.getString(ANSWER_IS_CORRECT_ALIAS)) == 1)
                                         .build());
-                    }
+                    } while (resultSet.next());
+
                     for (Question.Builder builder : questionBuilders.values()) {
                         examBuilder.addQuestion(builder.build());
                     }
