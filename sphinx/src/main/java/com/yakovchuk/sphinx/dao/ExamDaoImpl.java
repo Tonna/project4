@@ -106,55 +106,64 @@ public class ExamDaoImpl implements ExamDao {
 
     @Override
     public Exam create(Exam toCreate) {
-        //create subject if not exist, create exam.
         //have no idea how to implement this
 
-        try {
 
-            PreparedStatement selectLanguage = getConnection().prepareStatement("SELECT ID FROM LANGUAGE WHERE CODE LIKE ?");
+        try (Connection con = getConnection();
+             PreparedStatement selectLanguage = con.prepareStatement("SELECT ID FROM LANGUAGE WHERE CODE LIKE ?");
+             PreparedStatement insertSubject = con.prepareStatement("INSERT INTO SUBJECT (NAME, LANGUAGE_ID) VALUES(?,?)", new String[]{"ID"});
+             PreparedStatement insertExam = con.prepareStatement("INSERT INTO EXAM (SUBJECT_ID, NAME) VALUES(?,?)", new String[]{"ID"});
+             PreparedStatement insertQuestion = con.prepareStatement("INSERT INTO QUESTION (EXAM_ID, TEXT) VALUES(?,?)", new String[]{"ID"});
+             PreparedStatement insertAnswer = con.prepareStatement("INSERT INTO ANSWER (QUESTION_ID, TEXT, IS_CORRECT) VALUES(?,?,?)", new String[]{"ID"});
+             PreparedStatement selectSubject = con.prepareStatement("SELECT ID FROM SUBJECT WHERE NAME LIKE ?")) {
+
             selectLanguage.setNString(1, "en");
-            selectLanguage.execute();
-            ResultSet languageResultSet = selectLanguage.getResultSet();
-            languageResultSet.next();
-            String languageId = languageResultSet.getString(1);
+            String languageId;
+            try (ResultSet languageResultSet = selectLanguage.executeQuery()) {
+                languageResultSet.next();
+                languageId = languageResultSet.getString(1);
+            }
 
-            PreparedStatement selectSubject = connection.prepareStatement("SELECT ID FROM SUBJECT WHERE NAME LIKE ?");
             selectSubject.setNString(1, toCreate.getSubject());
-            selectSubject.execute();
-            ResultSet selectSubjectRS = selectSubject.getResultSet();
-            selectSubjectRS.next();
-            String subjectId = selectSubjectRS.getString(1);
-            if (subjectId == null || subjectId.isEmpty()) {
-                PreparedStatement insertSubject = connection.prepareStatement("INSERT INTO SUBJECT (NAME, LANGUAGE_ID) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
-                insertSubject.setNString(1, toCreate.getSubject());
-                insertSubject.setNString(2, languageId);
-                insertSubject.execute();
-                ResultSet generatedKeys = insertSubject.getGeneratedKeys();
-                generatedKeys.next();
-                subjectId = generatedKeys.getString(1);
+            String subjectId;
+            try (ResultSet selectSubjectRS = selectSubject.executeQuery()) {
+
+                //create subject if not exist
+
+                if (selectSubjectRS.next()) {
+                    subjectId = selectSubjectRS.getString(1);
+                } else {
+                    insertSubject.setNString(1, toCreate.getSubject());
+                    insertSubject.setNString(2, languageId);
+                    try (ResultSet insertedSubject = insertSubject.executeQuery();
+                         ResultSet generatedKeys = insertSubject.getGeneratedKeys()) {
+                        generatedKeys.next();
+                        subjectId = generatedKeys.getString(1);
+                    }
+                }
             }
 
 
-            PreparedStatement insertExam = connection.prepareStatement("INSERT INTO EXAM (SUBJECT_ID, NAME) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
-
             insertExam.setNString(1, subjectId);
             insertExam.setNString(2, toCreate.getName());
-
             insertExam.execute();
-            ResultSet generatedKeysExam = insertExam.getGeneratedKeys();
-            generatedKeysExam.next();
-            String examId = generatedKeysExam.getString(1);
 
-            PreparedStatement insertQuestion = connection.prepareStatement("INSERT INTO QUESTION (EXAM_ID, TEXT) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
-            PreparedStatement insertAnswer = connection.prepareStatement("INSERT INTO ANSWER (QUESTION_ID, TEXT, IS_CORRECT) VALUES(?,?,?)");
+            String examId;
+            try (ResultSet generatedKeysExam = insertExam.getGeneratedKeys();) {
+                generatedKeysExam.next();
+                examId = generatedKeysExam.getString(1);
+            }
+
 
             for (Question question : toCreate.getQuestions()) {
                 insertQuestion.setNString(1, examId);
                 insertQuestion.setNString(2, question.getText());
-                insertExam.execute();
-                ResultSet questionRS = insertExam.getGeneratedKeys();
-                questionRS.next();
-                String questionId = questionRS.getString(1);
+                insertQuestion.execute();
+                String questionId;
+                try (ResultSet questionRS = insertQuestion.getGeneratedKeys()) {
+                    questionRS.next();
+                    questionId = questionRS.getString(1);
+                }
 
                 for (Answer answer : question.getAnswers()) {
                     insertAnswer.setNString(1, questionId);
@@ -162,10 +171,7 @@ public class ExamDaoImpl implements ExamDao {
                     insertAnswer.setInt(3, answer.getIsCorrect() ? 1 : 0);
                     insertAnswer.execute();
                 }
-
-
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -207,10 +213,7 @@ public class ExamDaoImpl implements ExamDao {
     }
 
     private Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = dataSource.getConnection();
-        }
-        return connection;
+        return dataSource.getConnection();
     }
 
     //TODO create separate methods\class(?) for handling opening, closing connections, statements and stuff
