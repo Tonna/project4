@@ -41,7 +41,7 @@ public class InitializationServletContextListener implements ServletContextListe
         context.setAttribute("examCreationRoles", Arrays.asList("tutor"));
         context.setAttribute("examTakingRoles", Arrays.asList("student"));
 
-        DataSource dataSource=  null;
+        DataSource dataSource = null;
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
@@ -51,22 +51,26 @@ public class InitializationServletContextListener implements ServletContextListe
             logger.error("Couldn't resolve datasource");
         }
 
-	Map<String, String> rolesMapping = new HashMap<String, String>();
-	rolesMapping.put("tutor", "tutor");
-	rolesMapping.put("student", "student");
+        Map<String, String> rolesMapping = new HashMap<String, String>();
+        rolesMapping.put("tutor", "tutor");
+        rolesMapping.put("student", "student");
 
-        ProfileDao profileDao = new ProfileDaoImpl(dataSource, rolesMapping);
+        String selectProfileQuery = "SELECT LOGIN FROM PROFILE WHERE LOGIN LIKE ? AND PASSWORD LIKE ?";
+        String selectRolesOfProfileQuery = "SELECT R.NAME AS ROLE_OF_PROFILE FROM ROLE R JOIN PROFILE_ROLE PR ON PR.ROLE_ID = R.ID JOIN PROFILE P ON P.ID = PR.PROFILE_ID WHERE P.LOGIN LIKE ?";
+        String roleAlias = "ROLE_OF_PROFILE";
+
+        ProfileDao profileDao = new ProfileDaoImpl(dataSource, rolesMapping, selectProfileQuery, selectRolesOfProfileQuery, roleAlias);
         context.setAttribute("profileDao", profileDao);
 
         ProfileService profileService = new ProfileServiceImpl(profileDao);
         context.setAttribute("profileService", profileService);
-	
+
         ExamDao examDao = new ExamDaoImpl(dataSource);
         ExamServiceImpl examService = new ExamServiceImpl();
         examService.setExamDao(examDao);
         context.setAttribute("examService", examService);
 
-        HashMap actionRoleMapping = new HashMap<>();
+        HashMap<String, String> actionRoleMapping = new HashMap<>();
         actionRoleMapping.put("creationForm", "tutor");
         actionRoleMapping.put("create", "tutor");
         actionRoleMapping.put("take", "student");

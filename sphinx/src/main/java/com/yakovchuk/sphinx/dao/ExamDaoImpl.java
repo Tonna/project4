@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 
 public class ExamDaoImpl implements ExamDao {
 
+    private final DataSource dataSource;
     public static final String SELECT_LANGUAGE_BY_ID = "SELECT ID FROM LANGUAGE WHERE CODE LIKE ?";
     public static final String INSERT_SUBJECT = "INSERT INTO SUBJECT (NAME, LANGUAGE_ID) VALUES(?,?)";
     public static final String INSERT_EXAM = "INSERT INTO EXAM (SUBJECT_ID, NAME) VALUES(?,?)";
@@ -23,7 +24,6 @@ public class ExamDaoImpl implements ExamDao {
     public static final String EXAM_ID_COLUMN = "ID";
     public static final String QUESTION_ID_COLUMN = "ID";
     public static final String ANSWER_ID_COLUMN = "ID";
-    private final DataSource dataSource;
     public static final String EXAM_ID_ALIAS = "EXAM_ID";
     public static final String EXAM_NAME_ALIAS = "EXAM_NAME";
     public static final String SUBJECT_NAME_ALIAS = "SUBJECT_NAME";
@@ -46,13 +46,11 @@ public class ExamDaoImpl implements ExamDao {
 
         try (Connection con = getConnection();
              CallableStatement callableStatement = con.prepareCall(GET_EXAM_BY_ID)) {
-
             callableStatement.setNString(1, id);
 
             try (ResultSet resultSet = callableStatement.executeQuery()) {
 
                 if (resultSet.next()) {
-
                     examBuilder = examBuilder.id(resultSet.getString(EXAM_ID_ALIAS))
                             .name(resultSet.getString(EXAM_NAME_ALIAS))
                             .subject(resultSet.getString(SUBJECT_NAME_ALIAS));
@@ -138,6 +136,7 @@ public class ExamDaoImpl implements ExamDao {
             insertExam.setNString(1, subjectId);
             insertExam.setNString(2, toCreate.getName());
             insertExam.execute();
+
             String examId;
             try (ResultSet generatedKeysExam = insertExam.getGeneratedKeys();) {
                 generatedKeysExam.next();
