@@ -18,13 +18,13 @@
         </div>
     </c:if>
 
-    <c:if test="${col:contains(applicationScope['examCreationRoles'], sessionScope.user.roles)}">
+    <c:if test="${col:contains(applicationScope['examCreationRoles'], sessionScope.profile.roles)}">
         <div>
             <a href="exam?action=creationForm">Create exam</a>
         </div>
     </c:if>
 
-    <c:if test="${col:contains(applicationScope['examTakingRoles'], sessionScope.user.roles)}">
+    <c:if test="${col:contains(applicationScope['examTakingRoles'], sessionScope.profile.roles)}">
         <div class="development subjectList">
                 <c:forEach var="subject" items="${examsBySubject}" varStatus="status">
                     <div class="development subject">

@@ -5,8 +5,11 @@ import java.util.HashSet;
 
 public class CollectionUtil {
 
-    public static boolean contains(Collection<String> requiredRoles, Collection<String> userRoles) {
-        return new HashSet<>(userRoles).stream().anyMatch(role -> requiredRoles.contains(role));
+    public static boolean contains(Collection<String> requiredRoles, Collection<String> profileRoles) {
+        if(requiredRoles == null || profileRoles == null){
+            return false;
+        }
+        return new HashSet<>(profileRoles).stream().anyMatch(role -> requiredRoles.contains(role));
     }
 
 }

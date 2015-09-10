@@ -26,12 +26,12 @@ public class ExamCheckerImp implements ExamChecker {
             return correctAnswers;
         }
 
-        Map<String, Question> userAnsweredQuestions = new HashMap<>();
-        answeredExam.getQuestions().stream().forEach(q -> userAnsweredQuestions.put(q.getId(), q));
+        Map<String, Question> answeredQuestions = new HashMap<>();
+        answeredExam.getQuestions().stream().forEach(q -> answeredQuestions.put(q.getId(), q));
 
         for (Question originalQuestion : originalExam.getQuestions()) {
-            Question userQuestion = userAnsweredQuestions.get(originalQuestion.getId());
-            if (userQuestion != null && checkQuestion(originalQuestion, userQuestion)) {
+            Question answeredQuestion = answeredQuestions.get(originalQuestion.getId());
+            if (answeredQuestion != null && checkQuestion(originalQuestion, answeredQuestion)) {
                 correctAnswers += 1;
             }
         }
@@ -40,8 +40,8 @@ public class ExamCheckerImp implements ExamChecker {
 
     /*
         check question
-        get correct answers from original answer. get all answers from user.
-        if quantities match and each original answer has corresponding answer from user input return true.
+        get correct answers from original answer. get all answers from profile.
+        if quantities match and each original answer has corresponding answer from profile input return true.
      */
     private boolean checkQuestion(Question originalQuestion, Question answeredQuestion) {
 
@@ -50,9 +50,9 @@ public class ExamCheckerImp implements ExamChecker {
                 .filter(Answer::getIsCorrect).map(Answer::getId)
                 .iterator().forEachRemaining(originalAnswerIds::add);
 
-        Set<String> userAnswerIds = new HashSet<>();
-        answeredQuestion.getAnswers().stream().forEach(a -> userAnswerIds.add(a.getId()));
+        Set<String> answeredAnswerIds = new HashSet<>();
+        answeredQuestion.getAnswers().stream().forEach(a -> answeredAnswerIds.add(a.getId()));
 
-        return originalAnswerIds.equals(userAnswerIds);
+        return originalAnswerIds.equals(answeredAnswerIds);
     }
 }

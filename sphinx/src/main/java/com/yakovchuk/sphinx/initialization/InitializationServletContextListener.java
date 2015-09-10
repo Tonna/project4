@@ -2,13 +2,11 @@ package com.yakovchuk.sphinx.initialization;
 
 import com.yakovchuk.sphinx.dao.ExamDao;
 import com.yakovchuk.sphinx.dao.ExamDaoImpl;
-import com.yakovchuk.sphinx.dao.UserDao;
-import com.yakovchuk.sphinx.dao.UserDaoImpl;
-import com.yakovchuk.sphinx.dao.mock.ExamDataProvider;
-import com.yakovchuk.sphinx.dao.mock.MockExamDao;
+import com.yakovchuk.sphinx.dao.ProfileDao;
+import com.yakovchuk.sphinx.dao.ProfileDaoImpl;
 import com.yakovchuk.sphinx.service.ExamServiceImpl;
-import com.yakovchuk.sphinx.service.UserService;
-import com.yakovchuk.sphinx.service.UserServiceImpl;
+import com.yakovchuk.sphinx.service.ProfileService;
+import com.yakovchuk.sphinx.service.ProfileServiceImpl;
 import com.yakovchuk.sphinx.util.ExamCheckerImp;
 import com.yakovchuk.sphinx.util.ExamCreationMapper;
 import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
@@ -25,9 +23,6 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.getExam2Original;
-import static com.yakovchuk.sphinx.dao.mock.ExamDataProvider.getExam3Original;
 
 public class InitializationServletContextListener implements ServletContextListener {
 
@@ -60,11 +55,11 @@ public class InitializationServletContextListener implements ServletContextListe
 	rolesMapping.put("tutor", "tutor");
 	rolesMapping.put("student", "student");
 
-        UserDao userDao = new UserDaoImpl(dataSource, rolesMapping);
-        context.setAttribute("userDao", userDao);
+        ProfileDao profileDao = new ProfileDaoImpl(dataSource, rolesMapping);
+        context.setAttribute("profileDao", profileDao);
 
-        UserService userService = new UserServiceImpl(userDao);
-        context.setAttribute("userService", userService);
+        ProfileService profileService = new ProfileServiceImpl(profileDao);
+        context.setAttribute("profileService", profileService);
 	
         ExamDao examDao = new ExamDaoImpl(dataSource);
         ExamServiceImpl examService = new ExamServiceImpl();
