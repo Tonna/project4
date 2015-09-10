@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ExamDaoImpl implements ExamDao {
 
@@ -57,7 +57,7 @@ public class ExamDaoImpl implements ExamDao {
                             .name(resultSet.getString(EXAM_NAME_ALIAS))
                             .subject(resultSet.getString(SUBJECT_NAME_ALIAS));
 
-                    HashMap<String, Question.Builder> questionBuilders = new HashMap<>();
+                    LinkedHashMap<String, Question.Builder> questionBuilders = new LinkedHashMap<>();
 
                     do {
                         String questionId = resultSet.getString(QUESTION_ID_ALIAS);
