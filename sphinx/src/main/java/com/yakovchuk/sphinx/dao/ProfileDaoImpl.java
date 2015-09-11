@@ -14,18 +14,17 @@ import java.util.Map;
 
 public class ProfileDaoImpl implements ProfileDao {
 
-    private final String selectProfileQuery;
-    private final String selectRolesOfProfileQuery;
-    private final String roleAlias;
+    private String selectProfileQuery;
+    private String selectRolesOfProfileQuery;
+    private String roleAlias;
     private final DataSource dataSource;
     private final Map<String, String> rolesMapping;
 
-    public ProfileDaoImpl(DataSource dataSource, Map<String, String> rolesMapping, String selectProfileQuery, String selectRolesOfProfileQuery, String roleAlias) {
+
+
+    public ProfileDaoImpl(DataSource dataSource, Map<String, String> rolesMapping) {
         this.dataSource = dataSource;
         this.rolesMapping = rolesMapping;
-        this.selectProfileQuery = selectProfileQuery;
-        this.selectRolesOfProfileQuery = selectRolesOfProfileQuery;
-        this.roleAlias = roleAlias;
     }
 
     @Override
@@ -72,5 +71,17 @@ public class ProfileDaoImpl implements ProfileDao {
         }
 
         return profile;
+    }
+
+    public void setSelectProfileQuery(String selectProfileQuery) {
+        this.selectProfileQuery = selectProfileQuery;
+    }
+
+    public void setSelectRolesOfProfileQuery(String selectRolesOfProfileQuery) {
+        this.selectRolesOfProfileQuery = selectRolesOfProfileQuery;
+    }
+
+    public void setRoleAlias(String roleAlias) {
+        this.roleAlias = roleAlias;
     }
 }

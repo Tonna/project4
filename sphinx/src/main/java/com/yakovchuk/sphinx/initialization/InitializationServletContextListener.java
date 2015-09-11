@@ -27,6 +27,9 @@ import java.util.Map;
 public class InitializationServletContextListener implements ServletContextListener {
 
     private final static Logger logger = LogManager.getLogger(InitializationServletContextListener.class);
+    public static final String PROFILE_QUERY_CHECK_CREDENTIALS = "profile.query.checkCredentials";
+    public static final String PROFILE_QUERY_SELECT_PROFILE_ROLES_BY_PROFILE_LOGIN = "profile.query.selectProfileRoles.byProfileLogin";
+    public static final String PROFILE_ALIAS_ROLE_OF_PROFILE = "profile.alias.roleOfProfile";
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -55,12 +58,24 @@ public class InitializationServletContextListener implements ServletContextListe
         rolesMapping.put("tutor", "tutor");
         rolesMapping.put("student", "student");
 
-        String selectProfileQuery = "SELECT LOGIN FROM PROFILE WHERE LOGIN LIKE ? AND PASSWORD LIKE ?";
-        String selectRolesOfProfileQuery = "SELECT R.NAME AS ROLE_OF_PROFILE FROM ROLE R JOIN PROFILE_ROLE PR ON PR.ROLE_ID = R.ID JOIN PROFILE P ON P.ID = PR.PROFILE_ID WHERE P.LOGIN LIKE ?";
-        String roleAlias = "ROLE_OF_PROFILE";
+        //TODO retrieving sql strings from file
+        HashMap<String, String> sqlStringsMap = new HashMap<>();
+        sqlStringsMap.put(PROFILE_QUERY_CHECK_CREDENTIALS,"SELECT LOGIN FROM PROFILE WHERE LOGIN LIKE ? AND PASSWORD LIKE ?");
+        sqlStringsMap.put(PROFILE_QUERY_SELECT_PROFILE_ROLES_BY_PROFILE_LOGIN,"SELECT R.NAME AS ROLE_OF_PROFILE FROM ROLE R JOIN PROFILE_ROLE PR ON PR.ROLE_ID = R.ID JOIN PROFILE P ON P.ID = PR.PROFILE_ID WHERE P.LOGIN LIKE ?");
+        sqlStringsMap.put(PROFILE_ALIAS_ROLE_OF_PROFILE,"ROLE_OF_PROFILE");
 
-        ProfileDao profileDao = new ProfileDaoImpl(dataSource, rolesMapping, selectProfileQuery, selectRolesOfProfileQuery, roleAlias);
+/*        HashMap sqlStringHolder = new HashMap();
+        OR ever object?*/
+
+
+        ProfileDaoImpl profileDaoImpl = new ProfileDaoImpl(dataSource, rolesMapping);
+        profileDaoImpl.setSelectProfileQuery(sqlStringsMap.get(PROFILE_QUERY_CHECK_CREDENTIALS));
+        profileDaoImpl.setSelectRolesOfProfileQuery(sqlStringsMap.get(PROFILE_QUERY_SELECT_PROFILE_ROLES_BY_PROFILE_LOGIN));
+        profileDaoImpl.setRoleAlias(sqlStringsMap.get(PROFILE_ALIAS_ROLE_OF_PROFILE));
+        ProfileDao profileDao = profileDaoImpl;
         context.setAttribute("profileDao", profileDao);
+
+
 
         ProfileService profileService = new ProfileServiceImpl(profileDao);
         context.setAttribute("profileService", profileService);
