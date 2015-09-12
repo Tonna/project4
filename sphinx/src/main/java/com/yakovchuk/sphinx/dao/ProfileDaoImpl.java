@@ -16,13 +16,12 @@ import java.util.Map;
 
 public class ProfileDaoImpl implements ProfileDao {
 
-    private String selectProfileQuery;
-    private String selectRolesOfProfileQuery;
-    private String roleAlias;
+    private final static Logger logger = LogManager.getLogger(ProfileDaoImpl.class);
     private final DataSource dataSource;
     private final Map<String, String> rolesMapping;
-
-    private final static Logger logger = LogManager.getLogger(ProfileDaoImpl.class);
+    private String querySelectProfileByLoginAndPassword;
+    private String querySelectProfileRolesByProfileLogin;
+    private String aliasProfileRoleOfProfile;
 
 
     public ProfileDaoImpl(DataSource dataSource, Map<String, String> rolesMapping) {
@@ -35,7 +34,7 @@ public class ProfileDaoImpl implements ProfileDao {
         Profile profile = null;
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement selectProfileStatement = connection.prepareStatement(selectProfileQuery)) {
+             PreparedStatement selectProfileStatement = connection.prepareStatement(querySelectProfileByLoginAndPassword)) {
 
             selectProfileStatement.setNString(1, login);
             selectProfileStatement.setNString(2, password);
@@ -49,11 +48,11 @@ public class ProfileDaoImpl implements ProfileDao {
                 ProfileImpl profileImp = new ProfileImpl();
 
                 ArrayList<String> roles = new ArrayList<>();
-                try (PreparedStatement preparedStatement = connection.prepareStatement(selectRolesOfProfileQuery)) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement(querySelectProfileRolesByProfileLogin)) {
                     preparedStatement.setNString(1, login);
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         while (resultSet.next()) {
-                            String role = resultSet.getString(roleAlias);
+                            String role = resultSet.getString(aliasProfileRoleOfProfile);
                             if (rolesMapping.get(role) != null) {
                                 roles.add(rolesMapping.get(role));
                             }
@@ -76,15 +75,15 @@ public class ProfileDaoImpl implements ProfileDao {
         return profile;
     }
 
-    public void setQuerySelectProfileByLoginAndPassword(String selectProfileQuery) {
-        this.selectProfileQuery = selectProfileQuery;
+    public void setQuerySelectProfileByLoginAndPassword(String querySelectProfileByLoginAndPassword) {
+        this.querySelectProfileByLoginAndPassword = querySelectProfileByLoginAndPassword;
     }
 
-    public void setQuerySelectProfileRolesByProfileLogin(String selectRolesOfProfileQuery) {
-        this.selectRolesOfProfileQuery = selectRolesOfProfileQuery;
+    public void setQuerySelectProfileRolesByProfileLogin(String querySelectProfileRolesByProfileLogin) {
+        this.querySelectProfileRolesByProfileLogin = querySelectProfileRolesByProfileLogin;
     }
 
-    public void setAliasProfileRoleOfProfile(String roleAlias) {
-        this.roleAlias = roleAlias;
+    public void setAliasProfileRoleOfProfile(String aliasProfileRoleOfProfile) {
+        this.aliasProfileRoleOfProfile = aliasProfileRoleOfProfile;
     }
 }
