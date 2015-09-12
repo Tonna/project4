@@ -34,8 +34,8 @@ public class Answer {
     }
 
     public static class Builder {
-        private String id;
-        private String text;
+        private String id = "";
+        private String text = "";
         private Boolean isCorrect = false;
 
         public Builder(){}

@@ -1,7 +1,7 @@
 package com.yakovchuk.sphinx.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 public class Exam {
 
@@ -41,10 +41,10 @@ public class Exam {
 
     public static class Builder {
 
-        private String name;
-        private Collection<Question> questions;
-        private String id;
-        private String subject;
+        private String name = "";
+        private Collection<Question> questions = new LinkedList<>();
+        private String id = "";
+        private String subject = "";
 
         public Builder(Exam exam) {
             this.name = exam.name;
@@ -53,7 +53,8 @@ public class Exam {
             this.subject = exam.subject;
         }
 
-        public Builder(){}
+        public Builder() {
+        }
 
         public Builder id(String id) {
             this.id = id;
@@ -76,9 +77,6 @@ public class Exam {
         }
 
         public Builder addQuestion(Question question) {
-            if (questions == null) {
-                questions = new ArrayList<>();
-            }
             questions.add(question);
             return this;
         }

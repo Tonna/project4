@@ -1,7 +1,7 @@
 package com.yakovchuk.sphinx.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 public class Question {
 
@@ -33,9 +33,9 @@ public class Question {
     }
 
     public static class Builder {
-        private String text;
-        private Collection<Answer> answers;
-        private String id;
+        private String text = "";
+        private Collection<Answer> answers = new LinkedList<>();
+        private String id = "";
 
         public Builder() {
         }
@@ -61,10 +61,7 @@ public class Question {
             return this;
         }
 
-        public Builder addAnswer(Answer answer){
-            if(answers == null) {
-                answers = new ArrayList<>();
-            }
+        public Builder addAnswer(Answer answer) {
             answers.add(answer);
             return this;
         }
