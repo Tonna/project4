@@ -3,6 +3,8 @@ package com.yakovchuk.sphinx.dao;
 import com.yakovchuk.sphinx.profile.NullProfile;
 import com.yakovchuk.sphinx.profile.Profile;
 import com.yakovchuk.sphinx.profile.ProfileImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -20,6 +22,7 @@ public class ProfileDaoImpl implements ProfileDao {
     private final DataSource dataSource;
     private final Map<String, String> rolesMapping;
 
+    private final static Logger logger = LogManager.getLogger(ProfileDaoImpl.class);
 
 
     public ProfileDaoImpl(DataSource dataSource, Map<String, String> rolesMapping) {
@@ -67,9 +70,9 @@ public class ProfileDaoImpl implements ProfileDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Unable to retrieve profile with login {}", login);
+            throw new SphinxSQLException(e);
         }
-
         return profile;
     }
 

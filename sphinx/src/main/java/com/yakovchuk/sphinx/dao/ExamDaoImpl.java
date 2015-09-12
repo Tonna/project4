@@ -3,6 +3,8 @@ package com.yakovchuk.sphinx.dao;
 import com.yakovchuk.sphinx.domain.Answer;
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.domain.Question;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -13,13 +15,17 @@ import java.util.LinkedHashMap;
 
 public class ExamDaoImpl implements ExamDao {
 
+    private final static Logger logger = LogManager.getLogger(ExamDaoImpl.class);
+
+    private static final String LANGUAGE_ID_ALIAS = "LANGUAGE_ID";
+    private static final String SUBJECT_ID_ALIAS = "SUBJECT_ID";
     private final DataSource dataSource;
-    public static final String SELECT_LANGUAGE_BY_ID = "SELECT ID FROM LANGUAGE WHERE CODE LIKE ?";
+    public static final String SELECT_LANGUAGE_BY_ID = "SELECT ID AS LANGUAGE_ID FROM LANGUAGE WHERE CODE LIKE ?";
     public static final String INSERT_SUBJECT = "INSERT INTO SUBJECT (NAME, LANGUAGE_ID) VALUES(?,?)";
     public static final String INSERT_EXAM = "INSERT INTO EXAM (SUBJECT_ID, NAME) VALUES(?,?)";
     public static final String INSERT_QUESTION = "INSERT INTO QUESTION (EXAM_ID, TEXT) VALUES(?,?)";
     public static final String INSERT_ANSWER = "INSERT INTO ANSWER (QUESTION_ID, TEXT, IS_CORRECT) VALUES(?,?,?)";
-    public static final String SELECT_SUBJECT_BY_ID = "SELECT ID FROM SUBJECT WHERE NAME LIKE ?";
+    public static final String SELECT_SUBJECT_BY_ID = "SELECT ID AS SUBJECT_ID FROM SUBJECT WHERE NAME LIKE ?";
     public static final String SUBJECT_ID_COLUMN = "ID";
     public static final String EXAM_ID_COLUMN = "ID";
     public static final String QUESTION_ID_COLUMN = "ID";
@@ -33,20 +39,19 @@ public class ExamDaoImpl implements ExamDao {
     private static final String ANSWER_ID_ALIAS = "ANSWER_ID";
     private static final String ANSWER_TEXT_ALIAS = "ANSWER_TEXT";
     private static final String ANSWER_IS_CORRECT_ALIAS = "ANSWER_IS_CORRECT";
-    public static final String GET_ALL_EXAMS = "SELECT EXAM.ID" + " AS " + "EXAM_ID" + ", " + "EXAM.NAME" + " AS EXAM_NAME, SUBJECT.NAME AS SUBJECT_NAME, QUESTION.ID AS QUESTION_ID, QUESTION.TEXT AS QUESTION_TEXT, ANSWER.ID AS ANSWER_ID, ANSWER.TEXT AS ANSWER_TEXT, ANSWER.IS_CORRECT AS ANSWER_IS_CORRECT FROM EXAM JOIN SUBJECT ON EXAM.SUBJECT_ID = SUBJECT.ID JOIN QUESTION ON EXAM.ID = QUESTION.EXAM_ID JOIN ANSWER ON QUESTION.ID = ANSWER.QUESTION_ID";
-    public static final String GET_EXAM_BY_ID = GET_ALL_EXAMS + " WHERE EXAM.ID = ?";
+    public static final String GET_EXAM_BY_ID = "SELECT EXAM.ID AS EXAM_ID, EXAM.NAME AS EXAM_NAME, SUBJECT.NAME AS SUBJECT_NAME, QUESTION.ID AS QUESTION_ID, QUESTION.TEXT AS QUESTION_TEXT, ANSWER.ID AS ANSWER_ID, ANSWER.TEXT AS ANSWER_TEXT, ANSWER.IS_CORRECT AS ANSWER_IS_CORRECT FROM EXAM JOIN SUBJECT ON EXAM.SUBJECT_ID = SUBJECT.ID JOIN QUESTION ON EXAM.ID = QUESTION.EXAM_ID JOIN ANSWER ON QUESTION.ID = ANSWER.QUESTION_ID WHERE EXAM.ID = ?";
 
     public ExamDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     @Override
-    public Exam get(String id) {
+    public Exam get(String examId) {
         Exam.Builder examBuilder = new Exam.Builder();
 
         try (Connection con = getConnection();
              CallableStatement callableStatement = con.prepareCall(GET_EXAM_BY_ID)) {
-            callableStatement.setNString(1, id);
+            callableStatement.setNString(1, examId);
 
             try (ResultSet resultSet = callableStatement.executeQuery()) {
 
@@ -80,14 +85,15 @@ public class ExamDaoImpl implements ExamDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to retrieve exam with examId {}", examId);
+            throw new SphinxSQLException(e);
         }
-
         return examBuilder.build();
     }
 
     /**
-     * This method currently not supported. TODO Delete?
+     * This method currently not supported.
+     * TODO Delete?
      */
     @Override
     public Collection<Exam> getAll() {
@@ -99,35 +105,38 @@ public class ExamDaoImpl implements ExamDao {
 
         try (Connection con = getConnection();
              PreparedStatement selectLanguage = con.prepareStatement(SELECT_LANGUAGE_BY_ID);
+             PreparedStatement selectSubject = con.prepareStatement(SELECT_SUBJECT_BY_ID);
              PreparedStatement insertSubject = con.prepareStatement(INSERT_SUBJECT, new String[]{SUBJECT_ID_COLUMN});
              PreparedStatement insertExam = con.prepareStatement(INSERT_EXAM, new String[]{EXAM_ID_COLUMN});
              PreparedStatement insertQuestion = con.prepareStatement(INSERT_QUESTION, new String[]{QUESTION_ID_COLUMN});
-             PreparedStatement insertAnswer = con.prepareStatement(INSERT_ANSWER, new String[]{ANSWER_ID_COLUMN});
-             PreparedStatement selectSubject = con.prepareStatement(SELECT_SUBJECT_BY_ID)) {
+             PreparedStatement insertAnswer = con.prepareStatement(INSERT_ANSWER, new String[]{ANSWER_ID_COLUMN})) {
 
             con.setAutoCommit(false);
 
             //TODO set real language selection
-            selectLanguage.setNString(1, "en");
+            String languageCode = "en";
+            selectLanguage.setNString(1, languageCode);
             String languageId;
             try (ResultSet languageResultSet = selectLanguage.executeQuery()) {
-                languageResultSet.next();
-                //XXX bug will be here
-                languageId = languageResultSet.getString(1);
+                if (languageResultSet.next()) {
+                    languageId = languageResultSet.getString(LANGUAGE_ID_ALIAS);
+                } else {
+                    logger.error("Cannot find language with code {}", languageCode);
+                    throw new SphinxSQLException("No language with code '" + languageCode + "'");
+                }
             }
 
             selectSubject.setNString(1, toCreate.getSubject());
             String subjectId;
             try (ResultSet selectSubjectRS = selectSubject.executeQuery()) {
                 if (selectSubjectRS.next()) {
-                    subjectId = selectSubjectRS.getString(1);
+                    subjectId = selectSubjectRS.getString(SUBJECT_ID_ALIAS);
                 } else {
                     insertSubject.setNString(1, toCreate.getSubject());
                     insertSubject.setNString(2, languageId);
                     insertSubject.execute();
                     try (ResultSet generatedKeys = insertSubject.getGeneratedKeys()) {
                         generatedKeys.next();
-                        //XXX bug will be here
                         subjectId = generatedKeys.getString(1);
                     }
                 }
@@ -140,7 +149,6 @@ public class ExamDaoImpl implements ExamDao {
             String examId;
             try (ResultSet generatedKeysExam = insertExam.getGeneratedKeys();) {
                 generatedKeysExam.next();
-                //XXX bug will be here
                 examId = generatedKeysExam.getString(1);
             }
 
@@ -151,7 +159,6 @@ public class ExamDaoImpl implements ExamDao {
                 String questionId;
                 try (ResultSet questionRS = insertQuestion.getGeneratedKeys()) {
                     questionRS.next();
-                    //XXX bug will be here
                     questionId = questionRS.getString(1);
                 }
 
@@ -165,7 +172,8 @@ public class ExamDaoImpl implements ExamDao {
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to create exam {}", toCreate);
+            throw new SphinxSQLException(e);
         }
         return toCreate;
     }
@@ -196,7 +204,8 @@ public class ExamDaoImpl implements ExamDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to retrieve exams without questions");
+            throw new SphinxSQLException(e);
         }
         return exams;
     }
