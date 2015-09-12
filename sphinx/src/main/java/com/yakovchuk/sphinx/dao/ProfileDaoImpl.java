@@ -76,15 +76,15 @@ public class ProfileDaoImpl implements ProfileDao {
         return profile;
     }
 
-    public void setSelectProfileQuery(String selectProfileQuery) {
+    public void setQuerySelectProfileByLoginAndPassword(String selectProfileQuery) {
         this.selectProfileQuery = selectProfileQuery;
     }
 
-    public void setSelectRolesOfProfileQuery(String selectRolesOfProfileQuery) {
+    public void setQuerySelectProfileRolesByProfileLogin(String selectRolesOfProfileQuery) {
         this.selectRolesOfProfileQuery = selectRolesOfProfileQuery;
     }
 
-    public void setRoleAlias(String roleAlias) {
+    public void setAliasProfileRoleOfProfile(String roleAlias) {
         this.roleAlias = roleAlias;
     }
 }
