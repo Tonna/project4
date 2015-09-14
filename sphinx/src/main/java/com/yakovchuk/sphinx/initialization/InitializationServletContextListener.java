@@ -103,13 +103,13 @@ public class InitializationServletContextListener implements ServletContextListe
         sqlStringsMap.put(ALIAS_EXAM_ID, "EXAM_ID");
         sqlStringsMap.put(ALIAS_SUBJECT_NAME, "SUBJECT_NAME");
         sqlStringsMap.put(ALIAS_EXAM_NAME, "EXAM_NAME");
-        sqlStringsMap.put(QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS, "SELECT EXAM.ID AS EXAM_ID, EXAM.NAME AS EXAM_NAME, SUBJECT.NAME AS SUBJECT_NAME FROM EXAM JOIN SUBJECT ON SUBJECT.ID,EXAM.SUBJECT_ID");
+        sqlStringsMap.put(QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS, "SELECT EXAM.ID AS EXAM_ID, EXAM.NAME AS EXAM_NAME, SUBJECT.NAME AS SUBJECT_NAME FROM EXAM JOIN SUBJECT ON SUBJECT.ID = EXAM.SUBJECT_ID");
         sqlStringsMap.put(ALIAS_QUESTION_ID, "QUESTION_ID");
         sqlStringsMap.put(ALIAS_QUESTION_TEXT, "QUESTION_TEXT");
         sqlStringsMap.put(ALIAS_ANSWER_ID, "ANSWER_ID");
         sqlStringsMap.put(ALIAS_ANSWER_TEXT, "ANSWER_TEXT");
         sqlStringsMap.put(ALIAS_ANSWER_IS_CORRECT, "ANSWER_IS_CORRECT");
-        sqlStringsMap.put(QUERY_SELECT_EXAM_BY_ID, "SELECT EXAM.ID AS EXAM_ID, EXAM.NAME AS EXAM_NAME, SUBJECT.NAME AS SUBJECT_NAME, QUESTION.ID AS QUESTION_ID, QUESTION.TEXT AS QUESTION_TEXT, ANSWER.ID AS ANSWER_ID, ANSWER.TEXT AS ANSWER_TEXT, ANSWER.IS_CORRECT AS ANSWER_IS_CORRECT FROM EXAM JOIN SUBJECT ON EXAM.SUBJECT_ID,SUBJECT.ID JOIN QUESTION ON EXAM.ID,QUESTION.EXAM_ID JOIN ANSWER ON QUESTION.ID,ANSWER.QUESTION_ID WHERE EXAM.ID,?");
+        sqlStringsMap.put(QUERY_SELECT_EXAM_BY_ID, "SELECT EXAM.ID AS EXAM_ID, EXAM.NAME AS EXAM_NAME, SUBJECT.NAME AS SUBJECT_NAME, QUESTION.ID AS QUESTION_ID, QUESTION.TEXT AS QUESTION_TEXT, ANSWER.ID AS ANSWER_ID, ANSWER.TEXT AS ANSWER_TEXT, ANSWER.IS_CORRECT AS ANSWER_IS_CORRECT FROM EXAM JOIN SUBJECT ON EXAM.SUBJECT_ID = SUBJECT.ID JOIN QUESTION ON EXAM.ID = QUESTION.EXAM_ID JOIN ANSWER ON QUESTION.ID = ANSWER.QUESTION_ID WHERE EXAM.ID = ?");
 
 
 /*        HashMap sqlStringHolder = new HashMap();
@@ -133,26 +133,26 @@ public class InitializationServletContextListener implements ServletContextListe
 
         examDaoImpl.setAliasLanguageId(sqlStringsMap.get(ALIAS_LANGUAGE_ID));
         examDaoImpl.setAliasSubjectId(sqlStringsMap.get(ALIAS_SUBJECT_ID));
-        examDaoImpl.setQuerySelectLanguageById(QUERY_SELECT_LANGUAGE_BY_ID);
-        examDaoImpl.setQueryInsertSubject(QUERY_INSERT_SUBJECT);
-        examDaoImpl.setQueryInsertExam(QUERY_INSERT_EXAM);
-        examDaoImpl.setQueryInsertQuestion(QUERY_INSERT_QUESTION);
-        examDaoImpl.setQueryInsertAnswer(QUERY_INSERT_ANSWER);
-        examDaoImpl.setQuerySelectSubjectById(QUERY_SELECT_SUBJECT_BY_ID);
-        examDaoImpl.setColumnSubjectId(COLUMN_SUBJECT_ID);
-        examDaoImpl.setColumnExamId(COLUMN_EXAM_ID);
-        examDaoImpl.setColumnQuestionId(COLUMN_QUESTION_ID);
-        examDaoImpl.setColumnAnswerId(COLUMN_ANSWER_ID);
-        examDaoImpl.setAliasExamId(ALIAS_EXAM_ID);
-        examDaoImpl.setAliasSubjectName(ALIAS_SUBJECT_NAME);
-        examDaoImpl.setAliasExamName(ALIAS_EXAM_NAME);
-        examDaoImpl.setQuerySelectExamsWithoutQuestions(QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS);
-        examDaoImpl.setAliasQuestionId(ALIAS_QUESTION_ID);
-        examDaoImpl.setAliasQuestionText(ALIAS_QUESTION_TEXT);
-        examDaoImpl.setAliasAnswerId(ALIAS_ANSWER_ID);
-        examDaoImpl.setAliasAnswerText(ALIAS_ANSWER_TEXT);
-        examDaoImpl.setAliasAnswerIsCorrect(ALIAS_ANSWER_IS_CORRECT);
-        examDaoImpl.setQuerySelectExamById(QUERY_SELECT_EXAM_BY_ID);
+        examDaoImpl.setQuerySelectLanguageById(sqlStringsMap.get(QUERY_SELECT_LANGUAGE_BY_ID));
+        examDaoImpl.setQueryInsertSubject(sqlStringsMap.get(QUERY_INSERT_SUBJECT));
+        examDaoImpl.setQueryInsertExam(sqlStringsMap.get(QUERY_INSERT_EXAM));
+        examDaoImpl.setQueryInsertQuestion(sqlStringsMap.get(QUERY_INSERT_QUESTION));
+        examDaoImpl.setQueryInsertAnswer(sqlStringsMap.get(QUERY_INSERT_ANSWER));
+        examDaoImpl.setQuerySelectSubjectById(sqlStringsMap.get(QUERY_SELECT_SUBJECT_BY_ID));
+        examDaoImpl.setColumnSubjectId(sqlStringsMap.get(COLUMN_SUBJECT_ID));
+        examDaoImpl.setColumnExamId(sqlStringsMap.get(COLUMN_EXAM_ID));
+        examDaoImpl.setColumnQuestionId(sqlStringsMap.get(COLUMN_QUESTION_ID));
+        examDaoImpl.setColumnAnswerId(sqlStringsMap.get(COLUMN_ANSWER_ID));
+        examDaoImpl.setAliasExamId(sqlStringsMap.get(ALIAS_EXAM_ID));
+        examDaoImpl.setAliasSubjectName(sqlStringsMap.get(ALIAS_SUBJECT_NAME));
+        examDaoImpl.setAliasExamName(sqlStringsMap.get(ALIAS_EXAM_NAME));
+        examDaoImpl.setQuerySelectExamsWithoutQuestions(sqlStringsMap.get(QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS));
+        examDaoImpl.setAliasQuestionId(sqlStringsMap.get(ALIAS_QUESTION_ID));
+        examDaoImpl.setAliasQuestionText(sqlStringsMap.get(ALIAS_QUESTION_TEXT));
+        examDaoImpl.setAliasAnswerId(sqlStringsMap.get(ALIAS_ANSWER_ID));
+        examDaoImpl.setAliasAnswerText(sqlStringsMap.get(ALIAS_ANSWER_TEXT));
+        examDaoImpl.setAliasAnswerIsCorrect(sqlStringsMap.get(ALIAS_ANSWER_IS_CORRECT));
+        examDaoImpl.setQuerySelectExamById(sqlStringsMap.get(QUERY_SELECT_EXAM_BY_ID));
 
         examDao = examDaoImpl;
         ExamServiceImpl examService = new ExamServiceImpl();
