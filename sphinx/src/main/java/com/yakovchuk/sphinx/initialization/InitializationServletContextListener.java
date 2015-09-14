@@ -1,12 +1,10 @@
 package com.yakovchuk.sphinx.initialization;
 
-import com.yakovchuk.sphinx.dao.ExamDao;
-import com.yakovchuk.sphinx.dao.ExamDaoImpl;
-import com.yakovchuk.sphinx.dao.ProfileDao;
-import com.yakovchuk.sphinx.dao.ProfileDaoImpl;
+import com.yakovchuk.sphinx.dao.*;
 import com.yakovchuk.sphinx.service.ExamServiceImpl;
 import com.yakovchuk.sphinx.service.ProfileService;
 import com.yakovchuk.sphinx.service.ProfileServiceImpl;
+import com.yakovchuk.sphinx.service.SubjectServiceImpl;
 import com.yakovchuk.sphinx.util.ExamCheckerImp;
 import com.yakovchuk.sphinx.util.ExamCreationMapper;
 import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
@@ -121,25 +119,33 @@ public class InitializationServletContextListener implements ServletContextListe
         profileDaoImpl.setQuerySelectProfileRolesByProfileLogin(sqlStringsMap.get(QUERY_SELECT_PROFILE_ROLES_BY_PROFILE_LOGIN));
         profileDaoImpl.setAliasProfileRoleOfProfile(sqlStringsMap.get(ALIAS_PROFILE_ROLE_OF_PROFILE));
 
-        ProfileDao profileDao = profileDaoImpl;
-        context.setAttribute("profileDao", profileDao);
+        context.setAttribute("profileDao", profileDaoImpl);
 
 
-        ProfileService profileService = new ProfileServiceImpl(profileDao);
+        ProfileService profileService = new ProfileServiceImpl(profileDaoImpl);
         context.setAttribute("profileService", profileService);
+
+        SubjectDao subjectDao;
+        SubjectDaoImpl subjectDaoImpl = new SubjectDaoImpl(dataSource);
+        subjectDaoImpl.setAliasLanguageId(sqlStringsMap.get(ALIAS_LANGUAGE_ID));
+        subjectDaoImpl.setAliasSubjectId(sqlStringsMap.get(ALIAS_SUBJECT_ID));
+        subjectDaoImpl.setQuerySelectLanguageById(sqlStringsMap.get(QUERY_SELECT_LANGUAGE_BY_ID));
+        subjectDaoImpl.setQueryInsertSubject(sqlStringsMap.get(QUERY_INSERT_SUBJECT));
+        subjectDaoImpl.setQuerySelectSubjectById(sqlStringsMap.get(QUERY_SELECT_SUBJECT_BY_ID));
+        subjectDaoImpl.setColumnSubjectId(sqlStringsMap.get(COLUMN_SUBJECT_ID));
+        subjectDao = subjectDaoImpl;
+
+        SubjectServiceImpl subjectService = new SubjectServiceImpl();
+        subjectService.setSubjectDao(subjectDao);
+
+        context.setAttribute("subjectService", subjectService);
 
         ExamDao examDao;
         ExamDaoImpl examDaoImpl = new ExamDaoImpl(dataSource);
 
-        examDaoImpl.setAliasLanguageId(sqlStringsMap.get(ALIAS_LANGUAGE_ID));
-        examDaoImpl.setAliasSubjectId(sqlStringsMap.get(ALIAS_SUBJECT_ID));
-        examDaoImpl.setQuerySelectLanguageById(sqlStringsMap.get(QUERY_SELECT_LANGUAGE_BY_ID));
-        examDaoImpl.setQueryInsertSubject(sqlStringsMap.get(QUERY_INSERT_SUBJECT));
         examDaoImpl.setQueryInsertExam(sqlStringsMap.get(QUERY_INSERT_EXAM));
         examDaoImpl.setQueryInsertQuestion(sqlStringsMap.get(QUERY_INSERT_QUESTION));
         examDaoImpl.setQueryInsertAnswer(sqlStringsMap.get(QUERY_INSERT_ANSWER));
-        examDaoImpl.setQuerySelectSubjectById(sqlStringsMap.get(QUERY_SELECT_SUBJECT_BY_ID));
-        examDaoImpl.setColumnSubjectId(sqlStringsMap.get(COLUMN_SUBJECT_ID));
         examDaoImpl.setColumnExamId(sqlStringsMap.get(COLUMN_EXAM_ID));
         examDaoImpl.setColumnQuestionId(sqlStringsMap.get(COLUMN_QUESTION_ID));
         examDaoImpl.setColumnAnswerId(sqlStringsMap.get(COLUMN_ANSWER_ID));
@@ -157,6 +163,7 @@ public class InitializationServletContextListener implements ServletContextListe
         examDao = examDaoImpl;
         ExamServiceImpl examService = new ExamServiceImpl();
         examService.setExamDao(examDao);
+
         context.setAttribute("examService", examService);
 
         HashMap<String, String> actionRoleMapping = new HashMap<>();

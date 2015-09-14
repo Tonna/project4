@@ -1,7 +1,9 @@
 package com.yakovchuk.sphinx.controller;
 
 import com.yakovchuk.sphinx.domain.Exam;
+import com.yakovchuk.sphinx.domain.Subject;
 import com.yakovchuk.sphinx.service.ExamService;
+import com.yakovchuk.sphinx.service.SubjectService;
 import com.yakovchuk.sphinx.util.ExamChecker;
 import com.yakovchuk.sphinx.util.ExamCreationMapper;
 import com.yakovchuk.sphinx.util.ExamMapper;
@@ -9,6 +11,7 @@ import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ public class ExamServlet extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger(ExamServlet.class);
     private ExamService examService;
+    private SubjectService subjectService;
     private ExamMapper examSubmissionMapper;
     private ExamMapper examCreationMapper;
     private ExamChecker examChecker;
@@ -31,10 +35,12 @@ public class ExamServlet extends HttpServlet {
     public void init() throws ServletException {
         logger.info("ExamServlet initiation started");
 
-        examService = (ExamService) getServletContext().getAttribute("examService");
-        examSubmissionMapper = (ExamSubmissionMapper) getServletContext().getAttribute("examSubmissionMapper");
-        examCreationMapper = (ExamCreationMapper) getServletContext().getAttribute("examCreationMapper");
-        examChecker = (ExamChecker) getServletContext().getAttribute("examChecker");
+        ServletContext servletContext = getServletContext();
+        examService = (ExamService) servletContext.getAttribute("examService");
+        subjectService = (SubjectService) servletContext.getAttribute("subjectService");
+        examSubmissionMapper = (ExamSubmissionMapper) servletContext.getAttribute("examSubmissionMapper");
+        examCreationMapper = (ExamCreationMapper) servletContext.getAttribute("examCreationMapper");
+        examChecker = (ExamChecker) servletContext.getAttribute("examChecker");
 
         logger.info("ExamServlet initiation finished");
     }
@@ -53,7 +59,14 @@ public class ExamServlet extends HttpServlet {
             request.setAttribute("exam", examService.getExam(request.getParameter("id")));
             goToPage(request, response, "WEB-INF/view/takeExam.jsp");
         } else if (create.equals(action)) {
+            //TODO make user set language
+            request.getSession().setAttribute("languageCode", "en");
+
             Exam createdExam = examCreationMapper.mapExam(request.getParameterMap());
+            if(createdExam.getSubject().getId().isEmpty()) {
+                Subject createdSubject = subjectService.createSubject(createdExam.getSubject().getName(), (String) request.getSession().getAttribute("languageCode"));
+                createdExam = new Exam.Builder(createdExam).subject(createdSubject).build();
+            }
             examService.createExam(createdExam);
             goToExamsPage(request, response);
         } else if (submit.equals(action)) {

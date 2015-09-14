@@ -19,23 +19,18 @@ public class ExamDaoImpl implements ExamDao {
     private final static Logger logger = LogManager.getLogger(ExamDaoImpl.class);
 
     private final DataSource dataSource;
-    private String querySelectLanguageById;
+
     private String queryInsertAnswer;
     private String queryInsertExam;
     private String queryInsertQuestion;
-    private String queryInsertSubject;
     private String querySelectExamById;
     private String querySelectExamsWithoutQuestions;
-    private String querySelectSubjectById;
-    private String columnSubjectId;
     private String columnExamId;
     private String columnQuestionId;
     private String columnAnswerId;
     private String aliasExamId;
     private String aliasExamName;
     private String aliasSubjectName;
-    private String aliasLanguageId;
-    private String aliasSubjectId;
     private String aliasQuestionId;
     private String aliasQuestionText;
     private String aliasAnswerId;
@@ -105,45 +100,12 @@ public class ExamDaoImpl implements ExamDao {
     public Exam create(Exam toCreate) {
 
         try (Connection con = getConnection();
-             PreparedStatement selectLanguage = con.prepareStatement(querySelectLanguageById);
-             PreparedStatement selectSubject = con.prepareStatement(querySelectSubjectById);
-             PreparedStatement insertSubject = con.prepareStatement(queryInsertSubject, new String[]{columnSubjectId});
              PreparedStatement insertExam = con.prepareStatement(queryInsertExam, new String[]{columnExamId});
              PreparedStatement insertQuestion = con.prepareStatement(queryInsertQuestion, new String[]{columnQuestionId});
              PreparedStatement insertAnswer = con.prepareStatement(queryInsertAnswer, new String[]{columnAnswerId})) {
-
             con.setAutoCommit(false);
 
-            //TODO set real language selection
-            String languageCode = "en";
-            selectLanguage.setNString(1, languageCode);
-            String languageId;
-            try (ResultSet languageResultSet = selectLanguage.executeQuery()) {
-                if (languageResultSet.next()) {
-                    languageId = languageResultSet.getString(aliasLanguageId);
-                } else {
-                    logger.error("Cannot find language with code {}", languageCode);
-                    throw new SphinxSQLException("No language with code '" + languageCode + "'");
-                }
-            }
-
-            selectSubject.setNString(1, toCreate.getSubject().getName());
-            String subjectId;
-            try (ResultSet selectSubjectRS = selectSubject.executeQuery()) {
-                if (selectSubjectRS.next()) {
-                    subjectId = selectSubjectRS.getString(aliasSubjectId);
-                } else {
-                    insertSubject.setNString(1, toCreate.getSubject().getName());
-                    insertSubject.setNString(2, languageId);
-                    insertSubject.execute();
-                    try (ResultSet generatedKeys = insertSubject.getGeneratedKeys()) {
-                        generatedKeys.next();
-                        subjectId = generatedKeys.getString(1);
-                    }
-                }
-            }
-
-            insertExam.setNString(1, subjectId);
+            insertExam.setNString(1, toCreate.getSubject().getId());
             insertExam.setNString(2, toCreate.getName());
             insertExam.execute();
 
@@ -238,14 +200,6 @@ public class ExamDaoImpl implements ExamDao {
         this.aliasQuestionId = aliasQuestionId;
     }
 
-    public void setAliasSubjectId(String aliasSubjectId) {
-        this.aliasSubjectId = aliasSubjectId;
-    }
-
-    public void setAliasLanguageId(String aliasLanguageId) {
-        this.aliasLanguageId = aliasLanguageId;
-    }
-
     public void setQuerySelectExamById(String querySelectExamById) {
         this.querySelectExamById = querySelectExamById;
     }
@@ -278,14 +232,6 @@ public class ExamDaoImpl implements ExamDao {
         this.columnExamId = columnExamId;
     }
 
-    public void setColumnSubjectId(String columnSubjectId) {
-        this.columnSubjectId = columnSubjectId;
-    }
-
-    public void setQuerySelectSubjectById(String querySelectSubjectById) {
-        this.querySelectSubjectById = querySelectSubjectById;
-    }
-
     public void setQueryInsertAnswer(String queryInsertAnswer) {
         this.queryInsertAnswer = queryInsertAnswer;
     }
@@ -298,11 +244,4 @@ public class ExamDaoImpl implements ExamDao {
         this.queryInsertExam = queryInsertExam;
     }
 
-    public void setQueryInsertSubject(String queryInsertSubject) {
-        this.queryInsertSubject = queryInsertSubject;
-    }
-
-    public void setQuerySelectLanguageById(String querySelectLanguageById) {
-        this.querySelectLanguageById = querySelectLanguageById;
-    }
 }
