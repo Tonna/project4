@@ -12,7 +12,7 @@ after code is done and write tests and make test coverage 95%, code, low,
 on exam creation tutor can pick one of existing subjects (for tutors language) or create his own (look at arwen app something simmilar is there), UI, medium,
 store in profile (db) last profiles language choise and use it on login, functional, low,
 create some nice (minimalistic  neat  easy to understand  pleasant to look at) style sheet. It should work in IE, UI, low,
-write DAO classes to retrieve and save data in DB. Login. get subjects and exams for language. get exam. create exam. Queries should be stored separate from code, db, high,
+write DAO classes to retrieve and save data in DB. Login. get subjects and exams for language. get exam. create exam. Queries should be stored separate from code, db, high,true
 generate 4 exams for 3 subjects (inserts in db) for English. generate 3 students and 2 tutors profiles, db, high,true
 If logged in user goes to login page or to app root (/sphinx/) and presses login without filling the form he will go to exam view page. Make it so that logged user after going to that pages was automatically redirected to exams page?, bug, medium,
 refactor build.xml and make it clear and not confusing, build, low,
