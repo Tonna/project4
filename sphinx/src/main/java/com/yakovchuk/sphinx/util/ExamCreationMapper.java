@@ -3,8 +3,12 @@ package com.yakovchuk.sphinx.util;
 import com.yakovchuk.sphinx.domain.Answer;
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.domain.Question;
+import com.yakovchuk.sphinx.domain.Subject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExamCreationMapper implements ExamMapper {
 
@@ -13,7 +17,7 @@ public class ExamCreationMapper implements ExamMapper {
         return buildQuestions(parameterMap,
                 new Exam.Builder()
                         .name(parameterMap.get("examName")[0])
-                        .subject(parameterMap.get("subject")[0]))
+                        .subject(new Subject.Builder().name(parameterMap.get("subject")[0]).build()))
                 .build();
     }
 

@@ -3,6 +3,7 @@ package com.yakovchuk.sphinx.dao.mock;
 import com.yakovchuk.sphinx.domain.Answer;
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.domain.Question;
+import com.yakovchuk.sphinx.domain.Subject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,8 @@ import java.util.Map;
 public class ExamDataProvider {
 
     public static Exam getExam1Original() {
-        return new Exam.Builder().id("1").subject("Math").name("Basic math")
+        return new Exam.Builder().id("1").name("Basic math").
+                subject(new Subject.Builder().name("Math").build())
                 .addQuestion(new Question.Builder().id("16").text("2 ^ 10 = ?")
                         .addAnswer(new Answer.Builder().text("1024").isCorrect(true).id("13").build())
                         .addAnswer(new Answer.Builder().text("20").isCorrect(false).id("14").build())
@@ -34,7 +36,8 @@ public class ExamDataProvider {
     }
 
     public static Exam getExam2Original() {
-        return new Exam.Builder().name("Despair exam").id("2").subject("Software development")
+        return new Exam.Builder().name("Despair exam").id("2")
+                .subject(new Subject.Builder().name("Software development").build())
                 .addQuestion(new Question.Builder().text("Maybe I should type less? Is there a way to develop software fast?").id("23")
                         .addAnswer(new Answer.Builder().text("No").isCorrect(false).id("22").build())
                         .addAnswer(new Answer.Builder().text("Yes").isCorrect(true).id("21").build())
@@ -58,7 +61,8 @@ public class ExamDataProvider {
     }
 
     public static Exam getExam3Original() {
-        return new Exam.Builder().id("3").name("dummy exam").subject("development")
+        return new Exam.Builder().id("3").name("dummy exam")
+                .subject(new Subject.Builder().name("development").build())
                 .addQuestion(
                         new Question.Builder().id("11").text("first question of dummy exam")
                                 .addAnswer(new Answer.Builder().id("111").text("first answer - wrong").build())
@@ -80,7 +84,8 @@ public class ExamDataProvider {
     }
 
     public static Exam getExam3OriginalWithoutIds() {
-        return new Exam.Builder().name("dummy exam").subject("development")
+        return new Exam.Builder().name("dummy exam")
+                .subject(new Subject.Builder().name("development").build())
                 .addQuestion(
                         new Question.Builder().text("first question of dummy exam")
                                 .addAnswer(new Answer.Builder().text("first answer - wrong").build())
@@ -156,7 +161,8 @@ public class ExamDataProvider {
     }
 
     public static Exam getExam4Original() {
-        return new Exam.Builder().name("Adjectives. Select correct adjective").subject("English vocabulary")
+        return new Exam.Builder().name("Adjectives. Select correct adjective")
+                .subject(new Subject.Builder().name("English").build())
                 .addQuestion(new Question.Builder().text("The girls were mad because they could not play")
                         .addAnswer(new Answer.Builder().text("happy").build())
                         .addAnswer(new Answer.Builder().text("sad").build())
@@ -177,7 +183,8 @@ public class ExamDataProvider {
     }
 
     public static Exam getExam5Original() {
-        return new Exam.Builder().name("Division").subject("Math")
+        return new Exam.Builder().name("Division")
+                .subject(new Subject.Builder().name("Math").build())
                 .addQuestion(new Question.Builder().text("5 / 5")
                         .addAnswer(new Answer.Builder().text("2").build())
                         .addAnswer(new Answer.Builder().text("5").build())

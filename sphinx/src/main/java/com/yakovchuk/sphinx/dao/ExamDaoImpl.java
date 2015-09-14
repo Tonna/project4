@@ -3,6 +3,7 @@ package com.yakovchuk.sphinx.dao;
 import com.yakovchuk.sphinx.domain.Answer;
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.domain.Question;
+import com.yakovchuk.sphinx.domain.Subject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,7 +59,7 @@ public class ExamDaoImpl implements ExamDao {
                 if (resultSet.next()) {
                     examBuilder = examBuilder.id(resultSet.getString(aliasExamId))
                             .name(resultSet.getString(aliasExamName))
-                            .subject(resultSet.getString(aliasSubjectName));
+                            .subject(new Subject.Builder().name(resultSet.getString(aliasSubjectName)).build());
 
                     LinkedHashMap<String, Question.Builder> questionBuilders = new LinkedHashMap<>();
 
@@ -126,13 +127,13 @@ public class ExamDaoImpl implements ExamDao {
                 }
             }
 
-            selectSubject.setNString(1, toCreate.getSubject());
+            selectSubject.setNString(1, toCreate.getSubject().getName());
             String subjectId;
             try (ResultSet selectSubjectRS = selectSubject.executeQuery()) {
                 if (selectSubjectRS.next()) {
                     subjectId = selectSubjectRS.getString(aliasSubjectId);
                 } else {
-                    insertSubject.setNString(1, toCreate.getSubject());
+                    insertSubject.setNString(1, toCreate.getSubject().getName());
                     insertSubject.setNString(2, languageId);
                     insertSubject.execute();
                     try (ResultSet generatedKeys = insertSubject.getGeneratedKeys()) {
@@ -199,7 +200,7 @@ public class ExamDaoImpl implements ExamDao {
             while (resultSet.next()) {
                 Exam exam = new Exam.Builder().id(resultSet.getString(aliasExamId))
                         .name(resultSet.getString(aliasExamName))
-                        .subject(resultSet.getString(aliasSubjectName)).build();
+                        .subject(new Subject.Builder().name(resultSet.getString(aliasSubjectName)).build()).build();
                 exams.add(exam);
             }
 

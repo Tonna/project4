@@ -14,16 +14,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class ExamServlet extends HttpServlet {
 
+    private static final Logger logger = LogManager.getLogger(ExamServlet.class);
     private ExamService examService;
     private ExamMapper examSubmissionMapper;
     private ExamMapper examCreationMapper;
     private ExamChecker examChecker;
-
-    private static final Logger logger = LogManager.getLogger(ExamServlet.class);
 
     @Override
     public void init() throws ServletException {
@@ -77,17 +79,17 @@ public class ExamServlet extends HttpServlet {
 
     /*TODO Move this displaying logic to separate jstl? Or just move it to jsp*/
     private TreeMap<String, Collection<Exam>> groupBySubjects(Collection<Exam> examHeaders) {
-        TreeMap<String, Collection<Exam>> subjectExamMap = new TreeMap<>();
+        TreeMap<String, Collection<Exam>> subjectsNameExamMap = new TreeMap<>();
         for (Exam exam : examHeaders) {
-            if (subjectExamMap.containsKey(exam.getSubject())) {
-                subjectExamMap.get(exam.getSubject()).add(exam);
+            if (subjectsNameExamMap.containsKey(exam.getSubject().getName())) {
+                subjectsNameExamMap.get(exam.getSubject().getName()).add(exam);
             } else {
                 Set<Exam> subjEx = new HashSet<>();
                 subjEx.add(exam);
-                subjectExamMap.put(exam.getSubject(), subjEx);
+                subjectsNameExamMap.put(exam.getSubject().getName(), subjEx);
             }
         }
-        return subjectExamMap;
+        return subjectsNameExamMap;
     }
 
     @Override

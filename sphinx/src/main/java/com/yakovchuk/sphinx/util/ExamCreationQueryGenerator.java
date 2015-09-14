@@ -35,7 +35,7 @@ public class ExamCreationQueryGenerator {
     }
 
     private static void generateExam(Exam exam, String languageId) {
-        String subjectName = exam.getSubject();
+        String subjectName = exam.getSubject().getName();
         String examName = exam.getName();
         String createSubject = "INSERT INTO " + subjectTableName + " (NAME, LANGUAGE_ID) VALUES('" + subjectName + "', (" + languageId + "))";
         System.out.println(createSubject + ";");

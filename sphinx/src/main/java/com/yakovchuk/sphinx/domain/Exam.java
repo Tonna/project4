@@ -7,7 +7,7 @@ public class Exam {
 
     private final String id;
     private final String name;
-    private final String subject;
+    private final Subject subject;
     private final Collection<Question> questions;
 
     private Exam(Builder builder) {
@@ -25,7 +25,7 @@ public class Exam {
         return name;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
@@ -44,7 +44,7 @@ public class Exam {
         private String name = "";
         private Collection<Question> questions = new LinkedList<>();
         private String id = "";
-        private String subject = "";
+        private Subject subject = new Subject.Builder().build();
 
         public Builder(Exam exam) {
             this.name = exam.name;
@@ -61,7 +61,7 @@ public class Exam {
             return this;
         }
 
-        public Builder subject(String subject) {
+        public Builder subject(Subject subject) {
             this.subject = subject;
             return this;
         }
