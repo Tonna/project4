@@ -1,5 +1,6 @@
 <%@ taglib prefix="examCreation" tagdir="/WEB-INF/tags/examCreation" %>
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <common:header title="Exam creation"/>
 <common:userSection/>
@@ -12,7 +13,18 @@
         <div>
             <p>Exam subject</p>
             <p>
-                <input type="text" name="subject"/>
+                <input type="text" name="subject" list="subjects-list"/>
+                <datalist id="subjects-list">
+                <!--[if !IE]><!-->
+                <select>
+                <!--<![endif]-->
+                    <c:forEach var="subject" items="${subjects}" varStatus="status">
+                        <option value="${subject.name}"></option>
+                    </c:forEach>
+                <!--[if !IE]><!-->
+                </select>
+                <!--<![endif]-->
+                </datalist>
             </p>
         </div>
         <div>

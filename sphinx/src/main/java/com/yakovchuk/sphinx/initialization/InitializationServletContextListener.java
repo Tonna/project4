@@ -43,13 +43,14 @@ public class InitializationServletContextListener implements ServletContextListe
     public static final String ALIAS_EXAM_ID = "alias.exam.id";
     public static final String ALIAS_SUBJECT_NAME = "alias.subject.name";
     public static final String ALIAS_EXAM_NAME = "alias.exam.name";
-    public static final String QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS = "query.select.examsWithoutQuestions";
+    public static final String QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS = "query.select.exams.withoutQuestions";
     public static final String ALIAS_QUESTION_ID = "alias.question.id";
     public static final String ALIAS_QUESTION_TEXT = "alias.question.text";
     public static final String ALIAS_ANSWER_ID = "alias.answer.id";
     public static final String ALIAS_ANSWER_TEXT = "alias.answer.text";
     public static final String ALIAS_ANSWER_IS_CORRECT = "alias.answer.isCorrect";
     public static final String QUERY_SELECT_EXAM_BY_ID = "query.select.examById";
+    private static final String QUERY_SELECT_SUBJECTS_BY_LANGUAGE_CODE = "query.select.subject.byLanguageCode";
     private final static Logger logger = LogManager.getLogger(InitializationServletContextListener.class);
 
     @Override
@@ -108,6 +109,7 @@ public class InitializationServletContextListener implements ServletContextListe
         sqlStringsMap.put(ALIAS_ANSWER_TEXT, "ANSWER_TEXT");
         sqlStringsMap.put(ALIAS_ANSWER_IS_CORRECT, "ANSWER_IS_CORRECT");
         sqlStringsMap.put(QUERY_SELECT_EXAM_BY_ID, "SELECT EXAM.ID AS EXAM_ID, EXAM.NAME AS EXAM_NAME, SUBJECT.NAME AS SUBJECT_NAME, QUESTION.ID AS QUESTION_ID, QUESTION.TEXT AS QUESTION_TEXT, ANSWER.ID AS ANSWER_ID, ANSWER.TEXT AS ANSWER_TEXT, ANSWER.IS_CORRECT AS ANSWER_IS_CORRECT FROM EXAM JOIN SUBJECT ON EXAM.SUBJECT_ID = SUBJECT.ID JOIN QUESTION ON EXAM.ID = QUESTION.EXAM_ID JOIN ANSWER ON QUESTION.ID = ANSWER.QUESTION_ID WHERE EXAM.ID = ?");
+        sqlStringsMap.put(QUERY_SELECT_SUBJECTS_BY_LANGUAGE_CODE, "SELECT SUBJECT.ID AS SUBJECT_ID, SUBJECT.NAME AS SUBJECT_NAME FROM SUBJECT JOIN LANGUAGE ON LANGUAGE.ID = SUBJECT.LANGUAGE_ID WHERE LANGUAGE.CODE LIKE ?");
 
 
 /*        HashMap sqlStringHolder = new HashMap();
@@ -129,10 +131,13 @@ public class InitializationServletContextListener implements ServletContextListe
         SubjectDaoImpl subjectDaoImpl = new SubjectDaoImpl(dataSource);
         subjectDaoImpl.setAliasLanguageId(sqlStringsMap.get(ALIAS_LANGUAGE_ID));
         subjectDaoImpl.setAliasSubjectId(sqlStringsMap.get(ALIAS_SUBJECT_ID));
+        subjectDaoImpl.setAliasSubjectName(sqlStringsMap.get(ALIAS_SUBJECT_NAME));
         subjectDaoImpl.setQuerySelectLanguageById(sqlStringsMap.get(QUERY_SELECT_LANGUAGE_BY_ID));
         subjectDaoImpl.setQueryInsertSubject(sqlStringsMap.get(QUERY_INSERT_SUBJECT));
         subjectDaoImpl.setQuerySelectSubjectById(sqlStringsMap.get(QUERY_SELECT_SUBJECT_BY_ID));
         subjectDaoImpl.setColumnSubjectId(sqlStringsMap.get(COLUMN_SUBJECT_ID));
+        subjectDaoImpl.setQuerySelectSubjectsByLanguageCode(sqlStringsMap.get(QUERY_SELECT_SUBJECTS_BY_LANGUAGE_CODE));
+
         subjectDao = subjectDaoImpl;
 
         SubjectServiceImpl subjectService = new SubjectServiceImpl();

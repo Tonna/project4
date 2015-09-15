@@ -53,20 +53,24 @@ public class ExamServlet extends HttpServlet {
         String take = "take";
         String submit = "submit";
         String action = request.getParameter("action");
+        request.getSession().setAttribute("languageCode", "en");
         if (creationForm.equals(action)) {
+            request.setAttribute("subjects", subjectService.getAll((String) request.getSession().getAttribute("languageCode")));
             goToPage(request, response, "WEB-INF/view/createExam.jsp");
         } else if (take.equals(action)) {
             request.setAttribute("exam", examService.getExam(request.getParameter("id")));
             goToPage(request, response, "WEB-INF/view/takeExam.jsp");
         } else if (create.equals(action)) {
             //TODO make user set language
-            request.getSession().setAttribute("languageCode", "en");
 
             Exam createdExam = examCreationMapper.mapExam(request.getParameterMap());
-            if(createdExam.getSubject().getId().isEmpty()) {
-                Subject createdSubject = subjectService.createSubject(createdExam.getSubject().getName(), (String) request.getSession().getAttribute("languageCode"));
-                createdExam = new Exam.Builder(createdExam).subject(createdSubject).build();
+            //TODO move logic from controller
+            String subjectName = createdExam.getSubject().getName();
+            Subject subject = subjectService.getSubject(subjectName);
+            if(subject.getId().isEmpty()) {
+                subject = subjectService.createSubject(subjectName, (String) request.getSession().getAttribute("languageCode"));
             }
+            createdExam = new Exam.Builder(createdExam).subject(subject).build();
             examService.createExam(createdExam);
             goToExamsPage(request, response);
         } else if (submit.equals(action)) {
