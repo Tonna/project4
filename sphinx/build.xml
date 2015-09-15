@@ -11,6 +11,7 @@
     <property name="src.dir" value="${base.dir}/src/main/java"/>
     <property name="src.res.dir" value="${base.dir}/src/main/resources"/>
     <property name="log4j.xml" value="${src.res.dir}/log4j2.xml"/>
+    <property name="sql-string.properties" value="${src.res.dir}/database/oracle/sql_strings.properties"/>
     <property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
     <property name="src.web.xml.file" value="${src.web.dir}/WEB-INF/web.xml"/>
 
@@ -104,6 +105,7 @@
 
     <target name="war">
         <copy file="${log4j.xml}" todir="${classes.dir}"/>
+        <copy file="${sql-string.properties}" todir="${classes.dir}"/>
         <war destfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
             <fileset dir="${src.web.dir}"/>
             <classes dir="${classes.dir}"/>

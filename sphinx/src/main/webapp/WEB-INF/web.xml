@@ -65,5 +65,9 @@
         <location>/errorPage.jsp</location>
     </error-page>-->
 
+    <context-param>
+        <param-name>sql_strings</param-name>
+        <param-value>sql_strings.properties</param-value>
+    </context-param>
 
 </web-app>
