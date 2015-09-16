@@ -29,16 +29,13 @@ function validateExam(){
     if(isExamValid){
         $("#errorMessage").attr("style", "display: none;");
     } else {
-        $("#errorMessage").attr("style", "display: inline;");
+        $("#errorMessage").removeAttr("style");
+        window.scrollTo(0, 0);
     }
     return isExamValid ;
     } catch(err){
     return false;
     }
-    //checkTextFieldNotEmpty("examName");
-    //validateExamName();
-    //validateQuestions();
-    //$("input[name='examName']").prop('value')
 }
 
 function getTextField(fieldName){
@@ -59,7 +56,6 @@ function validateQuestion(question){
     var result = true;
     if(textFormIsEmpty){
         $(question).find('textarea').addClass("validationError");
-        question.focus();
         result = false;
     } else {
          $(question).find('textarea').removeClass("validationError");
@@ -98,7 +94,6 @@ function validateAnswer(answer){
     var textField = $(answer).find("input[type='text']");
     if(textField.prop('value') == ''){
         textField.addClass("validationError");
-        textField.focus();
         return false;
     }
     textField.removeClass("validationError");
@@ -109,7 +104,6 @@ function validateSubject(){
     var subject = getTextField("subject");
     if(subject.prop('value') ==  ''){
         subject.addClass("validationError");
-        subject.focus();
         return false;
     }
     subject.removeClass("validationError");
@@ -120,7 +114,6 @@ function validateExamName(){
     var examName = getTextField("examName");
     if(examName.prop('value') ==  ''){
         examName.addClass("validationError");
-        examName.focus();
         return false;
     }
     examName.removeClass("validationError");

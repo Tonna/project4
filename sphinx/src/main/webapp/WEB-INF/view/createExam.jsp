@@ -10,8 +10,8 @@
 
 <div id="main">
     <form action="exam?action=create" id="examCreationForm" onsubmit="return validateExam();" method="POST">
-        <div id="errorMessage" style="display: none;">
-            <p>Unable to create exam - form filled not correctly</p>
+        <div id="errorMessage" class="validationError" style="display: none;">
+            <p>Unable to create exam - form filled out incorrectly</p>
         </div>
 
         <div>
