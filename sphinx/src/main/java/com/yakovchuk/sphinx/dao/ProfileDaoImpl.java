@@ -31,8 +31,10 @@ public class ProfileDaoImpl implements ProfileDao {
 
     @Override
     public Profile getProfile(String login, String password) {
-        Profile profile = null;
-        String languageCode = "";
+        assert (login != null && !login.isEmpty());
+        assert (password != null && !password.isEmpty());
+
+        Profile profile;
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement selectProfileStatement = connection.prepareStatement(querySelectProfileByLoginAndPassword)) {
@@ -40,35 +42,33 @@ public class ProfileDaoImpl implements ProfileDao {
             selectProfileStatement.setNString(1, login);
             selectProfileStatement.setNString(2, password);
 
-            boolean isProfileFound;
-            try (ResultSet resultSet = selectProfileStatement.executeQuery()) {
-                isProfileFound = resultSet.next();
-                languageCode = resultSet.getNString(2);
-            }
+            try (ResultSet profileResultSet = selectProfileStatement.executeQuery()) {
+                if (profileResultSet.next()) {
+                    ProfileImpl profileImp = new ProfileImpl();
+                    ArrayList<String> roles = new ArrayList<>();
 
-            if (isProfileFound) {
-                ProfileImpl profileImp = new ProfileImpl();
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(querySelectProfileRolesByProfileLogin)) {
+                        preparedStatement.setNString(1, login);
 
-                ArrayList<String> roles = new ArrayList<>();
-                try (PreparedStatement preparedStatement = connection.prepareStatement(querySelectProfileRolesByProfileLogin)) {
-                    preparedStatement.setNString(1, login);
-                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        while (resultSet.next()) {
-                            String role = resultSet.getString(aliasProfileRoleOfProfile);
-                            if (rolesMapping.get(role) != null) {
-                                roles.add(rolesMapping.get(role));
+                        try (ResultSet profileRolesResultSet = preparedStatement.executeQuery()) {
+
+                            while (profileRolesResultSet.next()) {
+                                String role = profileRolesResultSet.getString(aliasProfileRoleOfProfile);
+                                if (rolesMapping.get(role) != null) {
+                                    roles.add(rolesMapping.get(role));
+                                }
                             }
                         }
                     }
+
+                    profileImp.setRoles(roles);
+                    profileImp.setLogin(login);
+                    profileImp.setLanguageCode(profileResultSet.getNString(2));
+                    profile = profileImp;
+
+                } else {
+                    profile = NullProfile.getInstance();
                 }
-
-                profileImp.setRoles(roles);
-                profileImp.setLogin(login);
-                profileImp.setLanguageCode(languageCode);
-                profile = profileImp;
-
-            } else {
-                profile = NullProfile.getInstance();
             }
 
         } catch (SQLException e) {
