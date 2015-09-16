@@ -9,7 +9,7 @@
 <examCreation:answer/>
 
 <div id="main">
-    <form action="exam?action=create" id="examCreationForm" method="POST">
+    <form action="exam?action=create" id="examCreationForm" onsubmit="return validateExam();" method="POST">
         <div>
             <p>Exam subject</p>
             <p>

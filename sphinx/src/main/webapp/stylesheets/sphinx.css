@@ -38,3 +38,7 @@ div div div div div{
 div div div div div div{
     border-color: red;
 }
+
+.validationError {
+    outline:5px solid red;
+}
