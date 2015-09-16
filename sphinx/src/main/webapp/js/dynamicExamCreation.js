@@ -25,7 +25,13 @@ function validateExam(){
     var  isSubjectValid = validateSubject();
     var  isExamNameValid = validateExamName();
     var  isQuestionsValid = validateQuestions();
-    return isSubjectValid && isExamNameValid && isQuestionsValid ;
+    var isExamValid = isSubjectValid && isExamNameValid && isQuestionsValid;
+    if(isExamValid){
+        $("#errorMessage").attr("style", "display: none;");
+    } else {
+        $("#errorMessage").attr("style", "display: inline;");
+    }
+    return isExamValid ;
     } catch(err){
     return false;
     }
