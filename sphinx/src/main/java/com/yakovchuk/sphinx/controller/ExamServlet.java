@@ -73,6 +73,7 @@ public class ExamServlet extends HttpServlet {
             }
             createdExam = new Exam.Builder(createdExam).subject(subject).build();
             examService.createExam(createdExam);
+            request.setAttribute("createdExamName", createdExam.getName());
             goToExamsPage(request, response);
         } else if (submit.equals(action)) {
             Exam submittedExam = examSubmissionMapper.mapExam(request.getParameterMap());

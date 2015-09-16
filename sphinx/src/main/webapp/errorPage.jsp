@@ -3,7 +3,7 @@
 
 <common:header title="Error"/>
 
-Something wrong happened
+<c:out value="Something wrong happened"/>
 
 <a href="/sphinx">
     <c:out value="Get out of here"/>

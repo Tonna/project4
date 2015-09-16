@@ -6,14 +6,14 @@
 
 <div id="main">
     <form id="questions" action="exam?action=submit" method="POST">
-        <h3>${exam.name}</h3>
+        <h3><c:out value="${exam.name}"/></h3>
         <input type="hidden" name="exam-id" value="${exam.id}"/>
         <c:forEach var="question" items="${exam.questions}">
             <div class="development question">
-                <h4>${question.text}</h4>
+                <h4><c:out value="${question.text}"/></h4>
                 <c:forEach var="answer" items="${question.answers}">
                     <div class="development answer">
-                        <p>${answer.text}</p>
+                        <p><c:out value="${answer.text}"/></p>
                         <p>
                             <input type="checkbox" name="answer-id-for-question-id-${question.id}" value="${answer.id}"/>
                         </p>

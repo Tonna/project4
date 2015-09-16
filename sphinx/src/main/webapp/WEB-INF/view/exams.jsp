@@ -8,19 +8,27 @@
 <div id="main">
 
     <c:if test="${not empty takenExamName}">
-        <div id="examResult">
+        <div id="examResult" class="goodMessage">
             <p>
-                You took "${takenExamName}" exam.
+                <c:out value="You took '${takenExamName}' exam."/>
             </p>
             <p>
-                You answered ${correctlyAnsweredQuestions} out of ${questionsInExam}
+                <c:out value="${correctlyAnsweredQuestions} out of ${questionsInExam} questions answered"/>
+            </p>
+        </div>
+    </c:if>
+
+    <c:if test="${not empty createdExamName}">
+        <div class="goodMessage">
+            <p>
+                <c:out value="Exam '${createdExamName}' created successfully"/>
             </p>
         </div>
     </c:if>
 
     <c:if test="${col:contains(applicationScope['examCreationRoles'], sessionScope.profile.roles)}">
         <div>
-            <a href="exam?action=creationForm">Create exam</a>
+            <a href="exam?action=creationForm"><c:out value="Create exam"/></a>
         </div>
     </c:if>
 
@@ -28,7 +36,7 @@
         <div class="development subjectList">
                 <c:forEach var="subject" items="${examsBySubject}" varStatus="status">
                     <div class="development subject">
-                        <h2>${subject.key}</h2>
+                        <h2><c:out value="${subject.key}"/></h2>
                         <c:forEach var="exam" items="${subject.value}" varStatus="status">
                             <p>
                                 <a href="exam?action=take&id=${exam.id}">
