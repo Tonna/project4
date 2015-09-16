@@ -70,9 +70,6 @@ public class InitializationServletContextListener implements ServletContextListe
         }
 
         logger.info("SQL strings loaded");
-        for (Map.Entry<Object, Object> s : sqlStrings.entrySet()) {
-            logger.info("SQL string '{}' has value '{}'", s.getKey() , s.getValue());
-        }
 
         context.setAttribute("examSubmissionMapper", new ExamSubmissionMapper());
         context.setAttribute("examCreationMapper", new ExamCreationMapper());
