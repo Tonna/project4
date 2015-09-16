@@ -3,7 +3,7 @@ package com.yakovchuk.sphinx.service;
 import com.yakovchuk.sphinx.dao.ExamDao;
 import com.yakovchuk.sphinx.domain.Exam;
 
-import java.util.*;
+import java.util.Collection;
 
 public class ExamServiceImpl implements ExamService {
 
@@ -23,8 +23,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Collection<Exam> getExamHeaders() {
-        return examDao.getAllExamsWithoutQuestions();
+    public Collection<Exam> getExamHeaders(String languageCode) {
+        return examDao.getAllExamsWithoutQuestions(languageCode);
     }
 
     @Override

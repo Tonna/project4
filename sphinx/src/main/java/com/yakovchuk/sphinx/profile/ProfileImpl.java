@@ -7,6 +7,7 @@ public class ProfileImpl implements Profile {
 
     private String login;
     private Collection<String> roles = Collections.EMPTY_LIST;
+    private String languageCode;
 
     public String getLogin() {
         return login;
@@ -16,11 +17,20 @@ public class ProfileImpl implements Profile {
         this.login = login;
     }
 
+    public Collection<String> getRoles() {
+        return roles;
+    }
+
     public void setRoles(Collection<String> roles) {
         this.roles = roles;
     }
 
-    public Collection<String> getRoles() {
-        return roles;
+    @Override
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
     }
 }

@@ -44,7 +44,7 @@ public class InitializationServletContextListener implements ServletContextListe
     private static final String ALIAS_EXAM_ID = "alias.exam.id";
     private static final String ALIAS_SUBJECT_NAME = "alias.subject.name";
     private static final String ALIAS_EXAM_NAME = "alias.exam.name";
-    private static final String QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS = "query.select.exams.withoutQuestions";
+    private static final String QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS_BY_LANGUAGE_CODE = "query.select.exams.withoutQuestions.byLanguageCode";
     private static final String ALIAS_QUESTION_ID = "alias.question.id";
     private static final String ALIAS_QUESTION_TEXT = "alias.question.text";
     private static final String ALIAS_ANSWER_ID = "alias.answer.id";
@@ -139,7 +139,7 @@ public class InitializationServletContextListener implements ServletContextListe
         examDaoImpl.setAliasExamId(sqlStrings.getProperty(ALIAS_EXAM_ID));
         examDaoImpl.setAliasSubjectName(sqlStrings.getProperty(ALIAS_SUBJECT_NAME));
         examDaoImpl.setAliasExamName(sqlStrings.getProperty(ALIAS_EXAM_NAME));
-        examDaoImpl.setQuerySelectExamsWithoutQuestions(sqlStrings.getProperty(QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS));
+        examDaoImpl.setQuerySelectExamsWithoutQuestionsByLanguageCode(sqlStrings.getProperty(QUERY_SELECT_EXAMS_WITHOUT_QUESTIONS_BY_LANGUAGE_CODE));
         examDaoImpl.setAliasQuestionId(sqlStrings.getProperty(ALIAS_QUESTION_ID));
         examDaoImpl.setAliasQuestionText(sqlStrings.getProperty(ALIAS_QUESTION_TEXT));
         examDaoImpl.setAliasAnswerId(sqlStrings.getProperty(ALIAS_ANSWER_ID));

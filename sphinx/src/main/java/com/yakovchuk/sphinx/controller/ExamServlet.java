@@ -2,6 +2,7 @@ package com.yakovchuk.sphinx.controller;
 
 import com.yakovchuk.sphinx.domain.Exam;
 import com.yakovchuk.sphinx.domain.Subject;
+import com.yakovchuk.sphinx.profile.Profile;
 import com.yakovchuk.sphinx.service.ExamService;
 import com.yakovchuk.sphinx.service.SubjectService;
 import com.yakovchuk.sphinx.util.ExamChecker;
@@ -53,9 +54,9 @@ public class ExamServlet extends HttpServlet {
         String take = "take";
         String submit = "submit";
         String action = request.getParameter("action");
-        request.getSession().setAttribute("languageCode", "en");
+        String profileLanguage = ((Profile) request.getSession().getAttribute("profile")).getLanguageCode();
         if (creationForm.equals(action)) {
-            request.setAttribute("subjects", subjectService.getAll((String) request.getSession().getAttribute("languageCode")));
+            request.setAttribute("subjects", subjectService.getAll(profileLanguage));
             goToPage(request, response, "WEB-INF/view/createExam.jsp");
         } else if (take.equals(action)) {
             request.setAttribute("exam", examService.getExam(request.getParameter("id")));
@@ -67,8 +68,8 @@ public class ExamServlet extends HttpServlet {
             //TODO move logic from controller
             String subjectName = createdExam.getSubject().getName();
             Subject subject = subjectService.getSubject(subjectName);
-            if(subject.getId().isEmpty()) {
-                subject = subjectService.createSubject(subjectName, (String) request.getSession().getAttribute("languageCode"));
+            if (subject.getId().isEmpty()) {
+                subject = subjectService.createSubject(subjectName, profileLanguage);
             }
             createdExam = new Exam.Builder(createdExam).subject(subject).build();
             examService.createExam(createdExam);
@@ -90,7 +91,8 @@ public class ExamServlet extends HttpServlet {
     }
 
     private void goToExamsPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("examsBySubject", groupBySubjects(examService.getExamHeaders()));
+        String profileLanguage = ((Profile) request.getSession().getAttribute("profile")).getLanguageCode();
+        request.setAttribute("examsBySubject", groupBySubjects(examService.getExamHeaders(profileLanguage)));
         goToPage(request, response, "WEB-INF/view/exams.jsp");
     }
 

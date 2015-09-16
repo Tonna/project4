@@ -32,6 +32,7 @@ public class ProfileDaoImpl implements ProfileDao {
     @Override
     public Profile getProfile(String login, String password) {
         Profile profile = null;
+        String languageCode = "";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement selectProfileStatement = connection.prepareStatement(querySelectProfileByLoginAndPassword)) {
@@ -42,6 +43,7 @@ public class ProfileDaoImpl implements ProfileDao {
             boolean isProfileFound;
             try (ResultSet resultSet = selectProfileStatement.executeQuery()) {
                 isProfileFound = resultSet.next();
+                languageCode = resultSet.getNString(2);
             }
 
             if (isProfileFound) {
@@ -62,6 +64,7 @@ public class ProfileDaoImpl implements ProfileDao {
 
                 profileImp.setRoles(roles);
                 profileImp.setLogin(login);
+                profileImp.setLanguageCode(languageCode);
                 profile = profileImp;
 
             } else {

@@ -6,4 +6,5 @@ public interface Profile {
 
     String getLogin();
     Collection<String> getRoles();
+    String getLanguageCode();
 }

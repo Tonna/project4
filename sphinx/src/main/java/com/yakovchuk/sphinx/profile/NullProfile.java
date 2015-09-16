@@ -24,4 +24,9 @@ public class NullProfile implements Profile {
     public Collection<String> getRoles() {
         return Collections.EMPTY_LIST;
     }
+
+    @Override
+    public String getLanguageCode() {
+        return "en";
+    }
 }

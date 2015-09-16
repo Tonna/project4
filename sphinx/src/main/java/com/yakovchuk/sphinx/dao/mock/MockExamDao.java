@@ -73,7 +73,7 @@ public class MockExamDao implements ExamDao {
     }
 
     @Override
-    public Collection<Exam> getAllExamsWithoutQuestions() {
+    public Collection<Exam> getAllExamsWithoutQuestions(String lnguageCode) {
         return getAll();
     }
 }

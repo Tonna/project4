@@ -24,7 +24,7 @@ public class ExamDaoImpl implements ExamDao {
     private String queryInsertExam;
     private String queryInsertQuestion;
     private String querySelectExamById;
-    private String querySelectExamsWithoutQuestions;
+    private String querySelectExamsWithoutQuestionsByLanguageCode;
     private String columnExamId;
     private String columnQuestionId;
     private String columnAnswerId;
@@ -152,18 +152,20 @@ public class ExamDaoImpl implements ExamDao {
     }
 
     @Override
-    public Collection<Exam> getAllExamsWithoutQuestions() {
+    public Collection<Exam> getAllExamsWithoutQuestions(String languageCode) {
+        assert (languageCode != null && !languageCode.isEmpty());
         ArrayList<Exam> exams = new ArrayList<>();
 
         try (Connection con = getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(querySelectExamsWithoutQuestions);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                Exam exam = new Exam.Builder().id(resultSet.getString(aliasExamId))
-                        .name(resultSet.getString(aliasExamName))
-                        .subject(new Subject.Builder().name(resultSet.getString(aliasSubjectName)).build()).build();
-                exams.add(exam);
+             PreparedStatement preparedStatement = con.prepareStatement(querySelectExamsWithoutQuestionsByLanguageCode)) {
+            preparedStatement.setNString(1, languageCode);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Exam exam = new Exam.Builder().id(resultSet.getString(aliasExamId))
+                            .name(resultSet.getString(aliasExamName))
+                            .subject(new Subject.Builder().name(resultSet.getString(aliasSubjectName)).build()).build();
+                    exams.add(exam);
+                }
             }
 
         } catch (SQLException e) {
@@ -204,8 +206,8 @@ public class ExamDaoImpl implements ExamDao {
         this.querySelectExamById = querySelectExamById;
     }
 
-    public void setQuerySelectExamsWithoutQuestions(String querySelectExamsWithoutQuestions) {
-        this.querySelectExamsWithoutQuestions = querySelectExamsWithoutQuestions;
+    public void setQuerySelectExamsWithoutQuestionsByLanguageCode(String querySelectExamsWithoutQuestionsByLanguageCode) {
+        this.querySelectExamsWithoutQuestionsByLanguageCode = querySelectExamsWithoutQuestionsByLanguageCode;
     }
 
     public void setAliasSubjectName(String aliasSubjectName) {
