@@ -9,17 +9,18 @@ import java.util.Collection;
 
 public class ExamCreationQueryGenerator {
 
-    private static String schemaName = "Examination_Portal";
-    private static String subjectTableName = schemaName + "." + "SUBJECT";
-    private static String examTableName = schemaName + "." + "EXAM";
-    private static String questionTableName = schemaName + "." + "QUESTION";
-    private static String answerTableName = schemaName + "." + "ANSWER";
-    private static String languageTableName = schemaName + "." + "Language";
+    private static String subjectTableName = "SUBJECT";
+    private static String examTableName = "EXAM";
+    private static String questionTableName = "QUESTION";
+    private static String answerTableName = "ANSWER";
+    private static String languageTableName = "Language";
 
     public static void main(String[] args) {
 
         String english = "English";
-        generateLanguage(english);
+
+        generateLanguage(english, "en");
+        generateLanguage("Russian", "ru");
 
         String languageId = "SELECT ID FROM " + languageTableName + " WHERE language.name LIKE '" + english + "'";
         generateExam(ExamDataProvider.getExam3OriginalWithoutIds(), languageId);
@@ -29,8 +30,8 @@ public class ExamCreationQueryGenerator {
         generateExam(ExamDataProvider.getExam5Original(), languageId);
     }
 
-    private static void generateLanguage(String language) {
-        String createLanguage = "INSERT INTO " + languageTableName + " (NAME, CODE) VALUES('" + language + "','en')";
+    private static void generateLanguage(String language, String code) {
+        String createLanguage = "INSERT INTO " + languageTableName + " (NAME, CODE) VALUES('" + language + "','" + code + "')";
         System.out.println(createLanguage + ";");
     }
 

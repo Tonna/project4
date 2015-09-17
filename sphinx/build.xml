@@ -11,7 +11,7 @@
     <property name="src.dir" value="${base.dir}/src/main/java"/>
     <property name="src.res.dir" value="${base.dir}/src/main/resources"/>
     <property name="log4j.xml" value="${src.res.dir}/log4j2.xml"/>
-    <property name="sql-string.properties" value="${src.res.dir}/database/oracle/sql_strings.properties"/>
+    <property name="sql-string.properties" value="src/main/resources/database/common/sql_strings.properties"/>
     <property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
     <property name="src.web.xml.file" value="${src.web.dir}/WEB-INF/web.xml"/>
 
