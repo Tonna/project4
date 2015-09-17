@@ -13,7 +13,7 @@
             <div class="development message"><c:out value="Welcome to sphinx portal! Please login."/></div>
         </c:otherwise>
     </c:choose>
-    <form id="login" action="login" method="POST">
+    <form id="login" action="user?action=login" method="POST">
         <div>
             <p><c:out value="Username: "/></p>
             <p>
