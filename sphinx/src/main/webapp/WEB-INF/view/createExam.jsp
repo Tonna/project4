@@ -11,7 +11,7 @@
 <div id="main">
     <form action="exam?action=create" id="examCreationForm" onsubmit="return validateExam();" method="POST">
         <div id="errorMessage" class="validationError" style="display: none;">
-            <p><c:out value="Unable to create exam - form filled out incorrectly</p>
+            <p><c:out value="Unable to create exam - form filled out incorrectly"/></p>
         </div>
 
         <div>

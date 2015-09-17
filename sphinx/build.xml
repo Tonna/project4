@@ -11,7 +11,8 @@
     <property name="src.dir" value="${base.dir}/src/main/java"/>
     <property name="src.res.dir" value="${base.dir}/src/main/resources"/>
     <property name="log4j.xml" value="${src.res.dir}/log4j2.xml"/>
-    <property name="sql-string.properties" value="src/main/resources/database/common/sql_strings.properties"/>
+    <property name="app.config" value="${src.res.dir}/config.properties"/>
+    <property name="sql-string.properties" value="${src.res.dir}/database/common/sql-strings.properties"/>
     <property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
     <property name="src.web.xml.file" value="${src.web.dir}/WEB-INF/web.xml"/>
 
@@ -105,6 +106,7 @@
 
     <target name="war">
         <copy file="${log4j.xml}" todir="${classes.dir}"/>
+        <copy file="${app.config}" todir="${classes.dir}"/>
         <copy file="${sql-string.properties}" todir="${classes.dir}"/>
         <war destfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
             <fileset dir="${src.web.dir}"/>
@@ -115,6 +117,7 @@
                 <include name="log4j-api-2.3.jar"/>
                 <include name="log4j-core-2.3.jar"/>
                 <include name="ojdbc14.jar"/>
+                <include name="hsqldb.jar"/>
             </lib>
         </war>
     </target>

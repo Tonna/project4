@@ -10,14 +10,11 @@ import com.yakovchuk.sphinx.util.ExamCreationMapper;
 import com.yakovchuk.sphinx.util.ExamSubmissionMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,11 +58,32 @@ public class InitializationServletContextListener implements ServletContextListe
 
         ServletContext context = servletContextEvent.getServletContext();
 
+        Properties applicationConfiguration = new Properties();
+
+        try {
+            applicationConfiguration.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(context.getInitParameter("application-configuration")));
+        } catch (IOException e) {
+            logger.fatal("Unable to load application configuration from file {}", context.getInitParameter("application-configuration"));
+            throw new SphinxInitializationException(e);
+        }
+
+        PoolProperties poolProperties = new PoolProperties();
+        poolProperties.setUrl(applicationConfiguration.getProperty("url"));
+        poolProperties.setDriverClassName(applicationConfiguration.getProperty("driverClassName"));
+        poolProperties.setUsername(applicationConfiguration.getProperty("username"));
+        poolProperties.setPassword(applicationConfiguration.getProperty("password"));
+        poolProperties.setMaxActive(Integer.parseInt(applicationConfiguration.getProperty("maxActive")));
+        poolProperties.setMaxWait(Integer.parseInt(applicationConfiguration.getProperty("maxWait")));
+        poolProperties.setMaxIdle(Integer.parseInt(applicationConfiguration.getProperty("maxIdle")));
+
+        org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
+        dataSource.setPoolProperties(poolProperties);
+
         Properties sqlStrings = new Properties();
         try {
-            sqlStrings.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(context.getInitParameter("sql_strings")));
+            sqlStrings.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(context.getInitParameter("sql-strings")));
         } catch (IOException e) {
-            logger.fatal("Unable to load SQL strings from file {}", context.getInitParameter("sql_strings"));
+            logger.fatal("Unable to load SQL strings from file {}", context.getInitParameter("sql-strings"));
             throw new SphinxInitializationException(e);
         }
 
@@ -78,16 +96,6 @@ public class InitializationServletContextListener implements ServletContextListe
 
         context.setAttribute("examCreationRoles", Arrays.asList("tutor"));
         context.setAttribute("examTakingRoles", Arrays.asList("student"));
-
-        DataSource dataSource = null;
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:/comp/env");
-            dataSource = (DataSource) envContext.lookup("jdbc/ExamDB");
-
-        } catch (NamingException e) {
-            logger.error("Couldn't resolve datasource");
-        }
 
         Map<String, String> rolesMapping = new HashMap<String, String>();
         rolesMapping.put("tutor", "tutor");
