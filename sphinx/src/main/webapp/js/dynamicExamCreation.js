@@ -92,7 +92,7 @@ function isAnswerMarkedAsCorrect(answer){
 
 function validateAnswer(answer){
     var textField = $(answer).find("input[type='text']");
-    if(textField.prop('value') == ''){
+    if(textField.prop('value').trim() == ''){
         textField.addClass("validationError");
         return false;
     }
@@ -102,7 +102,7 @@ function validateAnswer(answer){
 
 function validateSubject(){
     var subject = getTextField("subject");
-    if(subject.prop('value') ==  ''){
+    if(subject.prop('value').trim() ==  ''){
         subject.addClass("validationError");
         return false;
     }
@@ -112,7 +112,7 @@ function validateSubject(){
 
 function validateExamName(){
     var examName = getTextField("examName");
-    if(examName.prop('value') ==  ''){
+    if(examName.prop('value').trim() ==  ''){
         examName.addClass("validationError");
         return false;
     }

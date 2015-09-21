@@ -13,13 +13,35 @@ import java.util.Map;
 public class ExamCreationMapper implements ExamMapper {
 
     @Override
-    public Exam mapExam(Map<String, String[]> parameterMap) {
+    public Exam mapExam(Map<String, String[]> pm) {
+
+
+        Map<String, String[]> parameterMap = trimValues(pm);
+
         return buildQuestions(parameterMap,
                 new Exam.Builder()
                         .name(parameterMap.get("examName")[0])
                         .subject(new Subject.Builder().name(parameterMap.get("subject")[0]).build()))
                 .build();
     }
+
+    private Map<String, String[]> trimValues(Map<String, String[]> input) {
+        Map<String, String[]> result = new HashMap<>();
+        for (Map.Entry<String, String[]> stringEntry : input.entrySet()) {
+            result.put(stringEntry.getKey(), trimArray(stringEntry.getValue()));
+        }
+        return result;
+
+    }
+
+    private String[] trimArray(String[] input) {
+        String[] output = new String[input.length];
+        for (int i = 0; i < input.length; i++) {
+            output[i] = input[i].trim();
+        }
+        return output;
+    }
+
 
     private Exam.Builder buildQuestions(Map<String, String[]> parameterMap, Exam.Builder builder) {
         //separate different questions
