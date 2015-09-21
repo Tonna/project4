@@ -62,8 +62,6 @@ public class ExamServlet extends HttpServlet {
             request.setAttribute("exam", examService.getExam(request.getParameter("id")));
             goToPage(request, response, "WEB-INF/view/takeExam.jsp");
         } else if (create.equals(action)) {
-            //TODO make user set language
-
             Exam createdExam = examCreationMapper.mapExam(request.getParameterMap());
             //TODO move logic from controller
             String subjectName = createdExam.getSubject().getName();

@@ -39,7 +39,6 @@ public class ProfileServlet extends HttpServlet {
 
         Profile profileFromService = profileService.getProfile(login, password);
         if(profileFromService instanceof NullProfile){
-            //TODO add message to method
             request.setAttribute("authenticationFailed", "true");
             goToLogin(request, response);
             return;

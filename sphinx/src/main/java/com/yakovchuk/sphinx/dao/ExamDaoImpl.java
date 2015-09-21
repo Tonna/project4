@@ -134,6 +134,19 @@ public class ExamDaoImpl implements ExamDao {
             }
             con.commit();
             con.setAutoCommit(true);
+        } catch (SQLIntegrityConstraintViolationException integrityConstraintException) {
+            /*
+            Exam name is only unique value for exam except id. So in case of
+            such exception exam name is appended by time in millis and creation is retried.
+            Looks like hack, but no need for more complex solution now.
+             */
+            logger.error("Exam with name '{}' already exists.", toCreate.getName());
+            logger.error("Retry with datetime appended to exam name.");
+            String datetime = com.yakovchuk.sphinx.util.DateUtil.getCurrentDateTime();
+
+            return create(new Exam.Builder(toCreate)
+                    .name(toCreate.getName() + " " + datetime)
+                    .build());
         } catch (SQLException e) {
             logger.error("Failed to create exam {}", toCreate);
             throw new SphinxSQLException(e);
@@ -178,9 +191,6 @@ public class ExamDaoImpl implements ExamDao {
     private Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
-
-    //TODO create separate methods\class(?) for handling opening, closing connections, statements and stuff
-
 
     public void setAliasAnswerIsCorrect(String aliasAnswerIsCorrect) {
         this.aliasAnswerIsCorrect = aliasAnswerIsCorrect;
