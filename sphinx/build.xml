@@ -13,6 +13,7 @@
     <property name="log4j.xml" value="${src.res.dir}/log4j2.xml"/>
     <property name="app.config" value="${src.res.dir}/config.properties"/>
     <property name="sql-string.properties" value="${src.res.dir}/database/common/sql-strings.properties"/>
+    <property name="resource-bundles-folder" value="${src.res.dir}/i18n"/>
     <property name="src.web.dir" value="${base.dir}/src/main/webapp"/>
     <property name="src.web.xml.file" value="${src.web.dir}/WEB-INF/web.xml"/>
 
@@ -108,6 +109,9 @@
         <copy file="${log4j.xml}" todir="${classes.dir}"/>
         <copy file="${app.config}" todir="${classes.dir}"/>
         <copy file="${sql-string.properties}" todir="${classes.dir}"/>
+        <copy todir="${classes.dir}/i18n">
+            <fileset dir="${resource-bundles-folder}"/>
+        </copy>
         <war destfile="${target.dir}/${war.file}" webxml="${src.web.xml.file}">
             <fileset dir="${src.web.dir}"/>
             <classes dir="${classes.dir}"/>
