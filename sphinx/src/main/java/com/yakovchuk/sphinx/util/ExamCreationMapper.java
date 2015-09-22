@@ -25,6 +25,7 @@ public class ExamCreationMapper implements ExamMapper {
                 .build();
     }
 
+    //TODO move this functionality to separate logical entity?
     private Map<String, String[]> trimValues(Map<String, String[]> input) {
         Map<String, String[]> result = new HashMap<>();
         for (Map.Entry<String, String[]> stringEntry : input.entrySet()) {
