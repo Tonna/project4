@@ -2,9 +2,9 @@ package com.yakovchuk.sphinx.profile;
 
 import java.util.Collection;
 
-public interface Profile {
+public abstract class Profile {
 
-    String getLogin();
-    Collection<String> getRoles();
-    String getLanguageCode();
+    public abstract String getLogin();
+    public abstract Collection<String> getRoles();
+    public abstract String getLanguageCode();
 }
