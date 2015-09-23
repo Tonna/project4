@@ -1,14 +1,15 @@
 <%@ taglib prefix="examCreation" tagdir="/WEB-INF/tags/examCreation" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setBundle basename="i18n.UIStrings"/>
 
 <div id="questionTemplate" class="question" style="display: none;">
-    <p><c:out valie="Text for question"/></p>
+    <p><fmt:message key="tag.exam.creation.label.question.text"/></p>
     <p>
         <textarea rows="2" name="question"></textarea>
     </p>
     <div class="answersSection">
     </div>
     <div class="addAnswerButton">
-        <input type="button" value="Add answer" onclick="addAnswer(this.parentNode.parentNode);return false;"/>
+        <input type="button" value="<fmt:message key="tag.exam.creation.button.add.answer"/>" onclick="addAnswer(this.parentNode.parentNode);return false;"/>
     </div>
 </div>
-

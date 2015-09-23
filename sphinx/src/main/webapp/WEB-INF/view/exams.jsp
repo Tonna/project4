@@ -1,8 +1,12 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://yakovchuk.com/jsp/jstl/collection" prefix="col" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setBundle basename="i18n.UIStrings"/>
 
-<common:header title="Exam picking"/>
+
+
+<common:header title="page.exam.picking.title"/>
 <common:userSection/>
 
 <div id="main">
@@ -10,10 +14,10 @@
     <c:if test="${not empty takenExamName}">
         <div id="examResult" class="goodMessage">
             <p>
-                <c:out value="You took '${takenExamName}' exam."/>
+                <fmt:message key="page.exam.picking.message.submit.pre.exam.name"/> <c:out value="'${takenExamName}'."/>
             </p>
             <p>
-                <c:out value="${correctlyAnsweredQuestions} out of ${questionsInExam} questions answered"/>
+                <c:out value="${correctlyAnsweredQuestions}"/> <fmt:message key="page.exam.picking.message.submit.outOf"/> <c:out value="${questionsInExam}"/> <fmt:message key="page.exam.picking.message.submit.questions.answered"/>
             </p>
         </div>
     </c:if>
@@ -21,14 +25,14 @@
     <c:if test="${not empty createdExamName}">
         <div class="goodMessage">
             <p>
-                <c:out value="Exam '${createdExamName}' created successfully"/>
+                <fmt:message key="page.exam.picking.message.creation.success"/> <c:out value="'${createdExamName}' "/>
             </p>
         </div>
     </c:if>
 
     <c:if test="${col:contains(applicationScope['examCreationRoles'], sessionScope.profile.roles)}">
         <div>
-            <a href="exam?action=creationForm"><c:out value="Create exam"/></a>
+            <a href="exam?action=creationForm"><fmt:message key="page.exam.picking.link.create.exam"/></a>
         </div>
     </c:if>
 

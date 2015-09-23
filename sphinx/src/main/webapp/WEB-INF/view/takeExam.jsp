@@ -1,7 +1,10 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setBundle basename="i18n.UIStrings"/>
 
-<common:header title="Exam taking"/>
+
+<common:header title="page.exam.taking.title"/>
 <common:userSection/>
 
 <div id="main">
@@ -23,7 +26,7 @@
         </c:forEach>
         <div>
             <p>
-                <input type="Submit" value="Submit"/>
+                <input type="Submit" value="<fmt:message key="page.exam.taking.button.submit"/>"/>
             </p>
         </div>
     </form>

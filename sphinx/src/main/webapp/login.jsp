@@ -1,19 +1,19 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<common:header title="Login to sphinx"/>
-
 <fmt:setBundle basename="i18n.UIStrings"/>
+<common:header title="page.login.title"/>
+
 
 <div id="main">
     <c:choose>
         <c:when test="${not empty authenticationFailed}">
             <div class="validationError">
-                <p><c:out value="Login and password do not match existing user"/></p>
+                <p><fmt:message key="page.login.message.login.failure"/></p>
             </div>
         </c:when>
         <c:otherwise>
-            <div class="development message"><c:out value="Welcome to sphinx portal! Please login."/></div>
+            <div class="development message"><fmt:message key="page.login.message.welcome"/></div>
         </c:otherwise>
     </c:choose>
     <form id="login" action="user?action=login" method="POST">
