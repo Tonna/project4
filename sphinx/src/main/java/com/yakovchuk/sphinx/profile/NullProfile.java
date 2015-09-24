@@ -3,7 +3,7 @@ package com.yakovchuk.sphinx.profile;
 import java.util.Collection;
 import java.util.Collections;
 
-public class NullProfile implements Profile {
+public class NullProfile extends Profile {
 
     private static final NullProfile NULL_PROFILE = new NullProfile();
 

@@ -3,7 +3,7 @@ package com.yakovchuk.sphinx.profile;
 import java.util.Collection;
 import java.util.Collections;
 
-public class ProfileImpl implements Profile {
+public class ProfileImpl extends Profile {
 
     private String login;
     private Collection<String> roles = Collections.EMPTY_LIST;
