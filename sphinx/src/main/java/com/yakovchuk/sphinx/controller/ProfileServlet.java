@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class ProfileServlet extends HttpServlet {
 
@@ -47,9 +45,6 @@ public class ProfileServlet extends HttpServlet {
         }
 
         assert(profileFromService != null);
-
-        Locale locale = request.getLocale();
-        ResourceBundle bundle = ResourceBundle.getBundle("i18n.UIStrings", locale);
 
         request.getSession().setAttribute("profile", profileFromService);
         request.getRequestDispatcher("/exam?action=view").forward(request, response);

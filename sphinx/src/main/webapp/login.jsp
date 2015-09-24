@@ -1,6 +1,8 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<fmt:setLocale value="${pageContext.request.locale.language}" />
 <common:header title="page.login.title"/>
 
 

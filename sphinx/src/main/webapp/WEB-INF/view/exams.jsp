@@ -3,8 +3,11 @@
 <%@ taglib uri="http://yakovchuk.com/jsp/jstl/collection" prefix="col" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<fmt:setLocale value="${profile.languageCode}" />
+
 <common:header title="page.exam.picking.title"/>
 <common:userSection/>
+
 
 <div id="main">
 

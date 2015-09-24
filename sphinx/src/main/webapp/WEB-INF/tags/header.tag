@@ -1,5 +1,9 @@
 <%@ attribute name="title" required="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="profileLocale" value="${profile.languageCode}"/>
+<c:set var="requestLocale" value="${pageContext.request.locale.language}" />
+<fmt:setLocale value="${not empty profileLocale ? profileLocale : requestLocale}" />
 <!DOCTYPE html>
 <html>
 	<head>

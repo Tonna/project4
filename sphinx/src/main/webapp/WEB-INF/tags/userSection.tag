@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<fmt:setLocale value="${profile.languageCode}" />
 <div id="userSection">
     <div>
         <p><fmt:message key="page.home.pre.login"/> ${sessionScope.profile.login}.
