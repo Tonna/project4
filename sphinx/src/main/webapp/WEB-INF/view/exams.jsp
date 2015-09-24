@@ -2,9 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://yakovchuk.com/jsp/jstl/collection" prefix="col" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setBundle basename="i18n.UIStrings"/>
-
-
 
 <common:header title="page.exam.picking.title"/>
 <common:userSection/>

@@ -1,8 +1,6 @@
 <%@ taglib prefix="common" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setBundle basename="i18n.UIStrings"/>
-
 
 <common:header title="page.exam.taking.title"/>
 <common:userSection/>

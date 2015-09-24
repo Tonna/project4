@@ -1,6 +1,5 @@
 <%@ taglib prefix="examCreation" tagdir="/WEB-INF/tags/examCreation" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setBundle basename="i18n.UIStrings"/>
 
 <div id="questionTemplate" class="question" style="display: none;">
     <p><fmt:message key="page.exam.creation.label.question.text"/></p>
