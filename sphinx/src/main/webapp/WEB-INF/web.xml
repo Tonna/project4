@@ -29,6 +29,17 @@
         <url-pattern>/exam</url-pattern>
     </servlet-mapping>
 
+    <!-- Encoding filter should be called first to set the correct encoding-->
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.yakovchuk.sphinx.filter.EncodingFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/exam</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>ExamFilter</filter-name>
         <filter-class>com.yakovchuk.sphinx.filter.ExamFilter</filter-class>
@@ -48,6 +59,7 @@
         <filter-name>CheckIsLoggedInFilter</filter-name>
         <url-pattern>/login.jsp</url-pattern>
     </filter-mapping>
+
 
     <listener>
         <listener-class>com.yakovchuk.sphinx.initialization.InitializationServletContextListener</listener-class>

@@ -22,7 +22,6 @@ public class ExamFilter implements Filter {
 
         HttpSession session = ((HttpServletRequest) request).getSession();
 
-        //TODO can session be null at all? Better to check session is new or something
         if (session.getAttribute("profile") == null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;

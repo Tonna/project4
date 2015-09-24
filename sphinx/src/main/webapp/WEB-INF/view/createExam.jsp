@@ -10,7 +10,8 @@
 <examCreation:answer/>
 
 <div id="main">
-    <form action="exam?action=create" id="examCreationForm" onsubmit="return validateExam();" method="POST">
+    <form action="exam?action=create" id="examCreationForm" onsubmit="return validateExam();"
+    method="POST" accept-charset="UTF-8">
         <div id="errorMessage" class="validationError" style="display: none;">
             <p><fmt:message key="page.exam.creation.error.validation"/></p>
         </div>
