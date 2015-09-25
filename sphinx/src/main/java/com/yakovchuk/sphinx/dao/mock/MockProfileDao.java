@@ -44,4 +44,13 @@ public class MockProfileDao implements ProfileDao {
 
         return NullProfile.getInstance();
     }
+
+    @Override
+    public Profile changeLanguage(Profile profile, String newLanguage) {
+        ProfileImpl updatedProfile = new ProfileImpl();
+        updatedProfile.setLogin(profile.getLogin());
+        updatedProfile.setRoles(profile.getRoles());
+        updatedProfile.setLanguageCode(newLanguage);
+        return updatedProfile;
+    }
 }

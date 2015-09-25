@@ -45,21 +45,7 @@ public class ProfileDaoImpl implements ProfileDao {
             try (ResultSet profileResultSet = selectProfileStatement.executeQuery()) {
                 if (profileResultSet.next()) {
                     ProfileImpl profileImp = new ProfileImpl();
-                    ArrayList<String> roles = new ArrayList<>();
-
-                    try (PreparedStatement preparedStatement = connection.prepareStatement(querySelectProfileRolesByProfileLogin)) {
-                        preparedStatement.setNString(1, login);
-
-                        try (ResultSet profileRolesResultSet = preparedStatement.executeQuery()) {
-
-                            while (profileRolesResultSet.next()) {
-                                String role = profileRolesResultSet.getString(aliasProfileRoleOfProfile);
-                                if (rolesMapping.get(role) != null) {
-                                    roles.add(rolesMapping.get(role));
-                                }
-                            }
-                        }
-                    }
+                    ArrayList<String> roles = getProfileRoles(login, connection);
 
                     profileImp.setRoles(roles);
                     profileImp.setLogin(login);
@@ -76,6 +62,57 @@ public class ProfileDaoImpl implements ProfileDao {
             throw new SphinxSQLException(e);
         }
         return profile;
+    }
+
+    private ArrayList<String> getProfileRoles(String login, Connection connection) throws SQLException {
+        ArrayList<String> roles = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(querySelectProfileRolesByProfileLogin)) {
+            preparedStatement.setNString(1, login);
+
+            try (ResultSet profileRolesResultSet = preparedStatement.executeQuery()) {
+
+                while (profileRolesResultSet.next()) {
+                    String role = profileRolesResultSet.getString(aliasProfileRoleOfProfile);
+                    if (rolesMapping.get(role) != null) {
+                        roles.add(rolesMapping.get(role));
+                    }
+                }
+            }
+        }
+        return roles;
+    }
+
+    @Override
+    public Profile changeLanguage(Profile profile, String newLanguage) {
+        Profile profileToReturn = profile;
+        ProfileImpl updateProfile;
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement("UPDATE PROFILE SET LANGUAGE_ID = (SELECT ID FROM LANGUAGE WHERE CODE LIKE ?) WHERE LOGIN LIKE ?")){
+
+            con.setAutoCommit(false);
+
+            preparedStatement.setNString(1, newLanguage);
+            String login = profile.getLogin();
+            preparedStatement.setNString(2, login);
+
+            //TODO Add check that update was executed?
+            preparedStatement.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+
+            updateProfile = new ProfileImpl();
+            updateProfile.setLogin(login);
+            updateProfile.setLanguageCode(newLanguage);
+            updateProfile.setRoles(getProfileRoles(login, con));
+            profileToReturn = updateProfile;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("NOT IMPLEMENTED CATCH BLOCK", e);
+        }
+
+
+        return profileToReturn;
     }
 
     public void setQuerySelectProfileByLoginAndPassword(String querySelectProfileByLoginAndPassword) {

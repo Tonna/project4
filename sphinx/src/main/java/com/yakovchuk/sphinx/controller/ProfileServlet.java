@@ -27,8 +27,15 @@ public class ProfileServlet extends HttpServlet {
             logout(request, response);
             return;
         }
-
         Profile existingProfile = (Profile) request.getSession().getAttribute("profile");
+
+        if("changeLanguage".equals(request.getParameter("action"))) {
+            Profile updatedProfile = profileService.changeLanguage(existingProfile, request.getParameter("language"));
+            request.getSession().setAttribute("profile", updatedProfile);
+            request.getRequestDispatcher("/exam?action=view").forward(request, response);
+            return;
+        }
+
         if (existingProfile != null && existingProfile instanceof ProfileImpl) {
             request.getRequestDispatcher("/exam?action=view").forward(request, response);
             return;

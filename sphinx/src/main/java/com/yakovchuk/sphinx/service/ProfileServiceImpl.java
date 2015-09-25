@@ -15,4 +15,9 @@ public class ProfileServiceImpl implements ProfileService {
     public Profile getProfile(String login, String password) {
         return profileDao.getProfile(login, password);
     }
+
+    @Override
+    public Profile changeLanguage(Profile profile, String newLanguage) {
+        return profileDao.changeLanguage(profile, newLanguage);
+    }
 }
