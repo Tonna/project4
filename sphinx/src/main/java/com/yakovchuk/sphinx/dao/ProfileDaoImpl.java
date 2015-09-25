@@ -108,7 +108,8 @@ public class ProfileDaoImpl implements ProfileDao {
             profileToReturn = updateProfile;
 
         } catch (SQLException e) {
-            throw new RuntimeException("NOT IMPLEMENTED CATCH BLOCK", e);
+            logger.error("Unable to set profiles '{}' default language to '{}'", profile, newLanguage);
+            throw new SphinxSQLException(e);
         }
 
 

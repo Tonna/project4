@@ -1,16 +1,16 @@
 description, scope, priority, done
 configure database use in application, db, high,true
 exam creation input validation. no empty input field allowed. question should have at least one answer which marked as correct. Validate subject and exam name and questions one by one (question name and each answers (answer text) and that question has at least one answer marked as right). Use js and jquery for validation? Mark unvalid fields with border and message., UI, medium,true
-extract constants from UI to properties, UI, medium,
+extract constants from UI to properties, UI, medium,true
 extract constants from code to properties, code, low,
 after all code is done and refactored add logging, code, low,
 make sure code follows java code convention, code, low,
-make app multilingual and add language choosing links and store users prefered language in db, functional, medium, 
+make app multilingual and add language choosing links and store users prefered language in db, functional, medium,true
 add test coverage, code, low,
 add selenium UI tests, automatic testing, low,
 after code is done and write tests and make test coverage 95%, code, low,
 on exam creation tutor can pick one of existing subjects (for tutors language) or create his own (look at arwen app something simmilar is there), UI, medium,true
-store in profile (db) last profiles language choise and use it on login, functional, low,
+store in profile (db) last profiles language choise and use it on login, functional, low,true
 create some nice (minimalistic  neat  easy to understand  pleasant to look at) style sheet. It should work in IE, UI, low,
 write DAO classes to retrieve and save data in DB. Login. get subjects and exams for language. get exam. create exam. Queries should be stored separate from code, db, high,true
 generate 4 exams for 3 subjects (inserts in db) for English. generate 3 students and 2 tutors profiles, db, high,true

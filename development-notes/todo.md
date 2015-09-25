@@ -9,7 +9,7 @@
 4. x Use filters in business logic implementation.
 5. x Create and use custom JSTL tag. due:2015-08-05
 6. x Implement login, logout, roles. due:2015-08-07
-7. Application should support Russian and English languages. For storing information in DB also. due:2015-08-10
+7. x Application should support Russian and English languages. For storing information in DB also. due:2015-08-10
 8. x Domain information should be stored in Data Base. Use JDBC API to access data base. Use standard or custom connection pool. due:2015-08-12
 9. Use GoF patterns for in business logic implementation. (Which? Strategy, Command, Builder, State, Observer, etc). due:2015-08-14
 
