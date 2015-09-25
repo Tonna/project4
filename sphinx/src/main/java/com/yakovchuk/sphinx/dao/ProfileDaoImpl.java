@@ -22,6 +22,7 @@ public class ProfileDaoImpl implements ProfileDao {
     private String querySelectProfileByLoginAndPassword;
     private String querySelectProfileRolesByProfileLogin;
     private String aliasProfileRoleOfProfile;
+    private String queryUpdateProfileLanguage;
 
 
     public ProfileDaoImpl(DataSource dataSource, Map<String, String> rolesMapping) {
@@ -88,7 +89,7 @@ public class ProfileDaoImpl implements ProfileDao {
         Profile profileToReturn = profile;
         ProfileImpl updateProfile;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement("UPDATE PROFILE SET LANGUAGE_ID = (SELECT ID FROM LANGUAGE WHERE CODE LIKE ?) WHERE LOGIN LIKE ?")){
+             PreparedStatement preparedStatement = con.prepareStatement(queryUpdateProfileLanguage)){
 
             con.setAutoCommit(false);
 
@@ -126,5 +127,9 @@ public class ProfileDaoImpl implements ProfileDao {
 
     public void setAliasProfileRoleOfProfile(String aliasProfileRoleOfProfile) {
         this.aliasProfileRoleOfProfile = aliasProfileRoleOfProfile;
+    }
+
+    public void setQueryUpdateProfileLanguage(String queryUpdateProfileLanguage) {
+        this.queryUpdateProfileLanguage = queryUpdateProfileLanguage;
     }
 }

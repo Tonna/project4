@@ -49,6 +49,7 @@ public class InitializationServletContextListener implements ServletContextListe
     private static final String ALIAS_ANSWER_IS_CORRECT = "alias.answer.isCorrect";
     private static final String QUERY_SELECT_EXAM_BY_ID = "query.select.examById";
     private static final String QUERY_SELECT_SUBJECTS_BY_LANGUAGE_CODE = "query.select.subject.byLanguageCode";
+    private static final String QUERY_UPDATE_PROFILE_LANGUAGE = "query.update.profile.language";
 
     private static final Logger logger = LogManager.getLogger(InitializationServletContextListener.class);
 
@@ -110,6 +111,7 @@ public class InitializationServletContextListener implements ServletContextListe
         profileDaoImpl.setQuerySelectProfileByLoginAndPassword(sqlStrings.getProperty(QUERY_SELECT_PROFILE_BY_LOGIN_AND_PASSWORD));
         profileDaoImpl.setQuerySelectProfileRolesByProfileLogin(sqlStrings.getProperty(QUERY_SELECT_PROFILE_ROLES_BY_PROFILE_LOGIN));
         profileDaoImpl.setAliasProfileRoleOfProfile(sqlStrings.getProperty(ALIAS_PROFILE_ROLE_OF_PROFILE));
+        profileDaoImpl.setQueryUpdateProfileLanguage(sqlStrings.getProperty(QUERY_UPDATE_PROFILE_LANGUAGE));
 
         context.setAttribute("profileDao", profileDaoImpl);
 
