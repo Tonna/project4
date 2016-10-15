@@ -26,7 +26,7 @@ public class ExamFilter implements Filter {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         } else {
-            String[] actions = request.getParameterMap().get("action");
+            String[] actions = (String[]) request.getParameterMap().get("action");
             if (actions != null && actions[0] != null && actionRoleMapping.get(actions[0]) != null) {
                 Profile profile = (Profile) session.getAttribute("profile");
                 if (!profile.getRoles().contains(actionRoleMapping.get(actions[0]))) {
