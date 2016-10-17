@@ -11,7 +11,7 @@
 		<meta charset="utf-8"/>
 		<title><fmt:message key="${title}"/></title>
 		<script src="js/dynamicExamCreation.js"></script>
-		<script src="js/vendor/jquery-2.1.4.js"></script>
+		<script src="js/vendor/jquery.js"></script>
 	</head>
 	<body>
          <div id="allcontent">

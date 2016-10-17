@@ -16,10 +16,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class InitializationServletContextListener implements ServletContextListener {
 
@@ -62,7 +59,9 @@ public class InitializationServletContextListener implements ServletContextListe
         Properties applicationConfiguration = new Properties();
 
         try {
-            applicationConfiguration.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(context.getInitParameter("application-configuration")));
+            applicationConfiguration.load(Thread.currentThread()
+                    .getContextClassLoader().getResourceAsStream(context
+                            .getInitParameter("application-configuration")));
         } catch (IOException e) {
             logger.fatal("Unable to load application configuration from file {}", context.getInitParameter("application-configuration"));
             throw new SphinxInitializationException(e);
@@ -95,10 +94,10 @@ public class InitializationServletContextListener implements ServletContextListe
 
         context.setAttribute("examChecker", new ExamCheckerImp());
 
-        context.setAttribute("examCreationRoles", Arrays.asList("tutor"));
-        context.setAttribute("examTakingRoles", Arrays.asList("student"));
+        context.setAttribute("examCreationRoles", Collections.singletonList("tutor"));
+        context.setAttribute("examTakingRoles", Collections.singletonList("student"));
 
-        Map<String, String> rolesMapping = new HashMap<String, String>();
+        Map<String, String> rolesMapping = new HashMap<>();
         rolesMapping.put("tutor", "tutor");
         rolesMapping.put("student", "student");
         
