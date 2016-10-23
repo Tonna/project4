@@ -84,6 +84,8 @@ public class ProfileServletTest {
     */
     @Test
     public void testProfileSelectedFromSessionIfNotLogOutAction() throws ServletException, IOException {
+        when(request.getParameter("action")).thenReturn("NOT logout");
+
         profileServlet.doPost(request, response);
 
         verify(session).getAttribute("profile");
