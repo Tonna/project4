@@ -18,6 +18,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Profile changeLanguage(Profile profile, String newLanguage) {
+        //FIXME if not expected language passes it can cause an exception
+        //that will be visible to user
         return profileDao.changeLanguage(profile, newLanguage);
     }
 }

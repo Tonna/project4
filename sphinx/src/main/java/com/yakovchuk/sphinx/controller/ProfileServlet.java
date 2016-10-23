@@ -51,8 +51,6 @@ public class ProfileServlet extends HttpServlet {
             return;
         }
 
-        assert(profileFromService != null);
-
         request.getSession().setAttribute("profile", profileFromService);
         request.getRequestDispatcher("/exam?action=view").forward(request, response);
     }
@@ -71,3 +69,4 @@ public class ProfileServlet extends HttpServlet {
         doPost(request, response);
     }
 }
+
