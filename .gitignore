@@ -1,4 +1,4 @@
-sphinx/target/*
+**/target/*
 */.idea/*
 .idea/*
 */lib/*
